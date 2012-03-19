@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  provider: MyString
+  provider_account: 1
+  external_image_id: MyString
+  target_image: 1
+  factory_target_image_id: MyString
+  template: 1
+  factory_template_id: MyString
+  parameters: MyString
+  snapshot: false
+
+two:
+  id: 1
+  provider: MyString
+  provider_account: 1
+  external_image_id: MyString
+  target_image: 1
+  factory_target_image_id: MyString
+  template: 1
+  factory_template_id: MyString
+  parameters: MyString
+  snapshot: false
