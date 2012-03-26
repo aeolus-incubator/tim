@@ -1,0 +1,21 @@
+<h1>Listing image_versions</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @image_versions.each do |image_version| %>
+  <tr>
+    <td><%= link_to 'Show', image_version %></td>
+    <td><%= link_to 'Edit', edit_image_version_path(image_version) %></td>
+    <td><%= link_to 'Destroy', image_version, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Image version', new_image_version_path %>
