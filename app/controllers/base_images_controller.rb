@@ -2,7 +2,7 @@ class BaseImagesController < ApplicationController
   # GET /base_images
   # GET /base_images.json
   def index
-    @base_images = BaseImage.all
+    @base_images = ImageManagement::BaseImage.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class BaseImagesController < ApplicationController
   # GET /base_images/1
   # GET /base_images/1.json
   def show
-    @base_image = BaseImage.find(params[:id])
+    @base_image = ImageManagement::BaseImage.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class BaseImagesController < ApplicationController
   # GET /base_images/new
   # GET /base_images/new.json
   def new
-    @base_image = BaseImage.new
+    @base_image = ImageManagement::BaseImage.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +34,13 @@ class BaseImagesController < ApplicationController
 
   # GET /base_images/1/edit
   def edit
-    @base_image = BaseImage.find(params[:id])
+    @base_image = ImageManagement::BaseImage.find(params[:id])
   end
 
   # POST /base_images
   # POST /base_images.json
   def create
-    @base_image = BaseImage.new(params[:base_image])
+    @base_image = ImageManagement::BaseImage.new(params[:base_image])
 
     respond_to do |format|
       if @base_image.save
@@ -56,7 +56,7 @@ class BaseImagesController < ApplicationController
   # PUT /base_images/1
   # PUT /base_images/1.json
   def update
-    @base_image = BaseImage.find(params[:id])
+    @base_image = ImageManagement::BaseImage.find(params[:id])
 
     respond_to do |format|
       if @base_image.update_attributes(params[:base_image])
@@ -72,7 +72,7 @@ class BaseImagesController < ApplicationController
   # DELETE /base_images/1
   # DELETE /base_images/1.json
   def destroy
-    @base_image = BaseImage.find(params[:id])
+    @base_image = ImageManagement::BaseImage.find(params[:id])
     @base_image.destroy
 
     respond_to do |format|

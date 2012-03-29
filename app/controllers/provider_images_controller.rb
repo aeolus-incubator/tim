@@ -2,7 +2,7 @@ class ProviderImagesController < ApplicationController
   # GET /provider_images
   # GET /provider_images.json
   def index
-    @provider_images = ProviderImage.all
+    @provider_images = ImageManagement::ProviderImage.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class ProviderImagesController < ApplicationController
   # GET /provider_images/1
   # GET /provider_images/1.json
   def show
-    @provider_image = ProviderImage.find(params[:id])
+    @provider_image = ImageManagement::ProviderImage.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class ProviderImagesController < ApplicationController
   # GET /provider_images/new
   # GET /provider_images/new.json
   def new
-    @provider_image = ProviderImage.new
+    @provider_image = ImageManagement::ProviderImage.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +34,13 @@ class ProviderImagesController < ApplicationController
 
   # GET /provider_images/1/edit
   def edit
-    @provider_image = ProviderImage.find(params[:id])
+    @provider_image = ImageManagement::ProviderImage.find(params[:id])
   end
 
   # POST /provider_images
   # POST /provider_images.json
   def create
-    @provider_image = ProviderImage.new(params[:provider_image])
+    @provider_image = ImageManagement::ProviderImage.new(params[:provider_image])
 
     respond_to do |format|
       if @provider_image.save
@@ -56,7 +56,7 @@ class ProviderImagesController < ApplicationController
   # PUT /provider_images/1
   # PUT /provider_images/1.json
   def update
-    @provider_image = ProviderImage.find(params[:id])
+    @provider_image = ImageManagement::ProviderImage.find(params[:id])
 
     respond_to do |format|
       if @provider_image.update_attributes(params[:provider_image])
@@ -72,7 +72,7 @@ class ProviderImagesController < ApplicationController
   # DELETE /provider_images/1
   # DELETE /provider_images/1.json
   def destroy
-    @provider_image = ProviderImage.find(params[:id])
+    @provider_image = ImageManagement::ProviderImage.find(params[:id])
     @provider_image.destroy
 
     respond_to do |format|

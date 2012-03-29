@@ -2,7 +2,7 @@ class ImageVersionsController < ApplicationController
   # GET /image_versions
   # GET /image_versions.json
   def index
-    @image_versions = ImageVersion.all
+    @image_versions = ImageManagement::ImageVersion.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class ImageVersionsController < ApplicationController
   # GET /image_versions/1
   # GET /image_versions/1.json
   def show
-    @image_version = ImageVersion.find(params[:id])
+    @image_version = ImageManagement::ImageVersion.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class ImageVersionsController < ApplicationController
   # GET /image_versions/new
   # GET /image_versions/new.json
   def new
-    @image_version = ImageVersion.new
+    @image_version = ImageManagement::ImageVersion.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +34,13 @@ class ImageVersionsController < ApplicationController
 
   # GET /image_versions/1/edit
   def edit
-    @image_version = ImageVersion.find(params[:id])
+    @image_version = ImageManagement::ImageVersion.find(params[:id])
   end
 
   # POST /image_versions
   # POST /image_versions.json
   def create
-    @image_version = ImageVersion.new(params[:image_version])
+    @image_version = ImageManagement::ImageVersion.new(params[:image_version])
 
     respond_to do |format|
       if @image_version.save
@@ -56,7 +56,7 @@ class ImageVersionsController < ApplicationController
   # PUT /image_versions/1
   # PUT /image_versions/1.json
   def update
-    @image_version = ImageVersion.find(params[:id])
+    @image_version = ImageManagement::ImageVersion.find(params[:id])
 
     respond_to do |format|
       if @image_version.update_attributes(params[:image_version])
@@ -72,7 +72,7 @@ class ImageVersionsController < ApplicationController
   # DELETE /image_versions/1
   # DELETE /image_versions/1.json
   def destroy
-    @image_version = ImageVersion.find(params[:id])
+    @image_version = ImageManagement::ImageVersion.find(params[:id])
     @image_version.destroy
 
     respond_to do |format|
