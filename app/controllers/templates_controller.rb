@@ -2,7 +2,7 @@ class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.json
   def index
-    @templates = Template.all
+    @templates = ImageManagement::Template.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class TemplatesController < ApplicationController
   # GET /templates/1
   # GET /templates/1.json
   def show
-    @template = Template.find(params[:id])
+    @template = ImageManagement::Template.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class TemplatesController < ApplicationController
   # GET /templates/new
   # GET /templates/new.json
   def new
-    @template = Template.new
+    @template = ImageManagement::Template.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +34,13 @@ class TemplatesController < ApplicationController
 
   # GET /templates/1/edit
   def edit
-    @template = Template.find(params[:id])
+    @template = ImageManagement::Template.find(params[:id])
   end
 
   # POST /templates
   # POST /templates.json
   def create
-    @template = Template.new(params[:template])
+    @template = ImageManagement::Template.new(params[:template])
 
     respond_to do |format|
       if @template.save
@@ -56,7 +56,7 @@ class TemplatesController < ApplicationController
   # PUT /templates/1
   # PUT /templates/1.json
   def update
-    @template = Template.find(params[:id])
+    @template = ImageManagement::Template.find(params[:id])
 
     respond_to do |format|
       if @template.update_attributes(params[:template])
@@ -72,7 +72,7 @@ class TemplatesController < ApplicationController
   # DELETE /templates/1
   # DELETE /templates/1.json
   def destroy
-    @template = Template.find(params[:id])
+    @template = ImageManagement::Template.find(params[:id])
     @template.destroy
 
     respond_to do |format|
