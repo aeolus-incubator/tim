@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/jguiditta/image-management-engine.git
+  revision: b979683d172699a034d633b68775733b33943423
+  specs:
+    image_management (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -94,5 +100,6 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (>= 0.4.0)
+  image_management!
   rails (= 3.0.10)
   sqlite3
