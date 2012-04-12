@@ -6,4 +6,6 @@ Rails.application.routes.draw do
     resources :provider_images
     resources :templates
   end
+
+  root :to => "image_management/base_images#index"
 end
