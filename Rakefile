@@ -7,18 +7,14 @@ rescue LoadError
 end
 
 require 'rake'
-require 'rake/rdoctask'
+require 'rdoc/task'
+require 'rspec/core/rake_task'
 
-require 'rake/testtask'
+Dir["lib/tasks/*.rake"].sort.each { |ext| load ext }
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
-end
+RSpec::Core::RakeTask.new('spec')
 
-task :default => :test
+task :default => :rspec
 
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
