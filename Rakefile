@@ -10,6 +10,8 @@ require 'rake'
 require 'rdoc/task'
 require 'rspec/core/rake_task'
 
+Dir["lib/tasks/*.rake"].each { |ext| load ext }
+
 RSpec::Core::RakeTask.new('spec')
 
 task :default => :rspec
