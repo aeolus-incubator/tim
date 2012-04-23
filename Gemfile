@@ -5,6 +5,8 @@ gem "rails", "3.0.10"
 group :development, :test do
   gem "sqlite3"
   gem "rspec-rails"
+  gem "cucumber-rails"
+  gem "database_cleaner"
 end
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
