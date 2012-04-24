@@ -5,7 +5,6 @@ class CreateTargetImages < ActiveRecord::Migration
       t.string :factory_id
       t.integer :image_version_id
       # Provider returned String for target type
-      t.string :provider_type_id
       t.string :status
       t.string :status_details
       t.timestamps
