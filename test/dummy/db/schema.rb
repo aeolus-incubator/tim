@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120326103723532623) do
+ActiveRecord::Schema.define(:version => 20120423123757262119) do
 
   create_table "base_images", :force => true do |t|
     t.integer  "environment"
@@ -18,11 +18,22 @@ ActiveRecord::Schema.define(:version => 20120326103723532623) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "pool_family_id"
   end
 
   create_table "image_versions", :force => true do |t|
     t.integer  "base_image_id"
     t.integer  "template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pool_families", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "provider_accounts", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,16 +46,22 @@ ActiveRecord::Schema.define(:version => 20120326103723532623) do
     t.boolean  "snapshot"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "provider_account_id"
+  end
+
+  create_table "provider_types", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "target_images", :force => true do |t|
     t.string   "factory_id"
     t.integer  "image_version_id"
-    t.string   "provider_type_id"
     t.string   "status"
     t.string   "status_details"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "provider_type_id"
   end
 
   create_table "templates", :force => true do |t|
