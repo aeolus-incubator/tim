@@ -4,10 +4,11 @@ class CreateTargetImages < ActiveRecord::Migration
       t.integer :id
       t.string :factory_id
       t.integer :image_version_id
-      # Provider returned String for target type
-      t.string :provider_type_id
+      t.string :target
       t.string :status
-      t.string :status_details
+      t.string :status_detail
+      t.string :progress # Factory Target Image percent_complete
+
       t.timestamps
     end
   end
