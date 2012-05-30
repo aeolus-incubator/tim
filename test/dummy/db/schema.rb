@@ -57,8 +57,10 @@ ActiveRecord::Schema.define(:version => 20120423123757262119) do
   create_table "target_images", :force => true do |t|
     t.string   "factory_id"
     t.integer  "image_version_id"
+    t.string   "target"
     t.string   "status"
-    t.string   "status_details"
+    t.string   "status_detail"
+    t.string   "progress"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "provider_type_id"

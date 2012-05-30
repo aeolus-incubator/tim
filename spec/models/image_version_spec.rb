@@ -3,6 +3,10 @@ require 'spec_helper'
 module ImageManagement
   describe ImageVersion do
     describe "Model relationships" do
+      before (:each) do
+        TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
+      end
+
       it 'should have one base image' do
         image_version = ImageVersion.new
         image_version.base_image = BaseImage.new
