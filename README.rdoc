@@ -1,1 +1,14 @@
 = ImageManagement
+
+= Running Tests
+
+Tests are run from the project root directory.  But are run in the context of the dummy app located under test/dummy.  In order to run the tests you must first setup dummy app database.
+
+cd test/dummy; rake db:setup; rake test:prepare
+
+Once you have done this cd to the project root and run the following:
+
+rake spec
+rake cucumber
+
+
