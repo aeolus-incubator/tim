@@ -5,7 +5,9 @@ module ImageManagement
 
     before_save :create_factory_target_image
 
-    attr_accessible :target
+    attr_accessible :target, :image_version
+
+    accepts_nested_attributes_for :image_version, :class_name => "ImageManagement::ImageVersion"
 
     def template
       image_version.base_image.template
@@ -14,11 +16,11 @@ module ImageManagement
     private
     def create_factory_target_image
       begin
-        target_image = ImageFactory::TargetImage.create(:template => template.to_xml,
+        target_image = ImageFactory::TargetImage.create(:template => template.xml,
                                                         :target => target)
         populate_factory_fields(target_image)
-      # TODO Add in proper exception handling
       rescue => e
+        # TODO Add proper error handling
         raise e
       end
     end

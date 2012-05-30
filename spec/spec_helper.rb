@@ -5,8 +5,8 @@ require File.expand_path("../../lib/image_factory/image_factory.rb",  __FILE__)
 require 'rspec/rails'
 require 'factory_girl'
 
-Dir.glob(File.dirname(__FILE__) + "/factories/*/*").each do |factory|
-  require factory
+Dir.glob(File.join(File.dirname(__FILE__) + "/factories/", "**", "*.rb")).each do |file|
+  require file
 end
 
 RSpec.configure do |config|
