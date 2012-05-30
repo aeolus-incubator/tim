@@ -1,3 +1,4 @@
+@wip
 Feature: Manage Images API
 As a client of the conductor management API
 In order to manage the full life cycle of images in the system
