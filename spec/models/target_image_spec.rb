@@ -49,7 +49,9 @@ module ImageManagement
         end
 
         it "should create new target image with factory meta-data" do
-          ti = Factory.create(:target_image)
+          ti = Factory.build(:target_image)
+          ti.stub(:template).and_return(Factory(:template))
+          ti.save
 
           ti.factory_id.should == "4cc3b024-5fe7-4b0b-934b-c5d463b990b0"
           ti.status.should == "NEW"

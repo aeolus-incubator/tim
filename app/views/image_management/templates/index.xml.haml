@@ -1,0 +1,4 @@
+!!! XML
+%templates
+  - @templates.each do |template|
+    = render :partial => 'template', :locals => {:template => template}

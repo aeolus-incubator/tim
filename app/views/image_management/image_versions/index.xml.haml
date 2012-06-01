@@ -1,0 +1,4 @@
+!!! XML
+%image_versions
+  - @image_versions.each do |image_version|
+    = render :partial => 'image_version_minimal', :locals => {:image_version => image_version}

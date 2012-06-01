@@ -1,0 +1,4 @@
+!!! XML
+%base_images
+  - @base_images.each do |base_image|
+    = render :partial => 'base_image_minimal', :locals => {:base_image => base_image}
