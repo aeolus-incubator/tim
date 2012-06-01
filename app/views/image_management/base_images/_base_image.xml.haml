@@ -1,0 +1,4 @@
+!!! XML
+%base_image{:id => base_image.id, :href => image_management_base_image_url(base_image.id) }
+  - if base_image.template
+    = render :partial => 'image_management/templates/template_minimal', :locals => {:template => base_image.template}

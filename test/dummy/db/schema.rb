@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20120423123757262119) do
   end
 
   create_table "templates", :force => true do |t|
-    t.string   "location"
+    t.string   "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
