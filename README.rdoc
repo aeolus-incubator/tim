@@ -36,3 +36,22 @@ Response
     <name>MyFirstBaseImage</name>
     <description>This is my very first base image</description>
   </base_image>
+
+==== Show Base Image
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/base_images/1
+
+Response
+
+  Code: 201
+
+  Body:
+
+  <base_image href='http://localhost:3000/base_images/1' id='1'>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+    <image_versions>
+    </image_versions>
+  </base_image>
