@@ -45,7 +45,7 @@ Request
 
 Response
 
-  Code: 201
+  Code: 200
 
   Body:
 
@@ -55,3 +55,21 @@ Response
     <image_versions>
     </image_versions>
   </base_image>
+
+==== List Base Images
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/base_images
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <base_images>
+    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+    <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
+    <base_image href='http://localhost:3000/base_images/3' id='3'></base_image>
+  </base_images>

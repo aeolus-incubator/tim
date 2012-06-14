@@ -88,6 +88,23 @@ module ImageManagement
           end
         end
       end
+
+      describe "List Base Images" do
+        context "Success" do
+          it "should return a list of existing base images as XML" do
+            3.times do
+              Factory.create(:base_image)
+            end
+
+            get :index
+
+            body = Hash.from_xml(response.body)
+            body.keys.should  == ["base_images"]
+            body["base_images"]["base_image"].first.keys.should =~ ["id", "href"]
+            response.code.should == "200"
+          end
+        end
+      end
     end
   end
 end
