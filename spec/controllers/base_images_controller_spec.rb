@@ -26,7 +26,7 @@ module ImageManagement
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["base_image"]
-            body["base_image"].keys.should =~ ["template", "id", "href"]
+            body["base_image"].keys.should =~ ["template", "id", "href", "name", "description"]
             body["base_image"]["template"].keys.should =~ ["id", "href"]
           end
         end
