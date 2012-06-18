@@ -73,3 +73,15 @@ Response
     <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
     <base_image href='http://localhost:3000/base_images/3' id='3'></base_image>
   </base_images>
+
+==== Delete Base Image
+
+Request
+
+  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/base_images/1
+
+Response
+
+  Code: 204
+
+  Body:
