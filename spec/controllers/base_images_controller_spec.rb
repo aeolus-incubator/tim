@@ -105,6 +105,25 @@ module ImageManagement
           end
         end
       end
+
+      describe "List Delete Image" do
+        context "Success" do
+          it "should return a no content code when deleting an image" do
+            base_image = Factory(:base_image)
+            delete :destroy, :id => base_image.id
+            response.code.should == "204"
+
+            expect { BaseImage.find(base_image.id) }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+
+        context "Failure" do
+          it "should return a not found code when deleting an image that does not exist" do
+            delete :destroy, :id => -1
+            response.code.should == "404"
+          end
+        end
+      end
     end
   end
 end
