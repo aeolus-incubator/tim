@@ -1,4 +1,9 @@
 !!! XML
 %base_image{:id => base_image.id, :href => image_management_base_image_url(base_image.id) }
+  %name= base_image.name
+  %description= base_image.description
   - if base_image.template
     = render :partial => 'image_management/templates/template_minimal', :locals => {:template => base_image.template}
+  %image_versions
+    - base_image.image_versions.each do |image_version|
+      = render :partial => 'image_management/image_versions/image_version_minimal', :locals => {:image_version => image_version}

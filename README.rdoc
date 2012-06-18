@@ -1,6 +1,6 @@
 = ImageManagement
 
-= Running Tests
+== Running Tests
 
 Tests are run from the project root directory.  But are run in the context of the dummy app located under test/dummy.  In order to run the tests you must first setup dummy app database.
 
@@ -11,4 +11,77 @@ Once you have done this cd to the project root and run the following:
 rake spec
 rake cucumber
 
+== API Reference
 
+=== Base Images
+
+==== Create Base Image
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/base_images --data \
+  "<base_image>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+  </base_image>"
+
+Response
+
+  Code: 201
+
+  Body:
+
+  <base_image href='http://localhost:3000/base_images/1' id='1'>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+  </base_image>
+
+==== Show Base Image
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/base_images/1
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <base_image href='http://localhost:3000/base_images/1' id='1'>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+    <image_versions>
+    </image_versions>
+  </base_image>
+
+==== List Base Images
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/base_images
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <base_images>
+    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+    <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
+    <base_image href='http://localhost:3000/base_images/3' id='3'></base_image>
+  </base_images>
+
+==== Delete Base Image
+
+Request
+
+  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/base_images/1
+
+Response
+
+  Code: 204
+
+  Body:
