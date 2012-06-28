@@ -85,3 +85,99 @@ Response
   Code: 204
 
   Body:
+
+=== Image Versions
+
+==== Create Image Version
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/image_versions --data \
+  "<image_version>
+    <base_image id='1'></base_image>
+  </image_version>"
+
+Response
+
+  Code: 201
+
+  Body:
+
+  <image_version href='http://localhost:3000/image_versions/5' id='5'>
+    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+    <target_images>
+    </target_images>
+  </image_version>
+
+==== Show Image Version
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/image_versions/1
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <image_version href='http://localhost:3000/image_versions/1' id='1'>
+    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+    <target_images>
+    </target_images>
+  </image_version>
+
+==== List Image Versions
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/image_versions
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <image_versions>
+    <image_version href='http://localhost:3000/image_versions/1' id='1'></image_version>
+    <image_version href='http://localhost:3000/image_versions/2' id='2'></image_version>
+    <image_version href='http://localhost:3000/image_versions/3' id='3'></image_version>
+  </image_versions>
+
+==== Delete Image Version
+
+Request
+
+  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/image_versions/1
+
+Response
+
+  Code: 204
+
+  Body:
+
+==== Update Image Version
+
+Request
+
+  curl -X PUT --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/image_versions/1 --data \
+  "<image_version>
+    <base_image id='2'></base_image>
+  </image_version>"
+
+Response
+
+  Code: 200
+
+  body:
+
+  <image_version href='http://localhost:3000/image_versions/1' id='1'>
+    <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
+    <target_images>
+    </target_images>
+  </image_version>
+
+
