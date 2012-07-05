@@ -1,6 +1,6 @@
 = ImageManagement
 
-= Running Tests
+== Running Tests
 
 Tests are run from the project root directory.  But are run in the context of the dummy app located under test/dummy.  In order to run the tests you must first setup dummy app database.
 
@@ -11,4 +11,262 @@ Once you have done this cd to the project root and run the following:
 rake spec
 rake cucumber
 
+== API Reference
+
+=== Base Images
+
+==== Create Base Image
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/base_images --data \
+  "<base_image>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+  </base_image>"
+
+Response
+
+  Code: 201
+
+  Body:
+
+  <base_image href='http://localhost:3000/base_images/1' id='1'>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+  </base_image>
+
+==== Show Base Image
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/base_images/1
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <base_image href='http://localhost:3000/base_images/1' id='1'>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+    <image_versions>
+    </image_versions>
+  </base_image>
+
+==== List Base Images
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/base_images
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <base_images>
+    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+    <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
+    <base_image href='http://localhost:3000/base_images/3' id='3'></base_image>
+  </base_images>
+
+==== Delete Base Image
+
+Request
+
+  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/base_images/1
+
+Response
+
+  Code: 204
+
+  Body:
+
+=== Image Versions
+
+==== Create Image Version
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/image_versions --data \
+  "<image_version>
+    <base_image id='1'></base_image>
+  </image_version>"
+
+Response
+
+  Code: 201
+
+  Body:
+
+  <image_version href='http://localhost:3000/image_versions/5' id='5'>
+    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+    <target_images>
+    </target_images>
+  </image_version>
+
+==== Show Image Version
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/image_versions/1
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <image_version href='http://localhost:3000/image_versions/1' id='1'>
+    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+    <target_images>
+    </target_images>
+  </image_version>
+
+==== List Image Versions
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/image_versions
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <image_versions>
+    <image_version href='http://localhost:3000/image_versions/1' id='1'></image_version>
+    <image_version href='http://localhost:3000/image_versions/2' id='2'></image_version>
+    <image_version href='http://localhost:3000/image_versions/3' id='3'></image_version>
+  </image_versions>
+
+==== Delete Image Version
+
+Request
+
+  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/image_versions/1
+
+Response
+
+  Code: 204
+
+  Body:
+
+==== Update Image Version
+
+Request
+
+  curl -X PUT --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/image_versions/1 --data \
+  "<image_version>
+    <base_image id='2'></base_image>
+  </image_version>"
+
+Response
+
+  Code: 200
+
+  body:
+
+  <image_version href='http://localhost:3000/image_versions/1' id='1'>
+    <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
+    <target_images>
+    </target_images>
+  </image_version>
+
+==== Create Target Image
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/target_images --data \
+  "<target_image>
+    <image_version id='2' />
+  </target_image>"
+
+Response
+
+  Code: 201
+
+  Body:
+
+<target_image href='http://localhost:3000/target_images/1' id='1'>
+  <target>EC2</target>
+  <status>BUILDING</status>
+  <status_detail></status_detail>
+  <progress>0</progress>
+  <image_version href='http://localhost:3000/image_versions/2' id='2'></image_version>
+  <provider_images></provider_images>
+</target_image>
+
+==== Show Target Image
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/target_images/1
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <target_image href='http://localhost:3000/target_images/1' id='1'>
+    <target>EC2</target>
+    <status>COMPLETE</status>
+    <status_detail></status_detail>
+    <progress>100</progress>
+    <image_version href='http://localhost:3000/image_versions/2' id='2'></image_version>
+    <provider_images></provider_images>
+  </target_image>
+
+==== List Target Image
+
+Request
+
+  curl --header "Accept: application/xml" http://localhost:3000/target_images
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <target_images>
+    <target_image href='http://localhost:3000/target_images/1' id='1'></target_image>
+    <target_image href='http://localhost:3000/target_images/2' id='2'></target_image>
+    <target_image href='http://localhost:3000/target_images/3' id='3'></target_image>
+  </target_images>
+
+==== Delete Target Image
+
+Request
+
+  curl -X DELETE --header "Accept: application/xml" http://localhost:3000/target_images/1
+
+Response
+
+  Code: 204
+
+  Body:
+
+==== Update Target Image
+
+Request
+
+  curl -X PUT --header "Accept: application/xml" --header \
+  "Content-Type: application/xml" http://localhost:3000/target_images/2 --data \
+  "<target_image>
+    <image_version id='3'></image_version>
+  </target_image>"
+
+Response
+
+  Code: 204
 

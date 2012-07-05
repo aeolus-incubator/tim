@@ -13,7 +13,8 @@
 ActiveRecord::Schema.define(:version => 20120423123757262119) do
 
   create_table "base_images", :force => true do |t|
-    t.integer  "environment"
+    t.string   "name"
+    t.string   "description"
     t.integer  "template_id"
     t.datetime "created_at"
     t.datetime "updated_at"

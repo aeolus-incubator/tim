@@ -5,7 +5,7 @@ module ImageManagement
 
     before_save :create_factory_target_image
 
-    attr_accessible :target, :image_version
+    attr_accessible :target, :image_version_id
 
     accepts_nested_attributes_for :image_version, :class_name => "ImageManagement::ImageVersion"
 
