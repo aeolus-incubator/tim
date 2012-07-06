@@ -42,7 +42,16 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          @target_image = ImageManagement::TargetImage.new(params[:target_image])
+          # We check for base image manually, a restriction caused by the
+          # ActiveRecord::Base Patch 
+          # TODO Remove when modules are supported in ActiveRecord
+          if params[:target_image][:image_version] && params[:target_image][:image_version][:id]
+            image_version = ImageManagement::ImageVersion.find(params[:target_image].delete(:image_version)[:id])
+            @target_image = ImageManagement::TargetImage.new(params[:target_image])
+            @target_image.image_version = image_version
+          else
+            @target_image = ImageManagement::TargetImage.new(params[:target_image])
+          end
 
           if @target_image.save
             format.html { redirect_to image_management_target_image_path(@target_image), :notice => 'Image version was successfully created.' }
@@ -51,10 +60,14 @@ module ImageManagement
             format.html { render :action => "new" }
             format.xml { render :xml => @target_image.errors, :status => :unprocessable_entity }
           end
-        # TODO Add in proper exception handling in appliation controller
+        # TODO Add in proper exception handling in application controller
         rescue => e
-          format.html { render :action => "new" }
-          format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          if e.instance_of? ActiveRecord::RecordNotFound
+            raise e
+          else
+            format.html { render :action => "new" }
+            format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          end
         end
       end
     end
@@ -66,15 +79,27 @@ module ImageManagement
         begin
           @target_image = ImageManagement::TargetImage.find(params[:id])
 
-          if @target_image.update_attributes(params[:target_image])
+          # We check for base image manually, a restriction caused by the
+          # ActiveRecord::Base Patch 
+          # TODO Remove when modules are supported in ActiveRecord
+          if params[:target_image][:image_version] && params[:target_image][:image_version][:id]
+            image_version = ImageVersion.find(params[:target_image].delete(:image_version)[:id])
+            @target_image.attributes = params[:target_image]
+            @target_image.image_version = image_version
+          else
+            @target_image.attributes = params[:target_image]
+          end
+
+          if @target_image.save
             format.html { redirect_to @target_image, :notice => 'Target image was successfully updated.' }
-            format.xml { head :no_content }
+            format.xml { render :action => "show" }
           else
             format.html { render :action => "edit" }
             format.xml { render :xml => @target_image.errors, :status => :unprocessable_entity }
           end
         # TODO Add in proper exception handling in appliation controller
         rescue => e
+          raise e if e.instance_of? ActiveRecord::RecordNotFound
           format.html { render :action => "new" }
           format.xml { render :xml => e.message, :status => :unprocessable_entity }
         end
