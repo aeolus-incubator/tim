@@ -42,9 +42,12 @@ ActiveRecord::Schema.define(:version => 20120423123757262119) do
   create_table "provider_images", :force => true do |t|
     t.string   "factory_id"
     t.integer  "target_image_id"
-    t.integer  "provider_account"
+    t.string   "provider"
     t.string   "external_image_id"
     t.boolean  "snapshot"
+    t.string   "status"
+    t.string   "status_detail"
+    t.string   "progress"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "provider_account_id"
