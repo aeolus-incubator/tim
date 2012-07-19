@@ -4,11 +4,14 @@ class CreateProviderImages < ActiveRecord::Migration
       t.integer :id
       t.string :factory_id
       t.integer :target_image_id
-      t.integer :provider_account
+      t.string :provider
       # The Cloud Specific ID. i.e. ami-12345678
       t.string :external_image_id
       t.boolean :snapshot
 
+      t.string :status
+      t.string :status_detail
+      t.string :progress # Factory Target Image percent_complete
       t.timestamps
     end
   end

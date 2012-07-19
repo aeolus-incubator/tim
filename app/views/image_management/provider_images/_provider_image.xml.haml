@@ -1,0 +1,10 @@
+!!! XML
+%provider_image{:id => provider_image.id, :href => image_management_provider_image_url(provider_image.id) }
+  %provider= provider_image.provider
+  %external_image_id= provider_image.external_image_id
+  %snapshot= provider_image.snapshot
+  %status= provider_image.status
+  %status_detail= provider_image.status_detail
+  %progress= provider_image.progress
+  - if true#provider_image.target_image
+    = render :partial => 'image_management/target_images/target_image_minimal', :locals => {:target_image => provider_image.target_image}
