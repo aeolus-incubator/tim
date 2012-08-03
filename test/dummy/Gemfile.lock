@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/jguiditta/image-management-engine.git
-  revision: b979683d172699a034d633b68775733b33943423
+  remote: git://github.com/aeolus-incubator/image-management-engine.git
+  revision: f3350c118d7156aee9761a8a31658edf857128fe
   specs:
     image_management (0.0.1)
 
