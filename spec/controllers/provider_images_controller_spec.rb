@@ -9,6 +9,7 @@ module ImageManagement
         send_and_accept_xml
         TargetImage.any_instance.stub(:template).and_return(Factory(:template))
         ProviderImage.any_instance.stub(:create_factory_provider_image).and_return(true)
+        TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
         @status_detail = mock(:status)
         @status_detail.stub(:activity).and_return("Building")
         ImageFactory::TargetImage.stub(:create).and_return(Factory.build(:image_factory_target_image, :status_detail => @status_detail))

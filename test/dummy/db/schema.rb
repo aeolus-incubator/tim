@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120423123757262119) do
+ActiveRecord::Schema.define(:version => 20120423123730262118) do
 
   create_table "base_images", :force => true do |t|
     t.string   "name"
@@ -44,13 +44,13 @@ ActiveRecord::Schema.define(:version => 20120423123757262119) do
     t.integer  "target_image_id"
     t.string   "provider"
     t.string   "external_image_id"
+    t.string   "provider_account_id"
     t.boolean  "snapshot"
     t.string   "status"
     t.string   "status_detail"
     t.string   "progress"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "provider_account_id"
   end
 
   create_table "provider_types", :force => true do |t|

@@ -1,0 +1,13 @@
+<template>
+  <name>mock</name>
+  <description>Mock Template</description>
+  <os>
+    <name>RHELMock</name>
+    <version>1</version>
+    <arch>x86_64</arch>
+    <install type=\"iso\">
+      <iso>http://mockhost/RHELMock1-x86_64-DVD.iso</iso>
+    </install>
+    <rootpw>password</rootpw>
+  </os>
+</template>
