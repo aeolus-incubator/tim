@@ -17,6 +17,7 @@ module ImageManagement
       it 'should have many provider images' do
         target_image = TargetImage.new
         target_image.stub(:create_factory_target_image).and_return(true)
+        ProviderImage.any_instance.stub(:create_factory_provider_image).and_return(true)
         2.times do
           target_image.provider_images << ProviderImage.new
         end
