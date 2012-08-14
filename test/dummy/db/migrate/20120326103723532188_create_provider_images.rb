@@ -7,6 +7,7 @@ class CreateProviderImages < ActiveRecord::Migration
       t.string :provider
       # The Cloud Specific ID. i.e. ami-12345678
       t.string :external_image_id
+      t.string :provider_account_id
       t.boolean :snapshot
 
       t.string :status

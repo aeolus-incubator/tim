@@ -3,7 +3,7 @@ module ImageManagement
     belongs_to :image_version
     has_many :provider_images
 
-    before_save :create_factory_target_image
+    after_create :create_factory_target_image
 
     attr_accessible :target, :image_version_id
 
@@ -28,8 +28,8 @@ module ImageManagement
     def populate_factory_fields(factory_target_image)
       self.status = factory_target_image.status
       self.factory_id = factory_target_image.id
-      self.status_detail = factory_target_image.status_detail
-      self.progress = factory_target_image.percentage_complete
+      self.status_detail = factory_target_image.status_detail.activity
+      self.progress = factory_target_image.percent_complete
     end
   end
 end

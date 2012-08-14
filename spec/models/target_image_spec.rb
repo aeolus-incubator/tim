@@ -17,6 +17,7 @@ module ImageManagement
       it 'should have many provider images' do
         target_image = TargetImage.new
         target_image.stub(:create_factory_target_image).and_return(true)
+        ProviderImage.any_instance.stub(:create_factory_provider_image).and_return(true)
         2.times do
           target_image.provider_images << ProviderImage.new
         end
@@ -38,25 +39,28 @@ module ImageManagement
     describe "ImageFactory interactions" do
       describe "Successful Requests" do
         before(:each) do
-          @mock_fti = {:id => "4cc3b024-5fe7-4b0b-934b-c5d463b990b0",
+          @status_detail_fti = {:id => "4cc3b024-5fe7-4b0b-934b-c5d463b990b0",
                        :status => "NEW",
                        :status_detail => "",
                        :percentage_complete => 0}
 
           ActiveResource::HttpMock.respond_to do |mock|
-            mock.post("/imagefactory/target_images", {}, @mock_fti.to_json, 201, {})
+            mock.post("/imagefactory/target_images", {}, @status_detail_fti.to_json, 201, {})
           end
         end
 
         it "should create new target image with factory meta-data" do
+          @status_detail = mock(:status_detail)
+          @status_detail.stub(:activity).and_return("Building")
+          ImageFactory::TargetImage.stub(:create).and_return(Factory.build(:image_factory_target_image, :status_detail => @status_detail))
           ti = Factory.build(:target_image)
           ti.stub(:template).and_return(Factory(:template))
           ti.save
 
           ti.factory_id.should == "4cc3b024-5fe7-4b0b-934b-c5d463b990b0"
           ti.status.should == "NEW"
-          ti.status_detail.should == ""
-          ti.progress.should == 0
+          ti.status_detail.should == "Building"
+          ti.progress.should == "0"
         end
       end
     end
