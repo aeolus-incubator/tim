@@ -3,7 +3,7 @@ module ImageManagement
     belongs_to :target_image
 
     # TODO Should this be before create (Do we require retries)
-    after_create :create_factory_provider_image
+    before_create :create_factory_provider_image
 
     attr_writer :credentials
     accepts_nested_attributes_for :target_image, :class_name => "ImageManagement::TargetImage"

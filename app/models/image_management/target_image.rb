@@ -3,7 +3,7 @@ module ImageManagement
     belongs_to :image_version
     has_many :provider_images
 
-    after_create :create_factory_target_image
+    before_create :create_factory_target_image
 
     attr_accessible :target, :image_version_id
 
