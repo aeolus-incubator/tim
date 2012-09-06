@@ -40,6 +40,10 @@ module RequestContentTypeHelper
     @request.env["CONTENT_TYPE"] = "application/xml"
   end
 
+  def send_and_accept_json
+    @request.env["HTTP_ACCEPT"] = "application/json"
+    @request.env["CONTENT_TYPE"] = "application/json"
+  end
 end
 
 include RequestContentTypeHelper

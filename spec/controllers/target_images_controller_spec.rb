@@ -129,6 +129,24 @@ module ImageManagement
         end
       end
 
+      describe "Update Target Image via factory callback" do
+        before(:each) do
+          send_and_accept_json
+        end
+
+        it "should update target image status attributes via json" do
+          target_image = Factory(:target_image_with_full_tree)
+          factory_attributes = {:percent_complete => "100", :status_detail => {:activity => "Building Image"} }
+          hash = target_image.attributes.merge(factory_attributes)
+          post :update, :id => target_image.id, :target_image => hash
+          response.code.should == "200"
+
+          body = JSON.parse(response.body)
+          body.keys.should  == ["target_image"]
+          body["target_image"]["status_detail"].should == "Building Image"
+          body["target_image"]["progress"].should == "100"
+        end
+      end
     end
   end
 end
