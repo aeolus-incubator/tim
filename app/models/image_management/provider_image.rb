@@ -2,22 +2,32 @@ module ImageManagement
   class ProviderImage < ActiveRecord::Base
     belongs_to :target_image
 
-    # TODO Should this be before create (Do we require retries)
-    before_create :create_factory_provider_image
+    after_create :create_factory_provider_image
 
     attr_writer :credentials
+
+    attr_accessible :provider, :target_image_id
+
     accepts_nested_attributes_for :target_image, :class_name => "ImageManagement::TargetImage"
 
     def create_factory_provider_image
       begin
-        provider_image = ImageFactory::ProviderImage.create(:target_image_id => self.target_image.factory_id,
-                                                            :provider => self.provider,
-                                                            :credentials => @credentials,
-                                                            # TODO Remove this when upgrading to 3.2
-                                                            # target conflicts with rails 3.0.10
-                                                            # ActiveRecord::Associations::Association#target
-                                                            :target => target_image.target.target)
+        provider_image = ImageFactory::ProviderImage.new(:target_image_id => self.target_image.factory_id,
+                                                         :provider => self.provider,
+                                                         :credentials => @credentials,
+                                                          # TODO Remove this when upgrading to 3.2
+                                                          # target conflicts with rails 3.0.10
+                                                          # ActiveRecord::Associations::Association#target
+                                                          :target => target_image.target.target,
+                                                          :parameters => "")
+        # TODO There is a bug in ARes 3.0.10 that will add map name twice when setting in mass assign.  So we set
+        # parameters separately.
+        # Setting parameters at mass assign results in json => {"target_image":"parameters":{"parameters":{"..."}}}"
+        # This should be tested and removed if fixed in 3.2
+        provider_image.parameters = { :callbacks => ["#{ImageFactory::ProviderImage.callback_url}/#{self.id}"] }
+        provider_image.save!
         populate_factory_fields(provider_image)
+        self.save
       rescue => e
         # TODO Add proper error handling
         raise e

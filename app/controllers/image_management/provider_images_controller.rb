@@ -79,29 +79,37 @@ module ImageManagement
         begin
           @provider_image = ImageManagement::ProviderImage.find(params[:id])
 
+          # Check for factory params.  Modify param names.
+          if params[:provider_image][:percent_complete] && params[:provider_image][:status_detail][:activity]
+            @provider_image.progress = params[:provider_image].delete(:percent_complete)
+            @provider_image.status_detail = params[:provider_image].delete(:status_detail)[:activity]
+            @provider_image.status = params[:provider_image].delete(:status)
+          end
+
           # We check for base image manually, a restriction caused by the
           # ActiveRecord::Base Patch 
           # TODO Remove when modules are supported in ActiveRecord
           if params[:provider_image][:target_image] && params[:provider_image][:target_image][:id]
             target_image = ImageManagement::TargetImage.find(params[:provider_image].delete(:target_image)[:id])
-            @provider_image.attributes = params[:provider_image]
             @provider_image.target_image = target_image
-          else
-            @provider_image.attributes = params[:provider_image]
           end
 
+          @provider_image.update_attributes(params[:provider_image])
           if @provider_image.save
             format.html { redirect_to @provider_image, :notice => 'Provider image was successfully updated.' }
             format.xml { render :action => "show" }
+            format.json { render :json => @provider_image }
           else
             format.html { render :action => "edit" }
             format.xml { render :xml => @provider_image.errors, :status => :unprocessable_entity }
+            format.json { render :json => @provider_image.errors, :status => :unprocessable_entity }
           end
         # TODO Add in proper exception handling in appliation controller
         rescue => e
           raise e if e.instance_of? ActiveRecord::RecordNotFound
           format.html { render :action => "new" }
           format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          format.json { render :json => e.message, :status => :unprocessable_entity }
         end
       end
     end
