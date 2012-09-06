@@ -114,7 +114,7 @@ module ImageManagement
             body = Hash.from_xml(response.body)
             body.keys.should  == ["provider_image"]
 
-            ProviderImage.find(provider_image.id).target_image .should == provider_image.target_image 
+            ProviderImage.find(provider_image.id).target_image.should == provider_image.target_image
           end
         end
 
@@ -132,6 +132,24 @@ module ImageManagement
         end
       end
 
+      describe "Update Target Image via factory callback" do
+        before(:each) do
+          send_and_accept_json
+        end
+
+        it "should update provider image status attributes via json" do
+          provider_image = Factory(:provider_image_with_full_tree)
+          factory_attributes = {:percent_complete => "100", "status_detail" => {:activity => "Building Image"} }
+          hash = provider_image.attributes.merge(factory_attributes)
+          post :update, :id => provider_image.id, :provider_image => hash
+          response.code.should == "200"
+
+          body = JSON.parse(response.body)
+          body.keys.should  == ["provider_image"]
+          body["provider_image"]["status_detail"].should == "Building Image"
+          body["provider_image"]["progress"].should == "100"
+        end
+      end
     end
   end
 end

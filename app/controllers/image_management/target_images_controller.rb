@@ -79,29 +79,37 @@ module ImageManagement
         begin
           @target_image = ImageManagement::TargetImage.find(params[:id])
 
+          # Check for factory params.  Modify param names.
+          if params[:target_image][:percent_complete] && params[:target_image][:status_detail][:activity]
+            @target_image.progress = params[:target_image].delete(:percent_complete)
+            @target_image.status_detail = params[:target_image][:status_detail].delete(:activity)
+            @target_image.status = params[:target_image].delete(:status)
+          end
+
           # We check for base image manually, a restriction caused by the
           # ActiveRecord::Base Patch 
           # TODO Remove when modules are supported in ActiveRecord
           if params[:target_image][:image_version] && params[:target_image][:image_version][:id]
             image_version = ImageVersion.find(params[:target_image].delete(:image_version)[:id])
-            @target_image.attributes = params[:target_image]
             @target_image.image_version = image_version
-          else
-            @target_image.attributes = params[:target_image]
           end
 
+          @target_image.attributes = params[:target_image]
           if @target_image.save
             format.html { redirect_to @target_image, :notice => 'Target image was successfully updated.' }
             format.xml { render :action => "show" }
+            format.json { render :json => @target_image }
           else
             format.html { render :action => "edit" }
             format.xml { render :xml => @target_image.errors, :status => :unprocessable_entity }
+            format.json { render :json => @target_image.errors, :status => :unprocessable_entity }
           end
         # TODO Add in proper exception handling in appliation controller
         rescue => e
           raise e if e.instance_of? ActiveRecord::RecordNotFound
           format.html { render :action => "new" }
           format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          format.json { render :json => @target_image.errors, :status => :unprocessable_entity }
         end
       end
     end

@@ -1,3 +1,5 @@
+require "uri"
+
 module ImageManagement
   module ImageFactory
     class Base < ActiveResource::Base
@@ -6,6 +8,15 @@ module ImageManagement
       self.ssl_options = {:verify_mode  => OpenSSL::SSL::VERIFY_NONE}
 
       class << self
+        # Add Callback URL for listening to callback requests
+        def callback_url=(url)
+          @callback_url = URI.parse(url)
+        end
+
+        def callback_url
+          @callback_url
+        end
+
         ## Remove format from the url for resources
         def element_path(id, prefix_options = {}, query_options = nil)
           prefix_options, query_options = split_options(prefix_options) if query_options.nil?
