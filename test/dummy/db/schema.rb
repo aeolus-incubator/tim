@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,36 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120423123730262118) do
+ActiveRecord::Schema.define(:version => 20120423123114264114) do
 
-  create_table "base_images", :force => true do |t|
+  create_table "image_management_base_images", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "template_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "pool_family_id"
   end
 
-  create_table "image_versions", :force => true do |t|
+  create_table "image_management_image_versions", :force => true do |t|
     t.integer  "base_image_id"
     t.integer  "template_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
-  create_table "pool_families", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "provider_accounts", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "provider_images", :force => true do |t|
+  create_table "image_management_provider_images", :force => true do |t|
     t.string   "factory_id"
     t.integer  "target_image_id"
     t.string   "provider"
@@ -49,37 +40,47 @@ ActiveRecord::Schema.define(:version => 20120423123730262118) do
     t.string   "status"
     t.string   "status_detail"
     t.string   "progress"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
-  create_table "provider_types", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "target_images", :force => true do |t|
+  create_table "image_management_target_images", :force => true do |t|
     t.string   "factory_id"
     t.integer  "image_version_id"
     t.string   "target"
     t.string   "status"
     t.string   "status_detail"
     t.string   "progress"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "provider_type_id"
   end
 
-  create_table "templates", :force => true do |t|
-    t.string   "xml"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "image_management_templates", :force => true do |t|
+    t.text     "xml"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "pool_families", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "provider_accounts", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "provider_types", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

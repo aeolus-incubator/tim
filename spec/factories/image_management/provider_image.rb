@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :provider_image, :class => ImageManagement::ProviderImage do
+  factory :provider_image do
     association :target_image, :factory => :target_image
   end
 

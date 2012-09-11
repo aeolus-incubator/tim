@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :base_image, :class => ImageManagement::BaseImage do
+  factory :base_image do
     name "test base image"
     description "description of test image"
   end
