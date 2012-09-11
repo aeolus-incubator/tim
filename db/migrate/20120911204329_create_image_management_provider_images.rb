@@ -1,6 +1,6 @@
-class CreateProviderImages < ActiveRecord::Migration
-  def self.up
-    create_table :provider_images do |t|
+class CreateImageManagementProviderImages < ActiveRecord::Migration
+  def change
+    create_table :image_management_provider_images do |t|
       t.integer :id
       t.string :factory_id
       t.integer :target_image_id
@@ -15,9 +15,5 @@ class CreateProviderImages < ActiveRecord::Migration
       t.string :progress # Factory Target Image percent_complete
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :provider_images
   end
 end

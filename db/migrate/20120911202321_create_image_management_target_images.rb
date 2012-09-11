@@ -1,7 +1,6 @@
-class CreateTargetImages < ActiveRecord::Migration
-  def self.up
-    create_table :target_images do |t|
-      t.integer :id
+class CreateImageManagementTargetImages < ActiveRecord::Migration
+  def change
+    create_table :image_management_target_images do |t|
       t.string :factory_id
       t.integer :image_version_id
       t.string :target
@@ -11,9 +10,5 @@ class CreateTargetImages < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :target_images
   end
 end
