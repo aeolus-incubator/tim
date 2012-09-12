@@ -8,7 +8,7 @@ module ImageManagement
 
     attr_accessible :provider, :target_image_id
 
-    accepts_nested_attributes_for :target_image, :class_name => "ImageManagement::TargetImage"
+    accepts_nested_attributes_for :target_image
 
     def create_factory_provider_image
       begin

@@ -52,9 +52,9 @@ module ImageManagement
         it "should create new target image with factory meta-data" do
           @status_detail = mock(:status_detail)
           @status_detail.stub(:activity).and_return("Building")
-          ImageFactory::TargetImage.stub(:create).and_return(Factory.build(:image_factory_target_image, :status_detail => @status_detail))
-          ti = Factory.build(:target_image)
-          ti.stub(:template).and_return(Factory(:template))
+          ImageFactory::TargetImage.stub(:create).and_return(FactoryGirl.build(:image_factory_target_image, :status_detail => @status_detail))
+          ti = FactoryGirl.build(:target_image)
+          ti.stub(:template).and_return(FactoryGirl.build(:template))
           ti.save
 
           ti.factory_id.should == "4cc3b024-5fe7-4b0b-934b-c5d463b990b0"
