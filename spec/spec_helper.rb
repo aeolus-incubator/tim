@@ -12,6 +12,9 @@ end
 RSpec.configure do |config|
   config.color_enabled = true
   config.formatter     = 'documentation'
+
+  # Include Engine routes (needed for Controller specs)
+  #config.include ImageManagement::Engine.routes.url_helpers
 end
 
 # Override to_xml to use underscore rather than dash

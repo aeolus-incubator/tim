@@ -7,7 +7,7 @@ module ActiveRecord
       describe "create" do
         it "should allow mass assigment of attributes with one to one relationship" do
           template_xml = "<template></template>"
-          b = ImageManagement::BaseImage.create({:template => {:xml => template_xml}})
+          b = ImageManagement::BaseImage.create({:template => {:xml => template_xml}}, :as => :admin)
           b.new_record?.should == false
           b.template.xml.should == template_xml
         end

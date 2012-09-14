@@ -11,7 +11,7 @@ module ImageManagement
         image_version = ImageVersion.new
         image_version.base_image = BaseImage.new
         image_version.save!
-        ImageManagement::ImageVersion.find(image_version).base_image.should == image_version.base_image
+        ImageVersion.find(image_version).base_image.should == image_version.base_image
       end
 
       it 'should have many target images' do
