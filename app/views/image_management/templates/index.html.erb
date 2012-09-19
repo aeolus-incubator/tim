@@ -8,10 +8,10 @@
 	<% @templates.each do |template| %>
 	<tr>
 		<td><%= link_to 'Show', template %></td>
-		<td><%= link_to 'Edit', edit_image_management_template_path(template) %></td>
-		<td><%= button_to 'Delete', image_management_template_path(template), :method => :delete %></td>
+		<td><%= link_to 'Edit', edit_template_path(template) %></td>
+		<td><%= button_to 'Delete', template_path(template), :method => :delete %></td>
 	</tr>
 	<% end %>
 </table>
 <br />
-<%= link_to 'New Template', new_image_management_template_path %>
+<%= link_to 'New Template', new_template_path %>

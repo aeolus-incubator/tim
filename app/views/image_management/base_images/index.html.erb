@@ -8,10 +8,10 @@
 	<% @base_images.each do |base_image| %>
 	<tr>
 		<td><%= link_to 'Show', base_image %></td>
-		<td><%= link_to 'Edit', edit_image_management_base_image_path(base_image) %></td>
-		<td><%= button_to 'Delete', image_management_base_image_path(base_image), :method => :delete %></td>
+		<td><%= link_to 'Edit', edit_base_image_path(base_image) %></td>
+		<td><%= button_to 'Delete', base_image_path(base_image), :method => :delete %></td>
 	</tr>
 	<% end %>
 </table>
 <br />
-<%= link_to 'New Base image', new_image_management_base_image_path %>
+<%= link_to 'New Base image', new_base_image_path %>
