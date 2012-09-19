@@ -7,7 +7,7 @@ module ImageManagement
     describe "Target Images API" do
       before(:each) do
         send_and_accept_xml
-        TargetImage.any_instance.stub(:template).and_return(Factory(:template))
+        TargetImage.any_instance.stub(:template).and_return(FactoryGirl.build(:template))
         TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
         @status_detail = mock(:status)
         @status_detail.stub(:activity).and_return("Building")
@@ -15,13 +15,13 @@ module ImageManagement
 
       describe "Create Target Image" do
         before(:each) do
-          ImageFactory::TargetImage.stub(:create).and_return(Factory.build(:image_factory_target_image, :status_detail => @status_detail))
-          TargetImage.any_instance.stub(:template).and_return Factory(:template)
+          ImageFactory::TargetImage.stub(:create).and_return(FactoryGirl.build(:image_factory_target_image, :status_detail => @status_detail))
+          TargetImage.any_instance.stub(:template).and_return FactoryGirl.build(:template)
         end
 
         context "Success" do
           it "should return a new target image as xml" do
-            target_image = Factory(:target_image_with_full_tree)
+            target_image = FactoryGirl.build(:target_image_with_full_tree)
             post :create, { :target_image => target_image.attributes }
             response.code.should == "201"
 
@@ -34,7 +34,7 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            post :create, { :invalid_image => Factory(:target_image).attributes }
+            post :create, { :invalid_image => FactoryGirl.build(:target_image).attributes }
             response.code.should == "422"
           end
         end
@@ -43,7 +43,7 @@ module ImageManagement
       describe "Show Target Image" do
         context "Success" do
           it "should return an existing target image as XML" do
-            target_image = Factory.create(:target_image_with_full_tree)
+            target_image = FactoryGirl.create(:target_image_with_full_tree)
             get :show, :id => target_image.id
 
             response.code.should == "200"
@@ -67,7 +67,7 @@ module ImageManagement
         context "Success" do
           it "should return a list of existing target images as XML" do
             3.times do
-              Factory.create(:target_image)
+              FactoryGirl.create(:target_image)
             end
 
             get :index
@@ -83,7 +83,7 @@ module ImageManagement
       describe "Delete Target Image" do
         context "Success" do
           it "should return a no content code when deleting a target image" do
-            target_image = Factory(:target_image)
+            target_image = FactoryGirl.create(:target_image)
             delete :destroy, :id => target_image.id
             response.code.should == "204"
 
@@ -103,8 +103,8 @@ module ImageManagement
 
         context "Success" do
            it "should return an updated target image as xml" do
-            target_image = Factory(:target_image_with_full_tree)
-            target_image.image_version = Factory(:image_version)
+            target_image = FactoryGirl.create(:target_image_with_full_tree)
+            target_image.image_version = FactoryGirl.create(:image_version)
             post :update, :id => target_image.id, :target_image => target_image.attributes
             response.code.should == "200"
 
@@ -117,13 +117,13 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            target_image = Factory(:target_image)
+            target_image = FactoryGirl.create(:target_image)
             post :update, :id => target_image.id, :invalid_image => target_image.attributes
             response.code.should == "422"
           end
 
           it "should return a not found code when updating a target image that does not exist" do
-            delete :update, :id => -1, :target_image => Factory(:target_image).attributes
+            delete :update, :id => -1, :target_image => FactoryGirl.build(:target_image).attributes
             response.code.should == "404"
           end
         end
@@ -135,7 +135,7 @@ module ImageManagement
         end
 
         it "should update target image status attributes via json" do
-          target_image = Factory(:target_image_with_full_tree)
+          target_image = FactoryGirl.create(:target_image_with_full_tree)
           factory_attributes = {:percent_complete => "100", :status_detail => {:activity => "Building Image"} }
           hash = target_image.attributes.merge(factory_attributes)
           post :update, :id => target_image.id, :target_image => hash

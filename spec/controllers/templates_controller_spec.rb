@@ -13,7 +13,7 @@ module ImageManagement
 
         context "Success" do
            it "should return a new template as xml" do
-            post :create, { :template => Factory(:template).attributes }
+            post :create, { :template => FactoryGirl.build(:template).attributes }
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -23,7 +23,7 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            post :create, { :invalid_template => Factory(:template).attributes }
+            post :create, { :invalid_template => FactoryGirl.build(:template).attributes }
             response.code.should == "422"
           end
         end
