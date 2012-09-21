@@ -7,17 +7,17 @@ module ImageManagement
     describe "Provider Images API" do
       before(:each) do
         send_and_accept_xml
-        TargetImage.any_instance.stub(:template).and_return(Factory(:template))
+        TargetImage.any_instance.stub(:template).and_return(FactoryGirl.build(:template))
         ProviderImage.any_instance.stub(:create_factory_provider_image).and_return(true)
         TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
         @status_detail = mock(:status)
         @status_detail.stub(:activity).and_return("Building")
-        ImageFactory::TargetImage.stub(:create).and_return(Factory.build(:image_factory_target_image, :status_detail => @status_detail))
+        ImageFactory::TargetImage.stub(:create).and_return(FactoryGirl.build(:image_factory_target_image, :status_detail => @status_detail))
       end
 
       describe "Create Provider Image" do
         before(:each) do
-          ImageFactory::ProviderImage.stub(:create).and_return(Factory.build(:image_factory_provider_image))
+          ImageFactory::ProviderImage.stub(:create).and_return(FactoryGirl.build(:image_factory_provider_image))
         end
 
         context "Success" do
@@ -36,7 +36,7 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            post :create, { :invalid_image => Factory(:provider_image).attributes }
+            post :create, { :invalid_image => FactoryGirl.build(:provider_image).attributes }
             response.code.should == "422"
           end
         end
@@ -45,7 +45,7 @@ module ImageManagement
       describe "Show Provider Image" do
         context "Success" do
           it "should return an existing provider image as XML" do
-            provider_image = Factory.create(:provider_image_with_full_tree)
+            provider_image = FactoryGirl.create(:provider_image_with_full_tree)
             get :show, :id => provider_image.id
 
             response.code.should == "200"
@@ -70,7 +70,7 @@ module ImageManagement
         context "Success" do
           it "should return a list of existing provider images as XML" do
             3.times do
-              Factory.create(:provider_image)
+              FactoryGirl.create(:provider_image)
             end
 
             get :index
@@ -86,7 +86,7 @@ module ImageManagement
       describe "Delete Provider Image" do
         context "Success" do
           it "should return a no content code when deleting a provider image" do
-            provider_image = Factory(:provider_image)
+            provider_image = FactoryGirl.create(:provider_image)
             delete :destroy, :id => provider_image.id
             response.code.should == "204"
 
@@ -106,8 +106,8 @@ module ImageManagement
 
         context "Success" do
            it "should return an updated provider image as xml" do
-            provider_image = Factory(:provider_image_with_full_tree)
-            provider_image.target_image  = Factory(:target_image )
+            provider_image = FactoryGirl.create(:provider_image_with_full_tree)
+            provider_image.target_image  = FactoryGirl.create(:target_image )
             post :update, :id => provider_image.id, :provider_image => provider_image.attributes
             response.code.should == "200"
 
@@ -120,13 +120,13 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            provider_image = Factory(:provider_image)
+            provider_image = FactoryGirl.create(:provider_image)
             post :update, :id => provider_image.id, :invalid_image => provider_image.attributes
             response.code.should == "422"
           end
 
           it "should return a not found code when updating a Provider image that does not exist" do
-            delete :update, :id => -1, :provider_image => Factory(:provider_image).attributes
+            delete :update, :id => -1, :provider_image => FactoryGirl.create(:provider_image).attributes
             response.code.should == "404"
           end
         end
@@ -138,7 +138,7 @@ module ImageManagement
         end
 
         it "should update provider image status attributes via json" do
-          provider_image = Factory(:provider_image_with_full_tree)
+          provider_image = FactoryGirl.create(:provider_image_with_full_tree)
           factory_attributes = {:percent_complete => "100", "status_detail" => {:activity => "Building Image"} }
           hash = provider_image.attributes.merge(factory_attributes)
           post :update, :id => provider_image.id, :provider_image => hash

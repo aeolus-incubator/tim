@@ -14,7 +14,7 @@ module ImageManagement
 
         context "Success" do
            it "should return a new image version as xml" do
-            post :create, { :image_version => Factory(:image_version_with_full_tree).attributes }
+            post :create, { :image_version => FactoryGirl.build(:image_version_with_full_tree).attributes }
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -22,7 +22,7 @@ module ImageManagement
           end
 
           it "should return a new image version with base image as xml" do
-            post :create, { :image_version => Factory(:image_version_with_base_image).attributes }
+            post :create, { :image_version => FactoryGirl.build(:image_version_with_base_image).attributes }
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -34,7 +34,7 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            post :create, { :invalid_image => Factory(:image_version).attributes }
+            post :create, { :invalid_image => FactoryGirl.build(:image_version).attributes }
             response.code.should == "422"
           end
         end
@@ -43,7 +43,7 @@ module ImageManagement
       describe "Show Image Version" do
         context "Success" do
           it "should return an existing image version as XML" do
-            image_version = Factory.create(:image_version_with_base_image)
+            image_version = FactoryGirl.create(:image_version_with_base_image)
             get :show, :id => image_version.id
 
             response.code.should == "200"
@@ -54,7 +54,7 @@ module ImageManagement
           end
 
           it "should return an existing base image as XML with target images" do
-            image_version = Factory.create(:image_version_with_target_images)
+            image_version = FactoryGirl.create(:image_version_with_target_images)
             get :show, :id => image_version.id
 
             response.code.should == "200"
@@ -78,7 +78,7 @@ module ImageManagement
         context "Success" do
           it "should return a list of existing base images as XML" do
             3.times do
-              Factory.create(:image_version_with_base_image)
+              FactoryGirl.create(:image_version_with_base_image)
             end
 
             get :index
@@ -95,7 +95,7 @@ module ImageManagement
       describe "Delete Image Version" do
         context "Success" do
           it "should return a no content code when deleting an image version" do
-            image_version = Factory(:image_version)
+            image_version = FactoryGirl.create(:image_version)
             delete :destroy, :id => image_version.id
             response.code.should == "204"
 
@@ -115,8 +115,8 @@ module ImageManagement
 
         context "Success" do
            it "should return an updated image version as xml" do
-            image_version = Factory(:image_version_with_full_tree)
-            image_version.base_image = Factory(:base_image)
+            image_version = FactoryGirl.create(:image_version_with_full_tree)
+            image_version.base_image = FactoryGirl.create(:base_image)
             post :update, :id => image_version.id, :image_version => image_version.attributes
             response.code.should == "200"
 
@@ -129,13 +129,13 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            image_version = Factory(:image_version)
+            image_version = FactoryGirl.create(:image_version)
             post :update, :id => image_version.id, :invalid_image => image_version.attributes
             response.code.should == "422"
           end
 
           it "should return a not found code when updating an image version that does not exist" do
-            post :update, :id => -1, :image_version => Factory(:image_version).attributes
+            post :update, :id => -1, :image_version => FactoryGirl.build(:image_version).attributes
             response.code.should == "404"
           end
         end

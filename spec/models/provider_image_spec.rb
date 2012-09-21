@@ -32,12 +32,15 @@ module ImageManagement
           status_detail = mock(:status_detail)
           status_detail.stub(:activity).and_return("Building")
 
-          ImageFactory::ProviderImage.stub(:create).and_return(Factory.build(:image_factory_provider_image, :status_detail => status_detail))
+          ImageFactory::ProviderImage.stub(:create).
+		  and_return(FactoryGirl.
+	          build(:image_factory_provider_image,
+			:status_detail => status_detail))
           TargetImage.any_instance.stub(:factory_id).and_return("1234")
         end
 
         it "should create new target image with factory meta-data" do
-          pi = Factory.create(:provider_image)
+          pi = FactoryGirl.create(:provider_image)
 
           pi.factory_id.should == "4cc3b024-5fe7-4b0b-934b-c5d463b990b0"
           pi.status.should == "New"
