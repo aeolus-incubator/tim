@@ -1,7 +1,7 @@
 # Sets up use_route across controller tests, from:
 # http://bit.ly/PU4Wm4 (stackoverflow)
 
-module ControllerHacks
+module ControllerSetup
   def get(action, parameters = nil, session = nil, flash = nil)
     process_action(action, parameters, session, flash, "GET")
   end
@@ -37,5 +37,5 @@ RSpec.configure do |c|
    # use base_image_path and so on to get to the routes.
    c.include ImageManagement::Engine.routes.url_helpers
    # Always use the correct route for controller tests
-   c.include ControllerHacks, :type => :controller
+   c.include ControllerSetup, :type => :controller
 end
