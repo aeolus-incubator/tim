@@ -8,10 +8,10 @@
 	<% @provider_images.each do |provider_image| %>
 	<tr>
 		<td><%= link_to 'Show', provider_image %></td>
-		<td><%= link_to 'Edit', edit_image_management_provider_image_path(provider_image) %></td>
-		<td><%= button_to 'Delete', image_management_provider_image_path(provider_image), :method => :delete %></td>
+		<td><%= link_to 'Edit', edit_provider_image_path(provider_image) %></td>
+		<td><%= button_to 'Delete', provider_image_path(provider_image), :method => :delete %></td>
 	</tr>
 	<% end %>
 </table>
 <br />
-<%= link_to 'New Provider image', new_image_management_provider_image_path %>
+<%= link_to 'New Provider image', new_provider_image_path %>
