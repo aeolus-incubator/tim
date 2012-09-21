@@ -5,6 +5,12 @@ require File.expand_path("../../lib/image_factory/image_factory.rb",  __FILE__)
 require 'rspec/rails'
 require 'factory_girl'
 
+ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
+
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in spec/support/ and its subdirectories.
+
+Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
 Dir.glob(File.join(File.dirname(__FILE__) + "/factories/", "**", "*.rb")).each do |file|
   require file
 end
@@ -12,9 +18,6 @@ end
 RSpec.configure do |config|
   config.color_enabled = true
   config.formatter     = 'documentation'
-
-  # Include Engine routes (needed for Controller specs)
-  #config.include ImageManagement::Engine.routes.url_helpers
 end
 
 # Override to_xml to use underscore rather than dash

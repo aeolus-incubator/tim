@@ -13,7 +13,7 @@ module ImageManagement
 
         context "Success" do
            it "should return a new base image as xml" do
-            post :create, { :base_image => Factory(:base_image).attributes }
+            post :create, { :base_image => FactoryGirl.build(:base_image).attributes }
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -21,7 +21,7 @@ module ImageManagement
           end
 
           it "should return a new base image with template as xml" do
-            post :create, { :base_image => Factory(:base_image_with_template).attributes }
+            post :create, { :base_image => FactoryGirl.build(:base_image_with_template).attributes }
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -33,7 +33,7 @@ module ImageManagement
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            post :create, { :invalid_image => Factory(:base_image).attributes }
+            post :create, { :invalid_image => FactoryGirl.build(:base_image).attributes }
             response.code.should == "422"
           end
         end
@@ -42,7 +42,7 @@ module ImageManagement
       describe "Show Base Image" do
         context "Success" do
           it "should return an existing base image as XML" do
-            base_image = Factory.create(:base_image)
+            base_image = FactoryGirl.create(:base_image)
             get :show, :id => base_image.id
 
             response.code.should == "200"
@@ -53,7 +53,7 @@ module ImageManagement
           end
 
           it "should return an existing base image as XML with template" do
-            base_image = Factory.create(:base_image_with_template)
+            base_image = FactoryGirl.create(:base_image_with_template)
             get :show, :id => base_image.id
 
             response.code.should == "200"
@@ -65,9 +65,9 @@ module ImageManagement
           end
 
           it "should return an existing base image as XML with image versions" do
-            base_image = Factory.create(:base_image_with_template)
+            base_image = FactoryGirl.create(:base_image_with_template)
             2.times do
-              Factory.create(:image_version, :base_image => base_image)
+              FactoryGirl.create(:image_version, :base_image => base_image)
             end
 
             get :show, :id => base_image.id
@@ -93,7 +93,7 @@ module ImageManagement
         context "Success" do
           it "should return a list of existing base images as XML" do
             3.times do
-              Factory.create(:base_image)
+              FactoryGirl.create(:base_image)
             end
 
             get :index
@@ -109,7 +109,7 @@ module ImageManagement
       describe "List Delete Image" do
         context "Success" do
           it "should return a no content code when deleting an image" do
-            base_image = Factory(:base_image)
+            base_image = FactoryGirl.create(:base_image)
             delete :destroy, :id => base_image.id
             response.code.should == "204"
           end
