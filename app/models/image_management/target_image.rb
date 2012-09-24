@@ -1,6 +1,8 @@
 module ImageManagement
   class TargetImage < ActiveRecord::Base
     belongs_to :image_version
+    belongs_to :provider_type,
+	       :class_name => ImageManagement.provider_type_class
     has_many :provider_images
 
     after_create :create_factory_target_image
