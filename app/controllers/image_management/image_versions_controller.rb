@@ -42,19 +42,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          # We check for base image manually, a restriction caused by the
-          # ActiveRecord::Base Patch 
-          # TODO Remove when modules are supported in ActiveRecord
-          if params[:image_version][:base_image] && params[:image_version][:base_image][:id]
-            base_image = BaseImage.find(params[:image_version].delete(:base_image)[:id])
-            @image_version = ImageManagement::ImageVersion.new(params[:image_version])
-            @image_version.base_image = base_image
-          else
-            @image_version = ImageManagement::ImageVersion.new(params[:image_version])
-          end
-
-
-
+          @image_version = ImageVersion.new(params[:image_version])
           if @image_version.save
             format.html { redirect_to image_management_image_version_path(@image_version), :notice => 'Image version was successfully created.' }
             format.xml { render :action => "show", :status => :created }
@@ -77,18 +65,7 @@ module ImageManagement
         begin
           @image_version = ImageManagement::ImageVersion.find(params[:id])
 
-          # We check for base image manually, a restriction caused by the
-          # ActiveRecord::Base Patch 
-          # TODO Remove when modules are supported in ActiveRecord
-          if params[:image_version][:base_image] && params[:image_version][:base_image][:id]
-            base_image = BaseImage.find(params[:image_version].delete(:base_image)[:id])
-            @image_version.attributes = params[:image_version]
-            @image_version.base_image = base_image
-          else
-            @image_version.attributes = params[:image_version]
-          end
-
-          if @image_version.save
+          if @image_version.update_attributes(params[:image_version])
             format.html { redirect_to @image_version, :notice => 'Image version was successfully updated.' }
             format.xml { render :action => "show" }
           else
