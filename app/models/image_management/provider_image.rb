@@ -1,6 +1,8 @@
 module ImageManagement
   class ProviderImage < ActiveRecord::Base
     belongs_to :target_image
+    belongs_to :provider_account,
+	       :class_name => ImageManagement.provider_account_class
 
     after_create :create_factory_provider_image
 

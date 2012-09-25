@@ -1,5 +1,6 @@
 ImageManagement.user_class = "User"
-#ImageManagement.family_class = "PoolFamily"
+ImageManagement.provider_account_class = "ProviderAccount"
+ImageManagement.provider_type_class = "ProviderType"
 # Image Factory URL
 ImageManagement::ImageFactory::Base.site = "http://localhost:8075/imagefactory"
 # FIXME: We should be able to infer these from Routes
