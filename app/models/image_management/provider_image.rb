@@ -1,16 +1,23 @@
 module ImageManagement
   class ProviderImage < ActiveRecord::Base
     belongs_to :target_image
-    belongs_to :provider_account,
-	       :class_name => ImageManagement.provider_account_class
+    belongs_to :provider_account, :class_name => ImageManagement.provider_account_class
+
+    accepts_nested_attributes_for :target_image
+
+    attr_accessible :target_image_attributes
+    attr_accessible :status, :status_detail, :progress #, :as => :image_factory
+    attr_accessible :provider
+    attr_writer :credentials
+    attr_protected :id
 
     after_create :create_factory_provider_image
 
-    attr_writer :credentials
-
-    attr_accessible :provider, :target_image_id
-
-    accepts_nested_attributes_for :target_image
+    # FIXME Check to see if this is a setting we can add to Rails configuration.
+    # i.e. json_include_resource_name = true
+    def as_json(options={})
+      {:provider_image => super(options)}
+    end
 
     def create_factory_provider_image
       begin

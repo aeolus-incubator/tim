@@ -22,7 +22,7 @@ module ImageManagement
 
         context "Success" do
           it "should return a new provider image as xml" do
-            provider_image = Factory(:provider_image_with_full_tree)
+            provider_image = FactoryGirl.build(:provider_image_with_full_tree)
             post :create, { :provider_image => provider_image.attributes }
             response.code.should == "201"
 
