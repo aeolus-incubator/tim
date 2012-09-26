@@ -3,11 +3,13 @@ require 'spec_helper'
 module ImageManagement
   describe Template do
     describe "Model relationships" do
-      it 'should have one base image' do
+      it 'should have many base images' do
         template = Template.new
-        template.base_image = BaseImage.new
+        2.times do
+          template.base_images << BaseImage.new
+        end
         template.save!
-        Template.find(template).base_image.should == template.base_image
+        Template.find(template).base_images.size.should == 2
       end
     end
   end

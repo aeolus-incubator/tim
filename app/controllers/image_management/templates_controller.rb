@@ -1,5 +1,7 @@
 module ImageManagement
   class TemplatesController < ApplicationController
+    before_filter :template_params, :only => [:update, :create]
+
     # GET /templates
     # GET /templates.xml
     def index
@@ -42,8 +44,6 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-        # TODO Validate template
-          params[:template][:xml] = request.body.read
           @template = ImageManagement::Template.new(params[:template])
 
           if @template.save
@@ -55,8 +55,12 @@ module ImageManagement
           end
           # TODO Add in proper exception handling in application controller
         rescue => e
-          format.html { render :action => "new" }
-          format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          if e.instance_of? ActiveRecord::RecordNotFound
+            raise e
+          else
+            format.html { render :action => "new" }
+            format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          end
         end
       end
     end
@@ -66,7 +70,6 @@ module ImageManagement
     def update
       respond_to do |format|
         begin
-          params[:template][:xml] = request.body.read
           @template = ImageManagement::Template.find(params[:id])
 
           if @template.update_attributes(params[:template])
@@ -78,8 +81,12 @@ module ImageManagement
           end
           # TODO Add in proper exception handling in appliation controller
         rescue => e
-          format.html { render :action => "new" }
-          format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          if e.instance_of? ActiveRecord::RecordNotFound
+            raise e
+          else
+            format.html { render :action => "new" }
+            format.xml { render :xml => e.message, :status => :unprocessable_entity }
+          end
         end
       end
     end
@@ -94,6 +101,11 @@ module ImageManagement
         format.html { redirect_to image_management_templates_url }
         format.xml { head :no_content }
       end
+    end
+
+    private
+    def template_params
+      params[:template][:xml] = request.body.read
     end
   end
 end
