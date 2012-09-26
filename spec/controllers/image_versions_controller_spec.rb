@@ -14,7 +14,7 @@ module ImageManagement
 
         context "Success" do
            it "should return a new image version as xml" do
-            post :create, { :image_version => FactoryGirl.build(:image_version_with_full_tree).attributes }
+            post :create, { :image_version => {}}
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -22,7 +22,7 @@ module ImageManagement
           end
 
           it "should return a new image version with base image as xml" do
-            post :create, { :image_version => FactoryGirl.build(:image_version_with_base_image).attributes }
+            post :create, { :image_version => {:base_image => {:name => "Name"}}}
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -117,7 +117,7 @@ module ImageManagement
            it "should return an updated image version as xml" do
             image_version = FactoryGirl.create(:image_version_with_full_tree)
             image_version.base_image = FactoryGirl.create(:base_image)
-            post :update, :id => image_version.id, :image_version => image_version.attributes
+            put :update, :id => image_version.id, :image_version => image_version.attributes
             response.code.should == "200"
 
             body = Hash.from_xml(response.body)

@@ -12,10 +12,8 @@ module ImageManagement
     end
 
     factory :image_version_with_target_images, :parent => :image_version_with_full_tree do
-      after_create do |image_version|
-        2.times do
-          image_version.target_images << Factory(:target_image, :image_version => image_version)
-        end
+      after(:create) do |image_version, evaluator|
+        FactoryGirl.create_list(:target_image, 2, :image_version => image_version)
       end
     end
   end
