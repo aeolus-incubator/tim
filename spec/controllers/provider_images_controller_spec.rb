@@ -13,6 +13,7 @@ module ImageManagement
         @status_detail = mock(:status)
         @status_detail.stub(:activity).and_return("Building")
         ImageFactory::TargetImage.stub(:create).and_return(FactoryGirl.build(:image_factory_target_image, :status_detail => @status_detail))
+        ProviderImagesController.any_instance.stub(:template_exists?).and_return false
       end
 
       describe "Create Provider Image" do

@@ -7,6 +7,7 @@ module ImageManagement
     describe "Templates API" do
       before(:each) do
         send_and_accept_xml
+        TemplatesController.any_instance.stub(:template_exists?).and_return false
       end
 
       describe "Create Template" do

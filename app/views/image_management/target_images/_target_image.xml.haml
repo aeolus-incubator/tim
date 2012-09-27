@@ -7,3 +7,5 @@
   - if target_image.image_version
     = render :partial => 'image_management/image_versions/image_version_minimal', :locals => {:image_version => target_image.image_version}
   %provider_images
+  - if controller.template_exists?("custom", "image_management/target_images", true)
+    = render :partial => 'image_management/target_images/custom', :locals => {:target_image => target_image}

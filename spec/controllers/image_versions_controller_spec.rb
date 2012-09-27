@@ -8,6 +8,7 @@ module ImageManagement
       before(:each) do
         send_and_accept_xml
         TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
+        ImageVersionsController.any_instance.stub(:template_exists?).and_return false
       end
 
       describe "Create Image Version" do
