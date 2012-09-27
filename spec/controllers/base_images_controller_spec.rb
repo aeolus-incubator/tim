@@ -12,8 +12,8 @@ module ImageManagement
       describe "Create Base Image" do
 
         context "Success" do
-           it "should return a new base image as xml" do
-            post :create, { :base_image => FactoryGirl.build(:base_image).attributes }
+          it "should return a new base image as xml" do
+            post :create, { :base_image => { :name => "Name", :description => "Description"}}
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -21,7 +21,9 @@ module ImageManagement
           end
 
           it "should return a new base image with template as xml" do
-            post :create, { :base_image => FactoryGirl.build(:base_image_with_template).attributes }
+            post :create, { :base_image => { :name => "Name",
+                                             :description => "Description",
+                                             :template => {:xml => "<template></template>" }}}
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)

@@ -1,5 +1,7 @@
 module ImageManagement
   class BaseImagesController < ApplicationController
+    append_before_filter :set_template_xml, :only => [:create, :update]
+
     # GET /base_images
     # GET /base_images.xml
     def index
@@ -42,7 +44,6 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          set_template_xml
           @base_image = ImageManagement::BaseImage.new(params[:base_image])
           if @base_image.save
             format.html { redirect_to image_management_base_image_path(@base_image), :notice => 'Image version was successfully created.' }
@@ -64,9 +65,7 @@ module ImageManagement
     def update
       respond_to do |format|
         begin
-          set_template_xml
           @base_image = ImageManagement::BaseImage.find(params[:id])
-
           respond_to do |format|
             if @base_image.update_attributes(params[:base_image])
               format.html { redirect_to @base_image, :notice => 'Base image was successfully updated.' }
@@ -99,9 +98,9 @@ module ImageManagement
     private
     # Handles the cases when the template xml is supplied within request
     def set_template_xml
-      doc = Nokogiri::XML request.body.read
-      if !doc.xpath("//base_image/template/xml").empty?
-        params[:base_image][:template][:xml] = doc.xpath("//base_image/template/xml").children.to_s
+      doc = ::Nokogiri::XML request.body.read
+      if !doc.xpath("//base_image/template").empty?
+        params[:base_image][:template] = { :xml => doc.xpath("//base_image/template").children.to_s}
       end
     end
 
