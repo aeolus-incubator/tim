@@ -39,29 +39,36 @@ module ImageManagement
     describe "ImageFactory interactions" do
       describe "Successful Requests" do
         before(:each) do
-          @status_detail_fti = {:id => "4cc3b024-5fe7-4b0b-934b-c5d463b990b0",
-                       :status => "NEW",
-                       :status_detail => "",
-                       :percentage_complete => 0}
-
-          ActiveResource::HttpMock.respond_to do |mock|
-            mock.post("/imagefactory/target_images", {}, @status_detail_fti.to_json, 201, {})
-          end
+          ImageFactory::TargetImage.any_instance.stub(:save!)
         end
 
-        it "should create new target image with factory meta-data" do
-          @status_detail = mock(:status_detail)
-          @status_detail.stub(:activity).and_return("Building")
-          ImageFactory::TargetImage.stub(:create).and_return(FactoryGirl.build(:image_factory_target_image, :status_detail => @status_detail))
-          ti = FactoryGirl.build(:target_image)
-          ti.stub(:template).and_return(FactoryGirl.build(:template))
+        it "should create factory provider image and populate fields" do
+          # Needed due to ActiveRecord::Associations::Association#target
+          # name conflict
+          target = mock(:target)
+          target.stub(:target).and_return("mock")
+
+          ti = FactoryGirl.build(:target_image_with_full_tree)
+          ti.target = target
+          ti.should_receive(:populate_factory_fields)
           ti.save
+        end
+
+        it "should add factory fields to provider image" do
+          status_detail = mock(:status_detail)
+          status_detail.stub(:activity).and_return("Building")
+
+          ti = FactoryGirl.build(:target_image_with_full_tree)
+          ti.send(:populate_factory_fields, FactoryGirl
+                                .build(:image_factory_target_image,
+                                       :status_detail => status_detail))
 
           ti.factory_id.should == "4cc3b024-5fe7-4b0b-934b-c5d463b990b0"
           ti.status.should == "NEW"
           ti.status_detail.should == "Building"
           ti.progress.should == "0"
         end
+
       end
     end
   end
