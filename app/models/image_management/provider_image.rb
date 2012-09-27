@@ -1,16 +1,17 @@
 module ImageManagement
-  class ProviderImage < ActiveRecord::Base
+  class ProviderImage < ImageManagement::Base
     belongs_to :target_image
-    belongs_to :provider_account,
-	       :class_name => ImageManagement.provider_account_class
-
-    after_create :create_factory_provider_image
-
-    attr_writer :credentials
-
-    attr_accessible :provider, :target_image_id
+    belongs_to :provider_account, :class_name => ImageManagement.provider_account_class
 
     accepts_nested_attributes_for :target_image
+
+    attr_accessible :target_image_attributes
+    attr_accessible :status, :status_detail, :progress #, :as => :image_factory
+    attr_accessible :provider
+    attr_writer :credentials
+    attr_protected :id
+
+    after_create :create_factory_provider_image
 
     def create_factory_provider_image
       begin

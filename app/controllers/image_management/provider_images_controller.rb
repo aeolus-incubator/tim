@@ -1,5 +1,7 @@
 module ImageManagement
   class ProviderImagesController < ApplicationController
+    before_filter :factory_keys, :only => :update
+
     # GET /provider_images
     # GET /provider_images.xml
     def index
@@ -42,17 +44,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          # We check for base image manually, a restriction caused by the
-          # ActiveRecord::Base Patch 
-          # TODO Remove when modules are supported in ActiveRecord
-          if params[:provider_image][:target_image] && params[:provider_image][:target_image][:id]
-            target_image = ImageManagement::TargetImage.find(params[:provider_image].delete(:target_image)[:id])
-            @provider_image = ImageManagement::ProviderImage.new(params[:provider_image])
-            @provider_image.target_image = target_image
-          else
-            @provider_image = ImageManagement::ProviderImage.new(params[:provider_image])
-          end
-
+          @provider_image = ProviderImage.new(params[:provider_image])
           if @provider_image.save
             format.html { redirect_to image_management_target_image_path(@provider_image), :notice => 'Image version was successfully created.' }
             format.xml { render :action => "show", :status => :created }
@@ -78,21 +70,6 @@ module ImageManagement
       respond_to do |format|
         begin
           @provider_image = ImageManagement::ProviderImage.find(params[:id])
-
-          # Check for factory params.  Modify param names.
-          if params[:provider_image][:percent_complete] && params[:provider_image][:status_detail][:activity]
-            @provider_image.progress = params[:provider_image].delete(:percent_complete)
-            @provider_image.status_detail = params[:provider_image].delete(:status_detail)[:activity]
-            @provider_image.status = params[:provider_image].delete(:status)
-          end
-
-          # We check for base image manually, a restriction caused by the
-          # ActiveRecord::Base Patch 
-          # TODO Remove when modules are supported in ActiveRecord
-          if params[:provider_image][:target_image] && params[:provider_image][:target_image][:id]
-            target_image = ImageManagement::TargetImage.find(params[:provider_image].delete(:target_image)[:id])
-            @provider_image.target_image = target_image
-          end
 
           @provider_image.update_attributes(params[:provider_image])
           if @provider_image.save
@@ -126,5 +103,14 @@ module ImageManagement
       end
     end
 
+    private
+    # TODO Add factory permission check
+    def factory_keys
+      if params[:provider_image][:percent_complete] && params[:provider_image][:status_detail][:activity]
+        params[:provider_image][:progress] = params[:provider_image].delete(:percent_complete)
+        params[:provider_image][:status_detail] = params[:provider_image].delete(:status_detail)[:activity]
+        params[:provider_image][:status] = params[:provider_image].delete(:status)
+      end
+    end
   end
 end

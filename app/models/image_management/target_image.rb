@@ -1,15 +1,20 @@
 module ImageManagement
-  class TargetImage < ActiveRecord::Base
+  class TargetImage < ImageManagement::Base
     belongs_to :image_version
-    belongs_to :provider_type,
-	       :class_name => ImageManagement.provider_type_class
+    belongs_to :provider_type, :class_name => ImageManagement.provider_type_class
     has_many :provider_images
 
-    after_create :create_factory_target_image
-
-    attr_accessible :target, :image_version_id
-
     accepts_nested_attributes_for :image_version
+    accepts_nested_attributes_for :provider_images
+
+    attr_accessible :image_version_attributes
+    attr_accessible :provider_images_attributes
+    attr_accessible :status, :status_detail, :progress #, :as => :image_factory
+    attr_accessible :target
+
+    attr_protected :id
+
+    after_create :create_factory_target_image
 
     def template
       image_version.base_image.template

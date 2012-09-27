@@ -1,5 +1,7 @@
 module ImageManagement
   class TargetImagesController < ApplicationController
+    before_filter :factory_keys, :only => :update
+
     # GET /target_images
     # GET /target_images.xml
     def index
@@ -42,17 +44,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          # We check for base image manually, a restriction caused by the
-          # ActiveRecord::Base Patch 
-          # TODO Remove when modules are supported in ActiveRecord
-          if params[:target_image][:image_version] && params[:target_image][:image_version][:id]
-            image_version = ImageManagement::ImageVersion.find(params[:target_image].delete(:image_version)[:id])
-            @target_image = ImageManagement::TargetImage.new(params[:target_image])
-            @target_image.image_version = image_version
-          else
-            @target_image = ImageManagement::TargetImage.new(params[:target_image])
-          end
-
+          @target_image = TargetImage.new(params[:target_image])
           if @target_image.save
             format.html { redirect_to image_management_target_image_path(@target_image), :notice => 'Image version was successfully created.' }
             format.xml { render :action => "show", :status => :created }
@@ -79,22 +71,7 @@ module ImageManagement
         begin
           @target_image = ImageManagement::TargetImage.find(params[:id])
 
-          # Check for factory params.  Modify param names.
-          if params[:target_image][:percent_complete] && params[:target_image][:status_detail][:activity]
-            @target_image.progress = params[:target_image].delete(:percent_complete)
-            @target_image.status_detail = params[:target_image][:status_detail].delete(:activity)
-            @target_image.status = params[:target_image].delete(:status)
-          end
-
-          # We check for base image manually, a restriction caused by the
-          # ActiveRecord::Base Patch 
-          # TODO Remove when modules are supported in ActiveRecord
-          if params[:target_image][:image_version] && params[:target_image][:image_version][:id]
-            image_version = ImageVersion.find(params[:target_image].delete(:image_version)[:id])
-            @target_image.image_version = image_version
-          end
-
-          @target_image.attributes = params[:target_image]
+          @target_image.update_attributes(params[:target_image])
           if @target_image.save
             format.html { redirect_to @target_image, :notice => 'Target image was successfully updated.' }
             format.xml { render :action => "show" }
@@ -123,6 +100,15 @@ module ImageManagement
       respond_to do |format|
         format.html { redirect_to image_management_target_images_url }
         format.xml { head :no_content }
+      end
+    end
+
+    # TODO Add factory permission check
+    def factory_keys
+      if params[:target_image][:percent_complete] && params[:target_image][:status_detail][:activity]
+        params[:target_image][:progress] = params[:target_image].delete(:percent_complete)
+        params[:target_image][:status_detail] = params[:target_image][:status_detail].delete(:activity)
+        params[:target_image][:status] = params[:target_image].delete(:status)
       end
     end
 
