@@ -6,5 +6,7 @@
   %status= provider_image.status
   %status_detail= provider_image.status_detail
   %progress= provider_image.progress
-  - if true#provider_image.target_image
+  - if provider_image.target_image
     = render :partial => 'image_management/target_images/target_image_minimal', :locals => {:target_image => provider_image.target_image}
+  - if controller.template_exists?("custom", "image_management/provider_images", true)
+    = render :partial => 'image_management/provider_images/custom', :locals => {:provider_image => provider_image}

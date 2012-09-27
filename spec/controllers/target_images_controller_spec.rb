@@ -11,6 +11,7 @@ module ImageManagement
         TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
         @status_detail = mock(:status)
         @status_detail.stub(:activity).and_return("Building")
+        TargetImagesController.any_instance.stub(:template_exists?).and_return false
       end
 
       describe "Create Target Image" do
