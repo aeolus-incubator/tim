@@ -1,5 +1,5 @@
 module ImageManagement
-  class ImageVersion < ActiveRecord::Base
+  class ImageVersion < ImageManagement::Base
     belongs_to :base_image
     has_many :target_images
 

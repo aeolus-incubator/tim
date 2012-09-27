@@ -1,5 +1,5 @@
 module ImageManagement
-  class ProviderImage < ActiveRecord::Base
+  class ProviderImage < ImageManagement::Base
     belongs_to :target_image
     belongs_to :provider_account, :class_name => ImageManagement.provider_account_class
 
@@ -12,12 +12,6 @@ module ImageManagement
     attr_protected :id
 
     after_create :create_factory_provider_image
-
-    # FIXME Check to see if this is a setting we can add to Rails configuration.
-    # i.e. json_include_resource_name = true
-    def as_json(options={})
-      {:provider_image => super(options)}
-    end
 
     def create_factory_provider_image
       begin

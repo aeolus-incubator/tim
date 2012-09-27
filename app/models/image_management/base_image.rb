@@ -1,5 +1,5 @@
 module ImageManagement
-  class BaseImage < ActiveRecord::Base
+  class BaseImage < ImageManagement::Base
     has_many :image_versions
     belongs_to :template
     belongs_to :user, :class_name => ImageManagement.user_class

@@ -1,5 +1,5 @@
 module ImageManagement
-  class Template < ActiveRecord::Base
+  class Template < ImageManagement::Base
     has_many :base_images
 
     accepts_nested_attributes_for :base_images

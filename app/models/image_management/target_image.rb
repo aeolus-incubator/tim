@@ -1,5 +1,5 @@
 module ImageManagement
-  class TargetImage < ActiveRecord::Base
+  class TargetImage < ImageManagement::Base
     belongs_to :image_version
     belongs_to :provider_type, :class_name => ImageManagement.provider_type_class
     has_many :provider_images
@@ -18,12 +18,6 @@ module ImageManagement
 
     def template
       image_version.base_image.template
-    end
-
-    # FIXME Check to see if this is a setting we can add to Rails configuration.
-    # i.e. json_include_resource_name = true
-    def as_json(options={})
-      {:target_image => super(options)}
     end
 
     private
