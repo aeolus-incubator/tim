@@ -29,18 +29,30 @@ module ImageManagement
     describe "ImageFactory interactions" do
       describe "Successful Requests" do
         before(:each) do
-          status_detail = mock(:status_detail)
-          status_detail.stub(:activity).and_return("Building")
-
-          ImageFactory::ProviderImage.stub(:create).
-		  and_return(FactoryGirl.
-	          build(:image_factory_provider_image,
-			:status_detail => status_detail))
+          ImageFactory::ProviderImage.any_instance.stub(:save!)
           TargetImage.any_instance.stub(:factory_id).and_return("1234")
         end
 
-        it "should create new target image with factory meta-data" do
-          pi = FactoryGirl.create(:provider_image)
+        it "should create factory provider image and populate fields" do
+          # Needed due to ActiveRecord::Associations::Association#target
+          # name conflict
+          target = mock(:target)
+          target.stub(:target).and_return("mock")
+
+          pi = FactoryGirl.build(:provider_image)
+          pi.target_image.target = target
+          pi.should_receive(:populate_factory_fields)
+          pi.save
+        end
+
+        it "should add factory fields to provider image" do
+          status_detail = mock(:status_detail)
+          status_detail.stub(:activity).and_return("Building")
+
+          pi = FactoryGirl.build(:provider_image)
+          pi.send(:populate_factory_fields, FactoryGirl
+                                .build(:image_factory_provider_image,
+                                       :status_detail => status_detail))
 
           pi.factory_id.should == "4cc3b024-5fe7-4b0b-934b-c5d463b990b0"
           pi.status.should == "New"
