@@ -7,6 +7,7 @@ module ImageManagement
     describe "Base Images API" do
       before(:each) do
         send_and_accept_xml
+        BaseImagesController.any_instance.stub(:template_exists?).and_return false
       end
 
       describe "Create Base Image" do
