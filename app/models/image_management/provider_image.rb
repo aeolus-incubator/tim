@@ -13,6 +13,7 @@ module ImageManagement
 
     after_create :create_factory_provider_image
 
+    private
     def create_factory_provider_image
       begin
         provider_image = ImageFactory::ProviderImage.new(:target_image_id => self.target_image.factory_id,
