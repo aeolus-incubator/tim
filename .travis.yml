@@ -1,0 +1,22 @@
+language: ruby
+rvm:
+  - 1.8.7
+  - 1.9.3
+gemfile: Gemfile
+env:
+  - SUITE=spec
+install:
+  - bundle
+before_script:
+  - rake db:setup
+  - rake -f test/dummy/Rakefile test:prepare
+script:
+  - rake $SUITE
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#aeolus"
+    use_notice: true
+    skip_join: false
+    on_success: change
+    on_failure: change
