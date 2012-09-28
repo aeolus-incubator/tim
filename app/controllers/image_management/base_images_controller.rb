@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module ImageManagement
   class BaseImagesController < ApplicationController
     append_before_filter :set_template_xml, :only => [:create, :update]
