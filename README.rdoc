@@ -4,12 +4,20 @@
 
 Tests are run from the project root directory.  But are run in the context of the dummy app located under test/dummy.  In order to run the tests you must first setup dummy app database.
 
-cd test/dummy; rake db:setup; rake test:prepare
+rake db:setup; rake -f test/dummy/Rakefile test:prepare
 
 Once you have done this cd to the project root and run the following:
 
 rake spec
-rake cucumber
+
+== Running the Dummy app
+
+This will allow you to runn the commands below to test out the engine
+in isolation (if mounted in another application, the main difference
+will just be where the engine gets mounted, so adjust your url
+accordingly).
+
+cd test/dummy; rails s
 
 == API Reference
 
