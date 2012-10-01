@@ -5,7 +5,7 @@ module ImageManagement
     # GET /target_images
     # GET /target_images.xml
     def index
-      @target_images = ImageManagement::TargetImage.all
+      @target_images = ImageManagement::TargetImage.all unless defined? @target_images
 
       respond_to do |format|
         format.html # index.html.erb
@@ -16,7 +16,7 @@ module ImageManagement
     # GET /target_images/1
     # GET /target_images/1.xml
     def show
-      @target_image = ImageManagement::TargetImage.find(params[:id])
+      @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
 
       respond_to do |format|
         format.html # show.html.erb
@@ -27,7 +27,7 @@ module ImageManagement
     # GET /target_images/new
     # GET /target_images/new.xml
     def new
-      @target_image = ImageManagement::TargetImage.new
+      @target_image = ImageManagement::TargetImage.new unless defined? @target_image
 
       respond_to do |format|
         format.html # new.html.erb
@@ -36,7 +36,7 @@ module ImageManagement
 
     # GET /target_images/1/edit
     def edit
-      @target_image = ImageManagement::TargetImage.find(params[:id])
+      @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
     end
 
     # POST /target_images
@@ -44,7 +44,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          @target_image = TargetImage.new(params[:target_image])
+          @target_image = TargetImage.new(params[:target_image]) unless defined? @target_image
           if @target_image.save
             format.html { redirect_to image_management_target_image_path(@target_image), :notice => 'Image version was successfully created.' }
             format.xml { render :action => "show", :status => :created }
@@ -69,7 +69,7 @@ module ImageManagement
     def update
       respond_to do |format|
         begin
-          @target_image = ImageManagement::TargetImage.find(params[:id])
+          @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
 
           @target_image.update_attributes(params[:target_image])
           if @target_image.save
@@ -94,7 +94,7 @@ module ImageManagement
     # DELETE /target_images/1
     # DELETE /target_images/1.xml
     def destroy
-      @target_image = ImageManagement::TargetImage.find(params[:id])
+      @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
       @target_image.destroy
 
       respond_to do |format|

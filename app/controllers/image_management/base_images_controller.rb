@@ -7,7 +7,7 @@ module ImageManagement
     # GET /base_images
     # GET /base_images.xml
     def index
-      @base_images = ImageManagement::BaseImage.all
+      @base_images = ImageManagement::BaseImage.all unless defined? @base_images
 
       respond_to do |format|
         format.html # index.html.erb
@@ -18,7 +18,7 @@ module ImageManagement
     # GET /base_images/1
     # GET /base_images/1.xml
     def show
-      @base_image = ImageManagement::BaseImage.find(params[:id])
+      @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
 
       respond_to do |format|
         format.html # show.html.erb
@@ -38,7 +38,7 @@ module ImageManagement
 
     # GET /base_images/1/edit
     def edit
-      @base_image = ImageManagement::BaseImage.find(params[:id])
+      @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
     end
 
     # POST /base_images
@@ -46,7 +46,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          @base_image = ImageManagement::BaseImage.new(params[:base_image])
+          @base_image = ImageManagement::BaseImage.new(params[:base_image]) unless defined? @base_image
           if @base_image.save
             format.html { redirect_to image_management_base_image_path(@base_image), :notice => 'Image version was successfully created.' }
             format.xml { render :action => "show", :status => :created }
@@ -67,7 +67,7 @@ module ImageManagement
     def update
       respond_to do |format|
         begin
-          @base_image = ImageManagement::BaseImage.find(params[:id])
+          @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
           respond_to do |format|
             if @base_image.update_attributes(params[:base_image])
               format.html { redirect_to @base_image, :notice => 'Base image was successfully updated.' }
@@ -88,7 +88,7 @@ module ImageManagement
     # DELETE /base_images/1
     # DELETE /base_images/1.xml
     def destroy
-      @base_image = ImageManagement::BaseImage.find(params[:id])
+      @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
       @base_image.destroy
 
       respond_to do |format|

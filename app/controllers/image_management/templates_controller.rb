@@ -5,7 +5,7 @@ module ImageManagement
     # GET /templates
     # GET /templates.xml
     def index
-      @templates = ImageManagement::Template.all
+      @templates = ImageManagement::Template.all unless defined? @templates
 
       respond_to do |format|
         format.html # index.html.erb
@@ -16,7 +16,7 @@ module ImageManagement
     # GET /templates/1
     # GET /templates/1.xml
     def show
-      @template = ImageManagement::Template.find(params[:id])
+      @template = ImageManagement::Template.find(params[:id]) unless defined? @template
 
       respond_to do |format|
         format.html # show.html.erb
@@ -27,7 +27,7 @@ module ImageManagement
     # GET /templates/new
     # GET /templates/new.xml
     def new
-      @template = ImageManagement::Template.new
+      @template = ImageManagement::Template.new unless defined? @template
 
       respond_to do |format|
         format.html # new.html.erb
@@ -44,7 +44,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          @template = ImageManagement::Template.new(params[:template])
+          @template = ImageManagement::Template.new(params[:template]) unless defined? @template
 
           if @template.save
             format.html { redirect_to @template, :notice => 'Template was successfully created.' }
@@ -70,7 +70,7 @@ module ImageManagement
     def update
       respond_to do |format|
         begin
-          @template = ImageManagement::Template.find(params[:id])
+          @template = ImageManagement::Template.find(params[:id]) unless defined? @template
 
           if @template.update_attributes(params[:template])
             format.html { redirect_to @template, :notice => 'Template was successfully updated.' }
@@ -94,7 +94,7 @@ module ImageManagement
     # DELETE /templates/1
     # DELETE /templates/1.xml
     def destroy
-      @template = ImageManagement::Template.find(params[:id])
+      @template = ImageManagement::Template.find(params[:id]) unless defined? @template
       @template.destroy
 
       respond_to do |format|

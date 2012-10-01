@@ -3,7 +3,7 @@ module ImageManagement
     # GET /image_versions
     # GET /image_versions.xml
     def index
-      @image_versions = ImageManagement::ImageVersion.all
+      @image_versions = ImageManagement::ImageVersion.all unless defined? @image_versions
 
       respond_to do |format|
         format.html # index.html.erb
@@ -14,7 +14,7 @@ module ImageManagement
     # GET /image_versions/1
     # GET /image_versions/1.xml
     def show
-      @image_version = ImageManagement::ImageVersion.find(params[:id])
+      @image_version = ImageManagement::ImageVersion.find(params[:id]) unless defined? @image_version
 
       respond_to do |format|
         format.html # show.html.erb
@@ -25,7 +25,7 @@ module ImageManagement
     # GET /image_versions/new
     # GET /image_versions/new.xml
     def new
-      @image_version = ImageManagement::ImageVersion.new
+      @image_version = ImageManagement::ImageVersion.new unless defined? @image_version
 
       respond_to do |format|
         format.html # new.html.erb
@@ -34,7 +34,7 @@ module ImageManagement
 
     # GET /image_versions/1/edit
     def edit
-      @image_version = ImageManagement::ImageVersion.find(params[:id])
+      @image_version = ImageManagement::ImageVersion.find(params[:id]) unless defined? @image_version
     end
 
     # POST /image_versions
@@ -42,7 +42,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          @image_version = ImageVersion.new(params[:image_version])
+          @image_version = ImageVersion.new(params[:image_version]) unless defined? @image_version
           if @image_version.save
             format.html { redirect_to image_management_image_version_path(@image_version), :notice => 'Image version was successfully created.' }
             format.xml { render :action => "show", :status => :created }
@@ -63,7 +63,7 @@ module ImageManagement
     def update
       respond_to do |format|
         begin
-          @image_version = ImageManagement::ImageVersion.find(params[:id])
+          @image_version = ImageManagement::ImageVersion.find(params[:id]) unless defined? @image_version
 
           if @image_version.update_attributes(params[:image_version])
             format.html { redirect_to @image_version, :notice => 'Image version was successfully updated.' }
@@ -87,7 +87,7 @@ module ImageManagement
     # DELETE /image_versions/1
     # DELETE /image_versions/1.xml
     def destroy
-      @image_version = ImageManagement::ImageVersion.find(params[:id])
+      @image_version = ImageManagement::ImageVersion.find(params[:id]) unless defined? @image_version
       @image_version.destroy
 
       respond_to do |format|
