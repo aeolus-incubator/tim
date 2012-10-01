@@ -5,7 +5,7 @@ module ImageManagement
     # GET /provider_images
     # GET /provider_images.xml
     def index
-      @provider_images = ImageManagement::ProviderImage.all
+      @provider_images = ImageManagement::ProviderImage.all unless defined? @provider_images
 
       respond_to do |format|
         format.html # index.html.erb
@@ -16,7 +16,7 @@ module ImageManagement
     # GET /provider_images/1
     # GET /provider_images/1.xml
     def show
-      @provider_image = ImageManagement::ProviderImage.find(params[:id])
+      @provider_image = ImageManagement::ProviderImage.find(params[:id]) unless defined? @provider_image
 
       respond_to do |format|
         format.html # show.html.erb
@@ -36,7 +36,7 @@ module ImageManagement
 
     # GET /provider_images/1/edit
     def edit
-      @provider_image = ImageManagement::ProviderImage.find(params[:id])
+      @provider_image = ImageManagement::ProviderImage.find(params[:id]) unless defined? @provider_image
     end
 
     # POST /provider_images
@@ -44,7 +44,7 @@ module ImageManagement
     def create
       respond_to do |format|
         begin
-          @provider_image = ProviderImage.new(params[:provider_image])
+          @provider_image = ProviderImage.new(params[:provider_image]) unless defined? @provider_image
           if @provider_image.save
             format.html { redirect_to image_management_target_image_path(@provider_image), :notice => 'Image version was successfully created.' }
             format.xml { render :action => "show", :status => :created }
@@ -69,7 +69,7 @@ module ImageManagement
     def update
       respond_to do |format|
         begin
-          @provider_image = ImageManagement::ProviderImage.find(params[:id])
+          @provider_image = ImageManagement::ProviderImage.find(params[:id]) unless defined? @provider_image
 
           @provider_image.update_attributes(params[:provider_image])
           if @provider_image.save
@@ -94,7 +94,7 @@ module ImageManagement
     # DELETE /provider_images/1
     # DELETE /provider_images/1.xml
     def destroy
-      @provider_image = ImageManagement::ProviderImage.find(params[:id])
+      @provider_image = ImageManagement::ProviderImage.find(params[:id]) unless defined? @provider_image
       @provider_image.destroy
 
       respond_to do |format|

@@ -1,5 +1,5 @@
 module ImageManagement
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ::ApplicationController
     protect_from_forgery
 
     # FIXME Remove filter once support for custom XML with nested resources is
