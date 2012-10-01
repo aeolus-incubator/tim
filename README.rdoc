@@ -28,7 +28,7 @@ cd test/dummy; rails s
 Request
 
   curl -X POST --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/base_images --data \
+  "Content-Type: application/xml" http://localhost:3000/image_management/base_images --data \
   "<base_image>
     <name>MyFirstBaseImage</name>
     <description>This is my very first base image</description>
@@ -40,7 +40,7 @@ Response
 
   Body:
 
-  <base_image href='http://localhost:3000/base_images/1' id='1'>
+  <base_image href='http://localhost:3000/image_management/base_images/1' id='1'>
     <name>MyFirstBaseImage</name>
     <description>This is my very first base image</description>
   </base_image>
@@ -49,7 +49,7 @@ Response
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/base_images/1
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/base_images/1
 
 Response
 
@@ -57,7 +57,7 @@ Response
 
   Body:
 
-  <base_image href='http://localhost:3000/base_images/1' id='1'>
+  <base_image href='http://localhost:3000/image_management/base_images/1' id='1'>
     <name>MyFirstBaseImage</name>
     <description>This is my very first base image</description>
     <image_versions>
@@ -68,7 +68,7 @@ Response
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/base_images
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/base_images
 
 Response
 
@@ -77,16 +77,16 @@ Response
   Body:
 
   <base_images>
-    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
-    <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
-    <base_image href='http://localhost:3000/base_images/3' id='3'></base_image>
+    <base_image href='http://localhost:3000/image_management/base_images/1' id='1'></base_image>
+    <base_image href='http://localhost:3000/image_management/base_images/2' id='2'></base_image>
+    <base_image href='http://localhost:3000/image_management/base_images/3' id='3'></base_image>
   </base_images>
 
 ==== Delete Base Image
 
 Request
 
-  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/base_images/1
+  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/image_management/base_images/1
 
 Response
 
@@ -101,7 +101,7 @@ Response
 Request
 
   curl -X POST --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/image_versions --data \
+  "Content-Type: application/xml" http://localhost:3000/image_management/image_versions --data \
   "<image_version>
     <base_image id='1'></base_image>
   </image_version>"
@@ -112,8 +112,8 @@ Response
 
   Body:
 
-  <image_version href='http://localhost:3000/image_versions/5' id='5'>
-    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+  <image_version href='http://localhost:3000/image_management/image_versions/5' id='5'>
+    <base_image href='http://localhost:3000/image_management/base_images/1' id='1'></base_image>
     <target_images>
     </target_images>
   </image_version>
@@ -122,7 +122,7 @@ Response
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/image_versions/1
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/image_versions/1
 
 Response
 
@@ -130,8 +130,8 @@ Response
 
   Body:
 
-  <image_version href='http://localhost:3000/image_versions/1' id='1'>
-    <base_image href='http://localhost:3000/base_images/1' id='1'></base_image>
+  <image_version href='http://localhost:3000/image_management/image_versions/1' id='1'>
+    <base_image href='http://localhost:3000/image_management/base_images/1' id='1'></base_image>
     <target_images>
     </target_images>
   </image_version>
@@ -140,7 +140,7 @@ Response
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/image_versions
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/image_versions
 
 Response
 
@@ -149,16 +149,16 @@ Response
   Body:
 
   <image_versions>
-    <image_version href='http://localhost:3000/image_versions/1' id='1'></image_version>
-    <image_version href='http://localhost:3000/image_versions/2' id='2'></image_version>
-    <image_version href='http://localhost:3000/image_versions/3' id='3'></image_version>
+    <image_version href='http://localhost:3000/image_management/image_versions/1' id='1'></image_version>
+    <image_version href='http://localhost:3000/image_management/image_versions/2' id='2'></image_version>
+    <image_version href='http://localhost:3000/image_management/image_versions/3' id='3'></image_version>
   </image_versions>
 
 ==== Delete Image Version
 
 Request
 
-  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/image_versions/1
+  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/image_management/image_versions/1
 
 Response
 
@@ -171,7 +171,7 @@ Response
 Request
 
   curl -X PUT --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/image_versions/1 --data \
+  "Content-Type: application/xml" http://localhost:3000/image_management/image_versions/1 --data \
   "<image_version>
     <base_image id='2'></base_image>
   </image_version>"
@@ -182,8 +182,8 @@ Response
 
   body:
 
-  <image_version href='http://localhost:3000/image_versions/1' id='1'>
-    <base_image href='http://localhost:3000/base_images/2' id='2'></base_image>
+  <image_version href='http://localhost:3000/image_management/image_versions/1' id='1'>
+    <base_image href='http://localhost:3000/image_management/base_images/2' id='2'></base_image>
     <target_images>
     </target_images>
   </image_version>
@@ -193,7 +193,7 @@ Response
 Request
 
   curl -X POST --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/target_images --data \
+  "Content-Type: application/xml" http://localhost:3000/image_management/target_images --data \
   "<target_image>
     <image_version id='2' />
   </target_image>"
@@ -204,12 +204,12 @@ Response
 
   Body:
 
-<target_image href='http://localhost:3000/target_images/1' id='1'>
+<target_image href='http://localhost:3000/image_management/target_images/1' id='1'>
   <target>EC2</target>
   <status>BUILDING</status>
   <status_detail></status_detail>
   <progress>0</progress>
-  <image_version href='http://localhost:3000/image_versions/2' id='2'></image_version>
+  <image_version href='http://localhost:3000/image_management/image_versions/2' id='2'></image_version>
   <provider_images></provider_images>
 </target_image>
 
@@ -217,7 +217,7 @@ Response
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/target_images/1
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/target_images/1
 
 Response
 
@@ -225,12 +225,12 @@ Response
 
   Body:
 
-  <target_image href='http://localhost:3000/target_images/1' id='1'>
+  <target_image href='http://localhost:3000/image_management/target_images/1' id='1'>
     <target>EC2</target>
     <status>COMPLETE</status>
     <status_detail></status_detail>
     <progress>100</progress>
-    <image_version href='http://localhost:3000/image_versions/2' id='2'></image_version>
+    <image_version href='http://localhost:3000/image_management/image_versions/2' id='2'></image_version>
     <provider_images></provider_images>
   </target_image>
 
@@ -238,7 +238,7 @@ Response
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/target_images
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/target_images
 
 Response
 
@@ -247,16 +247,16 @@ Response
   Body:
 
   <target_images>
-    <target_image href='http://localhost:3000/target_images/1' id='1'></target_image>
-    <target_image href='http://localhost:3000/target_images/2' id='2'></target_image>
-    <target_image href='http://localhost:3000/target_images/3' id='3'></target_image>
+    <target_image href='http://localhost:3000/image_management/target_images/1' id='1'></target_image>
+    <target_image href='http://localhost:3000/image_management/target_images/2' id='2'></target_image>
+    <target_image href='http://localhost:3000/image_management/target_images/3' id='3'></target_image>
   </target_images>
 
 ==== Delete Target Image
 
 Request
 
-  curl -X DELETE --header "Accept: application/xml" http://localhost:3000/target_images/1
+  curl -X DELETE --header "Accept: application/xml" http://localhost:3000/image_management/target_images/1
 
 Response
 
@@ -269,7 +269,7 @@ Response
 Request
 
   curl -X PUT --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/target_images/2 --data \
+  "Content-Type: application/xml" http://localhost:3000/image_management/target_images/2 --data \
   "<target_image>
     <image_version id='3'></image_version>
   </target_image>"
@@ -283,7 +283,7 @@ Response
 Request
 
   curl -X POST --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/provider_images --data \
+  "Content-Type: application/xml" http://localhost:3000/image_management/provider_images --data \
   "<provider_image>
     <target_image id='1' />
   </provider_image>"
@@ -294,21 +294,21 @@ Response
 
   Body:
 
-  <provider_image href='http://localhost:3000/provider_images/85' id='85'>
+  <provider_image href='http://localhost:3000/image_management/provider_images/85' id='85'>
     <provider>Amazon EC2</provider>
     <external_image_id>ami-123456</external_image_id>
     <snapshot>false</snapshot>
     <status>NEW</status>
     <status_detail></status_detail>
     <progress>0</progress>
-    <target_image href='http://localhost:3000/target_images/1' id='1'></target_image>
+    <target_image href='http://localhost:3000/image_management/target_images/1' id='1'></target_image>
   </provider_image>
 
 ==== Show Provider Image
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/provider_images/1
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/provider_images/1
 
 Response
 
@@ -316,21 +316,21 @@ Response
 
   Body:
 
-  <provider_image href='http://localhost:3000/provider_images/85' id='85'>
+  <provider_image href='http://localhost:3000/image_management/provider_images/85' id='85'>
     <provider>Amazon EC2</provider>
     <external_image_id>ami-123456</external_image_id>
     <snapshot>false</snapshot>
     <status>NEW</status>
     <status_detail></status_detail>
     <progress>0</progress>
-    <target_image href='http://localhost:3000/target_images/1' id='1'></target_image>
+    <target_image href='http://localhost:3000/image_management/target_images/1' id='1'></target_image>
   </provider_image>
 
 ==== List Provider Images
 
 Request
 
-  curl --header "Accept: application/xml" http://localhost:3000/provider_images
+  curl --header "Accept: application/xml" http://localhost:3000/image_management/provider_images
 
 Response
 
@@ -339,16 +339,16 @@ Response
   Body:
 
   <provider_images>
-    <provider_image href='http://localhost:3000/provider_images/1' id='1'></provider_image>
-    <provider_image href='http://localhost:3000/provider_images/2' id='2'></provider_image>
-    <provider_image href='http://localhost:3000/provider_images/3' id='3'></provider_image>
+    <provider_image href='http://localhost:3000/image_management/provider_images/1' id='1'></provider_image>
+    <provider_image href='http://localhost:3000/image_management/provider_images/2' id='2'></provider_image>
+    <provider_image href='http://localhost:3000/image_management/provider_images/3' id='3'></provider_image>
   </provider_image>
 
 ==== Delete Target Image
 
 Request
 
-  curl -X DELETE --header "Accept: application/xml" http://localhost:3000/provider_images/1
+  curl -X DELETE --header "Accept: application/xml" http://localhost:3000/image_management/provider_images/1
 
 Response
 
@@ -361,7 +361,7 @@ Response
 Request
 
   curl -X PUT --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/provider_images/2 --data \
+  "Content-Type: application/xml" http://localhost:3000/image_management/provider_images/2 --data \
   "<provider_image>
     <target_image id='3'></target_image>
   </provider_image>"
@@ -372,12 +372,12 @@ Response
 
   Body:
 
-  <provider_image href='http://localhost:3000/provider_images/84' id='84'>
+  <provider_image href='http://localhost:3000/image_management/provider_images/84' id='84'>
     <provider></provider>
     <external_image_id></external_image_id>
     <snapshot></snapshot>
     <status></status>
     <status_detail></status_detail>
     <progress></progress>
-    <target_image href='http://localhost:3000/target_images/3' id='3'></target_image>
+    <target_image href='http://localhost:3000/image_management/target_images/3' id='3'></target_image>
   </provider_image>
