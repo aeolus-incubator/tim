@@ -381,3 +381,7 @@ Response
     <progress></progress>
     <target_image href='http://localhost:3000/image_management/target_images/3' id='3'></target_image>
   </provider_image>
+
+== License
+
+Image Management Engine is released under the MIT license.
