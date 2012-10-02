@@ -3,7 +3,7 @@
 module ImageManagement
   class UserKeysFilter
 
-    USER_KEYS = { "base_image"        => "base_image_attributes",
+    @@user_keys = { "base_image"        => "base_image_attributes",
                   "image_versions"    => "image_versions_attributes",
                   "image_version"     => "image_version_attributes",
                   "target_images"     => "target_image_attributes",
@@ -26,14 +26,14 @@ module ImageManagement
     def self.replace_user_keys(map)
       modified_map = map.clone
       map.each_pair do |key, value|
-        if USER_KEYS.has_key? key
+        if @@user_keys.has_key? key
           if map[key].instance_of? Hash
             # FIXME Using recursion in this way increases heap memory usage.
             # If we decide to stick with this approach a more memory efficient
             # implementation should be considered.
             modified_map[key] = replace_user_keys(map[key])
           end
-          modified_map[USER_KEYS[key]] = modified_map.delete(key)
+          modified_map[@@user_keys[key]] = modified_map.delete(key)
         end
       end
       modified_map
