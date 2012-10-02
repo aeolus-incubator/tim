@@ -4,9 +4,7 @@ module ImageManagement
   describe UserKeysFilter do
 
     before(:all) do |spec|
-      silence_warnings do
-        ImageManagement::UserKeysFilter::USER_KEYS = {:k1 => :a1, :k2 => :a2}
-      end
+      UserKeysFilter.class_variable_set(:@@user_keys, {:k1 => :a1, :k2 => :a2})
     end
 
     describe "replace user keys" do
