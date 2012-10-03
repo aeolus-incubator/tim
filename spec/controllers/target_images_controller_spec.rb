@@ -106,7 +106,7 @@ module ImageManagement
            it "should return an updated target image as xml" do
             target_image = FactoryGirl.create(:target_image_with_full_tree)
             target_image.image_version = FactoryGirl.create(:image_version)
-            post :update, :id => target_image.id, :target_image => target_image.attributes
+            put :update, :id => target_image.id, :target_image => target_image.attributes
             response.code.should == "200"
 
             body = Hash.from_xml(response.body)
@@ -119,7 +119,7 @@ module ImageManagement
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
             target_image = FactoryGirl.create(:target_image)
-            post :update, :id => target_image.id, :invalid_image => target_image.attributes
+            put :update, :id => target_image.id, :invalid_image => target_image.attributes
             response.code.should == "422"
           end
 
@@ -139,7 +139,7 @@ module ImageManagement
           target_image = FactoryGirl.create(:target_image_with_full_tree)
           factory_attributes = {:percent_complete => "100", :status_detail => {:activity => "Building Image"} }
           hash = target_image.attributes.merge(factory_attributes)
-          post :update, :id => target_image.id, :target_image => hash
+          put :update, :id => target_image.id, :target_image => hash
           response.code.should == "200"
 
           body = JSON.parse(response.body)
