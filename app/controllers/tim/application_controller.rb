@@ -4,7 +4,7 @@ module Tim
 
     respond_to :html, :xml
 
-    self.responder = Responder
+    self.responder = CustomResponder
 
     # FIXME Remove filter once support for custom XML with nested resources is
     # supported by rails.

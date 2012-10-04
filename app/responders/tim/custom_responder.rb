@@ -1,5 +1,5 @@
 module Tim
-  class Responder < ActionController::Responder
+  class CustomResponder < ActionController::Responder
     # We want different API Behaviour than in default renderer
     def api_behavior(error)
       raise error unless resourceful?
