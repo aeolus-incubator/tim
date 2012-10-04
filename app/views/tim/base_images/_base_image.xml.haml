@@ -1,0 +1,11 @@
+!!! XML
+%base_image{:id => base_image.id, :href => base_image_url(base_image.id) }
+  %name= base_image.name
+  %description= base_image.description
+  - if base_image.template
+    = render :partial => 'tim/templates/template_minimal', :locals => {:template => base_image.template}
+  %image_versions
+    - base_image.image_versions.each do |image_version|
+      = render :partial => 'tim/image_versions/image_version_minimal', :locals => {:image_version => image_version}
+  - if controller.template_exists?("custom", "tim/base_images", true)
+    = render :partial => 'tim/base_images/custom', :locals => {:base_image => base_image}

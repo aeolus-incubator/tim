@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-module ImageManagement
-  describe "/image_management/target_images/_target_image" do
+module Tim
+  describe "/tim/target_images/_target_image" do
     before(:each) do
       view.stub(:target_image).and_return FactoryGirl.build(:target_image)
       [:target_image_url, :image_version_url].each do |method|

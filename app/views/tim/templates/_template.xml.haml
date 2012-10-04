@@ -1,0 +1,4 @@
+!!! XML
+%template{:id => template.id, :href => template_url(template.id) }
+  - if controller.template_exists?("custom", "tim/templates", true)
+    = render :partial => 'tim/templates/custom', :locals => {:template => template}

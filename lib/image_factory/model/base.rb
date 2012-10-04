@@ -1,6 +1,6 @@
 require "uri"
 
-module ImageManagement
+module Tim
   module ImageFactory
     class Base < ActiveResource::Base
       self.format = :json

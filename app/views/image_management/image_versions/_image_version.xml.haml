@@ -1,9 +1,0 @@
-!!! XML
-%image_version{:id => image_version.id, :href => image_version_url(image_version.id) }
-  - if image_version.base_image
-    = render :partial => 'image_management/base_images/base_image_minimal', :locals => {:base_image => image_version.base_image}
-  %target_images
-    - image_version.target_images.each do |target_image|
-      = render :partial => 'image_management/target_images/target_image_minimal', :locals => {:target_image => target_image}
-  - if controller.template_exists?("custom", "image_management/image_versions", true)
-    = render :partial => 'image_management/image_versions/custom', :locals => {:image_version => image_version}

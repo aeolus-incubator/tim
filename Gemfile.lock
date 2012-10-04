@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    image_management (0.0.1)
+    tim (0.0.1)
       haml
       nokogiri
       rails (~> 3.2.8)
@@ -151,7 +151,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   factory_girl_rails
-  image_management!
   jquery-rails
   rspec-rails
   sqlite3
+  tim!

@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount ImageManagement::Engine => "/image_management"
+  mount Tim::Engine => "/tim"
 end
