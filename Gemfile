@@ -1,6 +1,6 @@
 source :rubygems
 
-# Declare your gem's dependencies in image_management.gemspec.
+# Declare your gem's dependencies in tim.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec

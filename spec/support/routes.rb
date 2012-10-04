@@ -28,14 +28,14 @@ module ControllerSetup
 
   def process_action(action, parameters = nil, session = nil, flash = nil, method = "GET")
     parameters ||= {}
-    process(action, parameters.merge!(:use_route => :image_management), session, flash, method)
+    process(action, parameters.merge!(:use_route => :tim), session, flash, method)
   end
 end
 
 RSpec.configure do |c|
    # This will include the routing helpers in the specs so that we can
    # use base_image_path and so on to get to the routes.
-   c.include ImageManagement::Engine.routes.url_helpers
+   c.include Tim::Engine.routes.url_helpers
    # Always use the correct route for controller tests
    c.include ControllerSetup, :type => :controller
 end

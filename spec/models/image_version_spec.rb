@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ImageManagement
+module Tim
   describe ImageVersion do
     describe "Model relationships" do
       before (:each) do

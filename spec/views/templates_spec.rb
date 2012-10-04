@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-module ImageManagement
-  describe "/image_management/templates/_template" do
+module Tim
+  describe "/tim/templates/_template" do
     before(:each) do
       view.stub(:template).and_return FactoryGirl.create(:template)
       [:template_url, :base_image].each do |method|

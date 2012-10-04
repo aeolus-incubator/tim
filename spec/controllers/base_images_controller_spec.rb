@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module ImageManagement
+module Tim
   describe BaseImagesController do
     render_views
 
