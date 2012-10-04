@@ -109,7 +109,7 @@ module ImageManagement
            it "should return an updated provider image as xml" do
             provider_image = FactoryGirl.create(:provider_image_with_full_tree)
             provider_image.target_image  = FactoryGirl.create(:target_image )
-            post :update, :id => provider_image.id, :provider_image => provider_image.attributes
+            put :update, :id => provider_image.id, :provider_image => provider_image.attributes
             response.code.should == "200"
 
             body = Hash.from_xml(response.body)
@@ -133,7 +133,7 @@ module ImageManagement
         end
       end
 
-      describe "Update Target Image via factory callback" do
+      describe "Update Provider Image via factory callback" do
         before(:each) do
           send_and_accept_json
         end
@@ -142,7 +142,7 @@ module ImageManagement
           provider_image = FactoryGirl.create(:provider_image_with_full_tree)
           factory_attributes = {:percent_complete => "100", "status_detail" => {:activity => "Building Image"} }
           hash = provider_image.attributes.merge(factory_attributes)
-          post :update, :id => provider_image.id, :provider_image => hash
+          put :update, :id => provider_image.id, :provider_image => hash
           response.code.should == "200"
 
           body = JSON.parse(response.body)

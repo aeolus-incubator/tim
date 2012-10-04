@@ -4,97 +4,46 @@ module ImageManagement
   class BaseImagesController < ApplicationController
     append_before_filter :set_template_xml, :only => [:create, :update]
 
-    # GET /base_images
-    # GET /base_images.xml
     def index
       @base_images = ImageManagement::BaseImage.all unless defined? @base_images
-
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml # index.xml
-      end
+      respond_with @base_images
     end
 
-    # GET /base_images/1
-    # GET /base_images/1.xml
     def show
       @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
-
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml # show.xml
-      end
+      respond_with @base_image
     end
 
-    # GET /base_images/new
-    # GET /base_images/new.xml
     def new
       @base_image = ImageManagement::BaseImage.new
-
-      respond_to do |format|
-        format.html # new.html.erb
-      end
+      respond_with @base_image
     end
 
-    # GET /base_images/1/edit
     def edit
       @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
+      respond_with @base_image
     end
 
-    # POST /base_images
-    # POST /base_images.xml
     def create
-      respond_to do |format|
-        begin
-          @base_image = ImageManagement::BaseImage.new(params[:base_image]) unless defined? @base_image
-          if @base_image.save
-            format.html { redirect_to image_management_base_image_path(@base_image), :notice => 'Image version was successfully created.' }
-            format.xml { render :action => "show", :status => :created }
-          else
-            format.html { render :action => "new" }
-            format.xml { render :xml => @base_image.errors, :status => :unprocessable_entity }
-          end
-        # TODO Add proper exception handling in application controller
-        rescue => e
-          format.html { render :action => "new" }
-          format.xml { render :xml => "<error>" + e.message + "</error>", :status => :unprocessable_entity }
-        end
+      @base_image = ImageManagement::BaseImage.new(params[:base_image]) unless defined? @base_image
+      if @base_image.save
+        flash[:notice] = "Successfully created Base Image"
       end
+      respond_with @base_image
     end
 
-    # PUT /base_images/1
-    # PUT /base_images/1.xml
     def update
-      respond_to do |format|
-        begin
-          @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
-          respond_to do |format|
-            if @base_image.update_attributes(params[:base_image])
-              format.html { redirect_to @base_image, :notice => 'Base image was successfully updated.' }
-              format.xml { head :no_content }
-            else
-              format.html { render :action => "edit" }
-              format.xml { render :xml => @base_image.errors, :status => :unprocessable_entity }
-            end
-          end
-        # TODO Add proper exception handling in application controller
-        rescue => e
-          format.html { render :action => "new" }
-          format.xml { render :xml => "<error>" + e.message + "</error>", :status => :unprocessable_entity }
-        end
+      @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
+      if @base_image.update_attributes(params[:base_image])
+        flash[:notice] = "Successfully updated Base Image"
       end
+      respond_with @base_image
     end
 
-    # DELETE /base_images/1
-    # DELETE /base_images/1.xml
     def destroy
       @base_image = ImageManagement::BaseImage.find(params[:id]) unless defined? @base_image
       @base_image.destroy
-
-      respond_to do |format|
-        format.html { redirect_to image_management_base_images_url }
-        format.xml { head :no_content }
-      end
+      respond_with(@base_image)
     end
 
     private

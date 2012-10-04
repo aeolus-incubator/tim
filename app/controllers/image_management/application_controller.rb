@@ -2,6 +2,10 @@ module ImageManagement
   class ApplicationController < ::ApplicationController
     protect_from_forgery
 
+    respond_to :html, :xml
+
+    self.responder = Responder
+
     # FIXME Remove filter once support for custom XML with nested resources is
     # supported by rails.
     before_filter UserKeysFilter, :only => [:create, :update]
