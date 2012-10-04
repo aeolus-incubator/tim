@@ -1,94 +1,43 @@
 module ImageManagement
   class TargetImagesController < ApplicationController
+    respond_to :json, :only => :update
+
     before_filter :factory_keys, :only => :update
 
-    # GET /target_images
-    # GET /target_images.xml
     def index
       @target_images = ImageManagement::TargetImage.all unless defined? @target_images
-
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml # index.xml
-      end
+      respond_with @target_images
     end
 
-    # GET /target_images/1
-    # GET /target_images/1.xml
     def show
       @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
-
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml # show.xml
-      end
+      respond_with @target_image
     end
 
-    # GET /target_images/new
-    # GET /target_images/new.xml
     def new
       @target_image = ImageManagement::TargetImage.new unless defined? @target_image
-
-      respond_to do |format|
-        format.html # new.html.erb
-      end
+      respond_with @target_image
     end
 
-    # GET /target_images/1/edit
     def edit
       @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
+      respond_with @target_image
     end
 
-    # POST /target_images
-    # POST /target_images.xml
     def create
-      respond_to do |format|
-        begin
-          @target_image = TargetImage.new(params[:target_image]) unless defined? @target_image
-          if @target_image.save
-            format.html { redirect_to image_management_target_image_path(@target_image), :notice => 'Image version was successfully created.' }
-            format.xml { render :action => "show", :status => :created }
-          else
-            format.html { render :action => "new" }
-            format.xml { render :xml => @target_image.errors, :status => :unprocessable_entity }
-          end
-        # TODO Add in proper exception handling in application controller
-        rescue => e
-          if e.instance_of? ActiveRecord::RecordNotFound
-            raise e
-          else
-            format.html { render :action => "new" }
-            format.xml { render :xml => e.message, :status => :unprocessable_entity }
-          end
-        end
+      @target_image = TargetImage.new(params[:target_image]) unless defined? @target_image
+      if @target_image.save
+        flash[:notice] = 'Image version was successfully created.'
       end
+      respond_with @target_image
     end
 
-    # PUT /target_images/1
-    # PUT /target_images/1.xml
     def update
-      respond_to do |format|
-        begin
-          @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
-
-          @target_image.update_attributes(params[:target_image])
-          if @target_image.save
-            format.html { redirect_to @target_image, :notice => 'Target image was successfully updated.' }
-            format.xml { render :action => "show" }
-            format.json { render :json => @target_image }
-          else
-            format.html { render :action => "edit" }
-            format.xml { render :xml => @target_image.errors, :status => :unprocessable_entity }
-            format.json { render :json => @target_image.errors, :status => :unprocessable_entity }
-          end
-        # TODO Add in proper exception handling in appliation controller
-        rescue => e
-          raise e if e.instance_of? ActiveRecord::RecordNotFound
-          format.html { render :action => "new" }
-          format.xml { render :xml => e.message, :status => :unprocessable_entity }
-          format.json { render :json => @target_image.errors, :status => :unprocessable_entity }
-        end
+      @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
+      if @target_image.update_attributes(params[:target_image])
+        flash[:notice] = 'Target image was successfully updated.'
       end
+      respond_with @target_image
     end
 
     # DELETE /target_images/1
@@ -96,11 +45,7 @@ module ImageManagement
     def destroy
       @target_image = ImageManagement::TargetImage.find(params[:id]) unless defined? @target_image
       @target_image.destroy
-
-      respond_to do |format|
-        format.html { redirect_to image_management_target_images_url }
-        format.xml { head :no_content }
-      end
+      respond_with @target_image
     end
 
     # TODO Add factory permission check
