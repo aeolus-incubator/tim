@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-module ImageManagement
-  describe "/image_management/base_images/_base_image" do
+module Tim
+  describe "/tim/base_images/_base_image" do
     before(:each) do
       view.stub(:base_image).and_return FactoryGirl.create(:base_image)
       view.stub(:base_image_url)

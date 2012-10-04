@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ImageManagement
+module Tim
   describe TargetImage do
 
     #TODO FIX: A bug in RSpec V2.1 means that any_instance propogates across context therefore we are  stubbing each 

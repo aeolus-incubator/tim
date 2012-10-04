@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20120423123114264114) do
 
-  create_table "image_management_base_images", :force => true do |t|
+  create_table "tim_base_images", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "template_id"
@@ -23,14 +23,14 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
     t.integer  "pool_family_id"
   end
 
-  create_table "image_management_image_versions", :force => true do |t|
+  create_table "tim_image_versions", :force => true do |t|
     t.integer  "base_image_id"
     t.integer  "template_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "image_management_provider_images", :force => true do |t|
+  create_table "tim_provider_images", :force => true do |t|
     t.string   "factory_id"
     t.integer  "target_image_id"
     t.string   "provider"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
     t.datetime "updated_at",          :null => false
   end
 
-  create_table "image_management_target_images", :force => true do |t|
+  create_table "tim_target_images", :force => true do |t|
     t.string   "factory_id"
     t.integer  "image_version_id"
     t.string   "target"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
     t.integer  "provider_type_id"
   end
 
-  create_table "image_management_templates", :force => true do |t|
+  create_table "tim_templates", :force => true do |t|
     t.text     "xml"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

@@ -1,4 +1,4 @@
-ImageManagement::Engine.routes.draw do
+Tim::Engine.routes.draw do
   resources :base_images
   resources :image_versions
   resources :target_images

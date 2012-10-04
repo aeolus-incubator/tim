@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ImageManagement
+module Tim
   describe BaseImage do
     describe "Model relationships" do
       it 'should have many image versions' do

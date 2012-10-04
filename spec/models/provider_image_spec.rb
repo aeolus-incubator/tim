@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ImageManagement
+module Tim
   describe ProviderImage do
     before (:each) do
       TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)

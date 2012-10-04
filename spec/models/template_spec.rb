@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ImageManagement
+module Tim
   describe Template do
     describe "Model relationships" do
       it 'should have many base images' do

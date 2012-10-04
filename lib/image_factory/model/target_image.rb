@@ -1,4 +1,4 @@
-module ImageManagement
+module Tim
   module ImageFactory
     class TargetImage < Base
     end
