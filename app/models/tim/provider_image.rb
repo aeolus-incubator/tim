@@ -22,7 +22,7 @@ module Tim
                                                           # TODO Remove this when upgrading to 3.2
                                                           # target conflicts with rails 3.0.10
                                                           # ActiveRecord::Associations::Association#target
-                                                          :target => target_image.target.target,
+                                                          :target => target_image.target,
                                                           :parameters => "")
         # TODO There is a bug in ARes 3.0.10 that will add map name twice when setting in mass assign.  So we set
         # parameters separately.
