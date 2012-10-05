@@ -16,6 +16,6 @@ notifications:
     channels:
       - "irc.freenode.org#aeolus"
     use_notice: true
-    skip_join: false
+    skip_join: true
     on_success: change
     on_failure: change

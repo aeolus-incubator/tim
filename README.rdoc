@@ -2,7 +2,12 @@
 
 == Running Tests
 
-Tests are run from the project root directory.  But are run in the context of the dummy app located under test/dummy.  In order to run the tests you must first setup dummy app database.
+{<img src="https://secure.travis-ci.org/aeolus-incubator/tim.png"
+alt="Build Status" />}[http://travis-ci.org/aeolus-incubator/tim]
+
+Tests are run from the project root directory.  But are run in the
+context of the dummy app located under test/dummy.  In order to run
+the tests you must first setup dummy app database.
 
 rake db:setup; rake -f test/dummy/Rakefile test:prepare
 
