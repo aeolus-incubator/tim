@@ -50,9 +50,9 @@ module Tim
     # TODO Add factory permission check
     def factory_keys
       if params[:provider_image][:percent_complete] && params[:provider_image][:status_detail][:activity]
-        params[:provider_image][:progress] = params[:provider_image].delete(:percent_complete)
-        params[:provider_image][:status_detail] = params[:provider_image].delete(:status_detail)[:activity]
-        params[:provider_image][:status] = params[:provider_image].delete(:status)
+        params[:provider_image] = { :progress => params[:provider_image][:percent_complete],
+                                    :status_detail => params[:provider_image][:status_detail][:activity],
+                                    :status => params[:provider_image][:status] }
       end
     end
   end
