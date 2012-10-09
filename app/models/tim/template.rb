@@ -7,9 +7,6 @@ module Tim
 
     has_many :base_images
 
-    accepts_nested_attributes_for :base_images
-
-    attr_accessible :base_images_attributes
     attr_accessible :xml
     attr_protected :id
 
