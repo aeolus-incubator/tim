@@ -1,5 +1,6 @@
-# FIXME Remove filter once support for custom XML with nested resources is
-# supported.
+# FIXME Remove replace_user_keys(map) once support for custom XML with nested
+# resources is supported.
+
 module Tim
   class UserKeysFilter
 
@@ -13,8 +14,10 @@ module Tim
                   "template"          => "template_attributes" }
 
     def self.before(controller)
+      
       begin
         resource_name = controller.controller_name.singularize.to_sym
+        set_template_params(resource_name, controller)
         controller.params[resource_name] = replace_user_keys(controller.params[resource_name])
       rescue => e
         controller.head :unprocessable_entity
@@ -38,5 +41,12 @@ module Tim
       end
       modified_map
     end
+
+    def self.set_template_params(resource_name, controller)
+      if resource_name == :template
+        controller.params[:template] = { :xml => controller.request.body.read }
+      end
+    end
+
   end
 end

@@ -1,6 +1,5 @@
 module Tim
   class TemplatesController < ApplicationController
-    before_filter :template_params, :only => [:update, :create]
 
     def index
       @templates = Tim::Template.all unless defined? @templates
@@ -44,9 +43,5 @@ module Tim
       respond_with @template
     end
 
-    private
-    def template_params
-      params[:template][:xml] = request.body.read
-    end
   end
 end
