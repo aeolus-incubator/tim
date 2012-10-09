@@ -1,0 +1,6 @@
+See the newly installed tim.rb in your initializers directory for
+default settings.
+
+As an example. you can choose different classes for Tim to hook
+into for user, provider_account, and provider_type, just specify those
+classes here.
