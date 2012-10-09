@@ -1,5 +1,8 @@
 !!! XML
 %template{:id => template.id, :href => template_url(template.id) }
   != template.xml_elements
+  %base_images
+    - template.base_images.each do |base_image|
+      = render :partial => 'tim/base_images/base_image_minimal', :locals => {:base_image => base_image}
   - if controller.template_exists?("custom", "tim/templates", true)
     = render :partial => 'tim/templates/custom', :locals => {:template => template}

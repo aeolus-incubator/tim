@@ -22,7 +22,7 @@ module Tim
              response.code.should == "201"
              template_xml = ::Nokogiri::XML::Document.parse(response.body)
              template_xml.xpath("//template/*").to_xml
-               .should == template.xml_elements
+               .include?(template.xml_elements).should == true
              template_xml.xpath("//template/@*").map { |node| node.name}
                .should =~ ["id", "href"]
           end

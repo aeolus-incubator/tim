@@ -1,0 +1,26 @@
+:template:
+  base_image:      base_image_attributes
+
+:base_image:
+  template:        template_attributes
+  image_versions:  image_versions_attributes
+  target_images:   target_images_attributes
+  provider_images: provider_images_attributes
+
+:image_version:
+  template:        template_attributes
+  base_image:      base_image_attributes
+  target_images:   target_images_attributes
+  provider_images: provider_images_attributes
+
+:target_image:
+  template:        template_attributes
+  base_image:      base_image_attributes
+  image_version:   image_version_attributes
+  provider_images: provider_images_attributes
+
+:provider_image:
+  template:        template_attributes
+  base_image:      base_image_attributes
+  image_version:   image_version_attributes
+  target_image:    target_image_attributes
