@@ -5,5 +5,5 @@ Tim::Engine.routes.draw do
   resources :provider_images
   resources :templates
 
-  root :to => "base_images#index"
+  root :to => "entrypoint#index"
 end
