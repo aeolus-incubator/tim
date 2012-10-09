@@ -1,5 +1,10 @@
+require "nokogiri"
+
 module Tim
   class Template < Tim::Base
+    include ActiveModel::Validations
+    validates_with TemplateValidator
+
     has_many :base_images
 
     accepts_nested_attributes_for :base_images

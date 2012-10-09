@@ -4,7 +4,7 @@ module Tim
   describe Template do
     describe "Model relationships" do
       it 'should have many base images' do
-        template = Template.new
+        template = FactoryGirl.build(:template)
         2.times do
           template.base_images << BaseImage.new
         end
