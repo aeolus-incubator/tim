@@ -7,13 +7,15 @@ module Tim
     @@user_keys = YAML.load(File.read(File.join(Tim::Engine.root, "config", "user_keys.yml")))
 
     def self.before(controller)
-      begin
-        @controller = controller
-        resource_name = @controller.controller_name.singularize.to_sym
-        set_template_params(resource_name)
-        @controller.params[resource_name] = replace_user_keys(@controller.params[resource_name], @@user_keys[resource_name])
-      rescue => e
-        @controller.head :unprocessable_entity
+      if controller.request.format == "application/xml"
+        begin
+          @controller = controller
+          resource_name = @controller.controller_name.singularize.to_sym
+          set_template_params(resource_name)
+          @controller.params[resource_name] = replace_user_keys(@controller.params[resource_name], @@user_keys[resource_name])
+        rescue => e
+          @controller.head :unprocessable_entity
+        end
       end
     end
 
