@@ -24,7 +24,10 @@ module Tim
 
     describe "replace user keys" do
       it 'should get the correct hash from params via controller name' do
+         request = mock("Request")
+         request.stub(:format).and_return "application/xml"
          controller = double("ApplicationController")
+         controller.stub(:request).and_return request
          controller.stub(:controller_name).and_return "resources"
          controller.stub(:params).and_return({:resource => {:k1 => {:k2 => :v2}}})
 
