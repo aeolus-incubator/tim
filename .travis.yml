@@ -1,7 +1,9 @@
 language: ruby
 rvm:
   - 1.9.3
-  - rbx-19mode
+# Disable rbx for now, seems to have a bug
+# https://github.com/rubinius/rubinius/issues/1813
+#  - rbx-19mode
 env:
   - SUITE=spec
 install:
