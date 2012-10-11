@@ -14,7 +14,7 @@ module Tim
 
       it "should have one template" do
         base_image = BaseImage.new
-        base_image.template = Template.new
+        base_image.template = FactoryGirl.build(:template)
         base_image.save!
         BaseImage.find(base_image).template.should == base_image.template
       end

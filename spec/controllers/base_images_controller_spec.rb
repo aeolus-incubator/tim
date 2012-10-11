@@ -22,6 +22,7 @@ module Tim
           end
 
           it "should return a new base image with template as xml" do
+            Template.any_instance.stub(:valid?).and_return true
             post :create, { :base_image => { :name => "Name",
                                              :description => "Description",
                                              :template => {:xml => "<template></template>" }}}
