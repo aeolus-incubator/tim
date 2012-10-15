@@ -1,5 +1,5 @@
 module Tim
-  class ImageVersionsController < Tim::ApplicationController
+  class ImageVersionsController < ApplicationController
 
     def index
       @image_versions = Tim::ImageVersion.all unless defined? @image_versions

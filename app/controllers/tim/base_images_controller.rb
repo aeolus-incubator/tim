@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 module Tim
-  class BaseImagesController < Tim::ApplicationController
+  class BaseImagesController < ApplicationController
     append_before_filter :set_template_xml, :only => [:create, :update]
 
     def index
