@@ -1,5 +1,5 @@
 module Tim
-  class TemplatesController < ApplicationController
+  class TemplatesController < Tim::ApplicationController
 
     def index
       @templates = Tim::Template.all unless defined? @templates

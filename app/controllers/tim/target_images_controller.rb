@@ -1,5 +1,5 @@
 module Tim
-  class TargetImagesController < ApplicationController
+  class TargetImagesController < Tim::ApplicationController
     respond_to :json, :only => :update
 
     before_filter :factory_keys, :only => :update
