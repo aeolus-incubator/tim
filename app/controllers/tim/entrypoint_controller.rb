@@ -1,5 +1,5 @@
 module Tim
-  class EntrypointController < ApplicationController
+  class EntrypointController < Tim::ApplicationController
     respond_to :xml
 
     def index
