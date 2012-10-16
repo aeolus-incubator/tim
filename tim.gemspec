@@ -9,7 +9,8 @@ Gem::Specification.new do |s|
   s.version     = Tim::VERSION
   s.authors     = ["Martyn Taylor", "Jason Guiditta"]
   s.email       = ["aeolus-devel@lists.fedorahosted.org"]
-  s.homepage    = "https://github.com/aeolus-incubator/image-management-engine"
+  s.homepage    = "https://github.com/aeolus-incubator/tim"
+  s.license     = 'MIT'
   s.summary     = "Embeddable client for Aeolus Image Factory"
   s.description = "Rails engine client for the Aeolus Image Factory cross-cloud virtual machine image builder."
 
