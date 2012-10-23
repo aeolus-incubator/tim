@@ -26,18 +26,136 @@ cd test/dummy; rails s
 
 == API Reference
 
-=== Base Images
+=== Templates
 
 ==== Create Base Image
 
 Request
 
-  curl -X POST --header "Accept: application/xml" --header \
-  "Content-Type: application/xml" http://localhost:3000/tim/base_images --data \
-  "<base_image>
+  curl -X POST --header "Accept: application/xml" --header "Content-Type: application/xml" --data "
+  <template>
+     <name>mock</name>
+     <os>
+       <name>RHEL-6</name>
+       <version>1</version>
+       <arch>x86_64</arch>
+       <install type=\"iso\">
+         <iso>http://mockhost/RHELMock1-x86_64-DVD.iso</iso>
+       </install>
+       <rootpw>password</rootpw>
+    </os>
+    <description>Mock Template</description>
+  </template>
+  " http://localhost:3000/tim/templates
+ 
+Response
+
+  Code: 201
+
+  Body:
+
+  <template href='http://localhost:3000/tim/templates/34' id='34'>
+    <name>mock</name><os>
+        <name>RHEL-6</name>
+        <version>1</version>
+        <arch>x86_64</arch>
+        <install type="iso">
+          <iso>http://mockhost/RHELMock1-x86_64-DVD.iso</iso>
+        </install>
+        <rootpw>password</rootpw>
+      </os><description>Mock Template</description>
+    <base_images>
+    </base_images>
+    <custom_content>custom</custom_content>
+  </template>
+
+
+=== Show Template
+
+Request
+
+  curl --header "Accept:application/xml" http://localhost:3000/tim/templates/34
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <template href='http://localhost:3000/tim/templates/34' id='34'>
+    <name>mock</name><os>
+        <name>RHEL-6</name>
+        <version>1</version>
+        <arch>x86_64</arch>
+        <install type="iso">
+          <iso>http://mockhost/RHELMock1-x86_64-DVD.iso</iso>
+        </install>
+        <rootpw>password</rootpw>
+      </os><description>Mock Template</description>
+    <base_images>
+    </base_images>
+    <custom_content>custom</custom_content>
+  </template>
+
+=== List Templates
+
+Request
+
+  curl --header "Accept:application/xml" http://localhost:3000/tim/templates
+
+Response
+
+  Code: 200
+
+  Body:
+
+  <templates>
+    <template href='http://localhost:3000/tim/templates/33' id='33'></template>
+    <template href='http://localhost:3000/tim/templates/35' id='35'></template>
+    <template href='http://localhost:3000/tim/templates/36' id='36'></template>
+  </templates>
+
+=== Update Template - Not Allowed
+
+=== Delete Template
+
+Request
+
+  curl -X DELETE --header "Accept: application/xml" http://localhost:3000/tim/templates/34
+
+Response
+
+  Code: 204
+
+  Body:
+
+=== Base Images
+
+==== Create Base Image with Template
+
+===== with New Template
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header "Content-Type: application/xml" --data "
+  <base_image>
     <name>MyFirstBaseImage</name>
     <description>This is my very first base image</description>
-  </base_image>"
+    <template>
+      <name>mock</name>
+      <os>
+        <name>RHEL-6</name>
+        <version>1</version>
+        <arch>x86_64</arch>
+        <install type=\"iso\">
+          <iso>http://mockhost/RHELMock1-x86_64-DVD.iso</iso>
+        </install>
+        <rootpw>password</rootpw>
+      </os>
+      <description>Mock Template</description>
+    </template>
+  </base_image>
+  " http://localhost:3000/tim/base_images
 
 Response
 
@@ -45,10 +163,63 @@ Response
 
   Body:
 
-  <base_image href='http://localhost:3000/tim/base_images/1' id='1'>
+  <base_image href='http://localhost:3000/tim/base_images/15' id='15'>
     <name>MyFirstBaseImage</name>
     <description>This is my very first base image</description>
+    <template href='http://localhost:3000/tim/templates/36' id='36'></template>
+    <image_versions>
+    </image_versions>
   </base_image>
+
+
+==== Create Base Image with Template, a single Image Version with a Single Target Image
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header "Content-Type: application/xml" --data "
+  <base_image>
+    <name>MyFirstBaseImage</name>
+    <description>ThisIsABaseImage</description>
+    <template>
+      <name>mock</name>
+      <os>
+        <name>RHEL-6</name>
+        <version>1</version>
+        <arch>x86_64</arch>
+        <install type=\"iso\">
+          <iso>http://mockhost/RHELMock1-x86_64-DVD.iso</iso>
+        </install>
+        <rootpw>password</rootpw>
+      </os>
+      <description>Mock Template</description>
+    </template>
+    <image_versions type='array'>
+     <image_version>
+        <target_images type='array'>
+          <target_image>
+            <target>MockSphere</target>
+          </target_image>
+        </target_images>
+      </image_version>
+    </image_versions>
+  </base_image>
+  " http://localhost:3000/tim/base_images
+
+Response
+
+  Code: 201
+
+  Body:
+
+  <base_image href='http://localhost:3000/tim/base_images/16' id='16'>
+    <name>MyFirstBaseImage</name>
+    <description>ThisIsABaseImage</description>
+    <template href='http://localhost:3000/tim/templates/37' id='37'></template>
+    <image_versions>
+      <image_version href='http://localhost:3000/tim/image_versions/12' id='12'></image_version>
+    </image_versions>
+  </base_image>
+
 
 ==== Show Base Image
 
@@ -66,6 +237,7 @@ Response
     <name>MyFirstBaseImage</name>
     <description>This is my very first base image</description>
     <image_versions>
+      <image_version href='http://localhost:3000/tim/image_versions/1' id='1'></image_version>
     </image_versions>
   </base_image>
 
@@ -91,7 +263,7 @@ Response
 
 Request
 
-  curl -X DELETE--header "Accept: application/xml" http://localhost:3000/tim/base_images/1
+  curl -X DELETE --header "Accept: application/xml" http://localhost:3000/tim/base_images/1
 
 Response
 
@@ -108,7 +280,7 @@ Request
   curl -X POST --header "Accept: application/xml" --header \
   "Content-Type: application/xml" http://localhost:3000/tim/image_versions --data \
   "<image_version>
-    <base_image id='1'></base_image>
+    <base_image id='3'></base_image>
   </image_version>"
 
 Response
