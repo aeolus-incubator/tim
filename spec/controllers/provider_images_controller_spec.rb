@@ -33,6 +33,18 @@ module Tim
               "snapshot", "status_detail", "progress", "href", "id","target_image", "status"]
             body["provider_image"]["target_image"]["id"].should == provider_image.target_image .id.to_s
           end
+
+          it "should return a new provider image awith existing target image" do
+            target_image = FactoryGirl.create(:target_image)
+            post :create, { :provider_image => { :target_image => { :id => target_image.id }}}
+            response.code.should == "201"
+
+            body = Hash.from_xml(response.body)
+            body.keys.should  == ["provider_image"]
+            body["provider_image"].keys.should  =~ ["external_image_id", "provider",
+              "snapshot", "status_detail", "progress", "href", "id","target_image", "status"]
+            body["provider_image"]["target_image"]["id"].should == target_image .id.to_s
+          end
         end
 
         context "failure" do

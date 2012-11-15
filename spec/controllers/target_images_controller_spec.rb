@@ -31,6 +31,17 @@ module Tim
             body["target_image"].keys.should  =~ ["target", "status", "status_detail", "progress", "href", "id", "provider_images", "image_version"]
             body["target_image"]["image_version"]["id"].should == target_image.image_version.id.to_s
           end
+
+          it "should create a new target image as with existing image version" do
+            image_version = FactoryGirl.create(:image_version)
+            post :create, { :target_image => {:image_version => {:id => image_version.id}, :target => "mock"}}
+            response.code.should == "201"
+
+            body = Hash.from_xml(response.body)
+            body.keys.should  == ["target_image"]
+            body["target_image"].keys.should  =~ ["target", "status", "status_detail", "progress", "href", "id", "provider_images", "image_version"]
+            body["target_image"]["image_version"]["id"].should == image_version.id.to_s
+          end
         end
 
         context "failure" do

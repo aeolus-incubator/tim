@@ -2,7 +2,8 @@ require 'nokogiri'
 
 module Tim
   class BaseImagesController < Tim::ApplicationController
-    append_before_filter :set_template_xml, :only => [:create, :update]
+    prepend_before_filter ResourceLinkFilter.new({ :base_image => :template }),
+                :only => [:create]
 
     def index
       @base_images = Tim::BaseImage.all unless defined? @base_images
@@ -44,15 +45,6 @@ module Tim
       @base_image = Tim::BaseImage.find(params[:id]) unless defined? @base_image
       @base_image.destroy
       respond_with(@base_image)
-    end
-
-    private
-    # Handles the cases when the template xml is supplied within request
-    def set_template_xml
-      doc = ::Nokogiri::XML request.body.read
-      if !doc.xpath("//base_image/template").empty?
-        params[:base_image][:template] = { :xml => doc.xpath("//base_image/template").children.to_s}
-      end
     end
 
   end
