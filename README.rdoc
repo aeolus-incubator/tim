@@ -28,7 +28,7 @@ cd test/dummy; rails s
 
 === Templates
 
-==== Create Base Image
+==== Create Template
 
 Request
 
@@ -132,6 +132,32 @@ Response
 === Base Images
 
 ==== Create Base Image with Template
+
+===== with Existing Template
+
+Request
+
+  curl -X POST --header "Accept: application/xml" --header "Content-Type: application/xml" --data "
+  <base_image>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+    <template href='http://localhost:3000/tim/templates/3' id='3'></template>
+  </base_image>
+  " http://localhost:3000/tim/base_images
+
+Response
+
+  Code: 201
+
+  Body:
+
+  <base_image href='http://localhost:3000/tim/base_images/15' id='15'>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+    <template href='http://localhost:3000/tim/templates/36' id='36'></template>
+    <image_versions>
+    </image_versions>
+  </base_image>
 
 ===== with New Template
 
