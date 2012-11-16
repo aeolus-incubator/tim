@@ -1,5 +1,7 @@
 module Tim
   class ImageVersionsController < Tim::ApplicationController
+    prepend_before_filter ResourceLinkFilter.new({ :image_version => :base_image }),
+                :only => [:create]
 
     def index
       @image_versions = Tim::ImageVersion.all unless defined? @image_versions

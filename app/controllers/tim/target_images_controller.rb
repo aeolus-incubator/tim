@@ -2,6 +2,8 @@ module Tim
   class TargetImagesController < Tim::ApplicationController
     respond_to :json, :only => :update
 
+    prepend_before_filter ResourceLinkFilter.new({ :target_image => :image_version }),
+                :only => [:create]
     before_filter :factory_keys, :only => :update
 
     def index
