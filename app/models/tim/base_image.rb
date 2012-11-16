@@ -7,7 +7,7 @@ module Tim
     accepts_nested_attributes_for :template
     accepts_nested_attributes_for :image_versions
 
-    attr_accessible :template, :name, :description
+    attr_accessible :template, :name, :description, :import
     attr_accessible :template_attributes
     attr_accessible :image_versions_attributes, :as => :admin
     attr_protected :id

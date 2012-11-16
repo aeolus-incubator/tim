@@ -6,12 +6,18 @@ module Tim
     accepts_nested_attributes_for :target_image
 
     attr_accessible :target_image_attributes
+    attr_accessible :external_image_id, :if => :imported?
     attr_accessible :status, :status_detail, :progress #, :as => :image_factory
     attr_accessible :provider
     attr_writer :credentials
     attr_protected :id
 
-    after_create :create_factory_provider_image
+    after_create :create_factory_provider_image, :unless => :imported?
+    after_create :create_import, :if => :imported?
+
+    def imported?
+      target_image.imported?
+    end
 
     private
     def create_factory_provider_image
@@ -46,6 +52,16 @@ module Tim
       self.provider = factory_provider_image.provider
       self.external_image_id = factory_provider_image.identifier_on_provider
       self.provider_account_id = factory_provider_image.provider_account_identifier
+    end
+
+    # TODO At the moment this method simply sets fields to import defaults.
+    # We should investigate whether we can check the image exists and if the
+    # user can access it.  Deltacloud?
+    def create_import
+      self.status = "IMPORTED"
+      self.status_detail = "Imported Image"
+      self.progress = "COMPLETE"
+      self.save
     end
   end
 end

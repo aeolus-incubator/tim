@@ -10,6 +10,7 @@ module Tim
         TargetImage.any_instance.stub(:template).and_return(FactoryGirl.build(:template))
         ProviderImage.any_instance.stub(:create_factory_provider_image).and_return(true)
         TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
+        TargetImage.any_instance.stub(:imported?).and_return(false)
         @status_detail = mock(:status)
         @status_detail.stub(:activity).and_return("Building")
         ImageFactory::TargetImage.stub(:create).and_return(FactoryGirl.build(:image_factory_target_image, :status_detail => @status_detail))

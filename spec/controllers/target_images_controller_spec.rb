@@ -9,6 +9,7 @@ module Tim
         send_and_accept_xml
         TargetImage.any_instance.stub(:template).and_return(FactoryGirl.build(:template))
         TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
+        TargetImage.any_instance.stub(:imported?).and_return(false)
         @status_detail = mock(:status)
         @status_detail.stub(:activity).and_return("Building")
         TargetImagesController.any_instance.stub(:template_exists?).and_return false
@@ -32,8 +33,8 @@ module Tim
             body["target_image"]["image_version"]["id"].should == target_image.image_version.id.to_s
           end
 
-          it "should create a new target image as with existing image version" do
-            image_version = FactoryGirl.create(:image_version)
+          it "should create a new target image for imported images" do
+            image_version = FactoryGirl.create(:image_version_import)
             post :create, { :target_image => {:image_version => {:id => image_version.id}, :target => "mock"}}
             response.code.should == "201"
 
