@@ -11,5 +11,8 @@ module Tim
     attr_accessible :template_attributes
     attr_accessible :image_versions_attributes, :as => :admin
     attr_protected :id
+
+    validates_presence_of :name
+    validates_presence_of :template
   end
 end

@@ -16,6 +16,9 @@ module Tim
 
     after_create :create_factory_target_image
 
+    validates_presence_of :image_version
+    validates_presence_of :provider_type
+
     def template
       image_version.base_image.template
     end
