@@ -15,7 +15,7 @@ module Tim
     end
 
     def new
-      @base_image = Tim::BaseImage.new
+      @base_image = Tim::BaseImage.new unless defined? @base_image
       respond_with @base_image
     end
 
