@@ -15,7 +15,6 @@ module Tim
 
     def new
       @image_version = Tim::ImageVersion.new unless defined? @image_version
-      @image_version = Tim::ImageVersion.new
       respond_with @image_version
     end
 
