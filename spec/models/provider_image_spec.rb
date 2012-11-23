@@ -4,6 +4,8 @@ module Tim
   describe ProviderImage do
     before (:each) do
       TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
+      Tim::ProviderImage.any_instance.stub(:imported?).and_return(false)
+      Tim::TargetImage.any_instance.stub(:imported?).and_return(false)
     end
 
     describe "Model relationships" do
@@ -63,6 +65,12 @@ module Tim
           pi.provider_account_id.should == "mock-account-123"
         end
 
+        it "should not make a request to factory if the base image is imported" do
+          Tim::ProviderImage.any_instance.stub(:imported?).and_return(true)
+          ti = FactoryGirl.build(:provider_image_import)
+          ti.should_not_receive(:create_factory_provider_image)
+          ti.save
+        end
       end
     end
   end

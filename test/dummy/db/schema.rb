@@ -13,14 +13,30 @@
 
 ActiveRecord::Schema.define(:version => 20120423123114264114) do
 
+  create_table "pool_families", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "provider_accounts", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "provider_types", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "tim_base_images", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "template_id"
     t.integer  "user_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "pool_family_id"
+    t.boolean  "import",         :default => false
   end
 
   create_table "tim_image_versions", :force => true do |t|
@@ -58,21 +74,6 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
 
   create_table "tim_templates", :force => true do |t|
     t.text     "xml"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "pool_families", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "provider_accounts", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "provider_types", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

@@ -7,6 +7,7 @@ module Tim
         .stub(:create_factory_target_image)
       Tim::TargetImage.any_instance.stub(:template)
         .and_return FactoryGirl.build(:template)
+      Tim::TargetImage.any_instance.stub(:imported?).and_return(false)
 
       view.stub(:provider_image).and_return FactoryGirl.build(:provider_image)
       [:provider_image_url, :target_image_url].each do |method|
