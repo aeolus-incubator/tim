@@ -246,6 +246,31 @@ Response
     </image_versions>
   </base_image>
 
+==== Import Image
+
+  curl -X POST --header "Accept: application/xml" --header "Content-Type: application/xml" --data "
+  <base_image>
+    <name>MyFirstBaseImage</name>
+    <description>This is my very first base image</description>
+    <template href='http://localhost:3000/tim/templates/3' id='3'></template>
+    <import>true</import>
+    <image_versions type='array'>
+      <image_version>
+        <target_images type='array'>
+          <target_image>
+            <target>ec2</target>
+            <provider_images type='array'>
+              <provider_image>
+                <provider>Amazon EC2</provider>
+                <external_image_id>ami-123456</external_image_id>
+              </provider_image>
+            </provider_images>
+          </target_image>
+        </target_images>
+      </image_version>
+    </image_versions>
+  </base_image>
+  " http://localhost:3000/tim/base_images
 
 ==== Show Base Image
 
