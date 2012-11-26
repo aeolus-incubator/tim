@@ -14,10 +14,15 @@ module Tim
 
     attr_protected :id
 
-    after_create :create_factory_target_image
+    after_create :create_factory_target_image, :unless => :imported?
+    after_create :create_import, :if => :imported?
 
     def template
       image_version.base_image.template
+    end
+
+    def imported?
+      image_version.base_image.import
     end
 
     private
@@ -46,5 +51,11 @@ module Tim
       self.progress = factory_target_image.percent_complete
     end
 
+    def create_import
+      self.progress = "COMPLETE"
+      self.status = "IMPORTED"
+      self.status_detail = "Imported Image"
+      self.save
+    end
   end
 end

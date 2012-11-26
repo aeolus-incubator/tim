@@ -16,5 +16,9 @@ module Tim
         FactoryGirl.create_list(:target_image, 2, :image_version => image_version)
       end
     end
+
+    factory :image_version_import, :parent => :image_version do
+      association :base_image, :factory => :base_image_import
+    end
   end
 end

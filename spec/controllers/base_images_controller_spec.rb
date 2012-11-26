@@ -30,7 +30,7 @@ module Tim
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["base_image"]
-            body["base_image"].keys.should =~ ["template", "id", "href", "name", "description", "image_versions"]
+            body["base_image"].keys.should =~ ["template", "id", "href", "name", "description", "image_versions", "import"]
             body["base_image"]["template"].keys.should =~ ["id", "href"]
           end
         end
@@ -44,7 +44,7 @@ module Tim
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["base_image"]
-            body["base_image"].keys.should =~ ["template", "id", "href", "name", "description", "image_versions"]
+            body["base_image"].keys.should =~ ["template", "id", "href", "name", "description", "image_versions", "import"]
             body["base_image"]["template"].keys.should =~ ["id", "href"]
           end
 
@@ -66,7 +66,7 @@ module Tim
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["base_image"]
-            body["base_image"].keys.should =~ ["id", "href", "name", "description", "image_versions"]
+            body["base_image"].keys.should =~ ["id", "href", "name", "description", "image_versions", "import"]
           end
 
           it "should return an existing base image as XML with template" do
@@ -77,7 +77,7 @@ module Tim
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["base_image"]
-            body["base_image"].keys.should =~ ["template", "id", "href", "name", "description", "image_versions"]
+            body["base_image"].keys.should =~ ["template", "id", "href", "name", "description", "image_versions", "import"]
             body["base_image"]["template"].keys.should =~ ["id", "href"]
           end
 
@@ -93,7 +93,7 @@ module Tim
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["base_image"]
-            body["base_image"].keys.should =~ ["image_versions", "template", "id", "href", "name", "description"]
+            body["base_image"].keys.should =~ ["image_versions", "template", "id", "href", "name", "description", "import"]
             body["base_image"]["image_versions"]["image_version"].size.should == 2
           end
         end

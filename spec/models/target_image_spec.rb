@@ -3,6 +3,9 @@ require 'spec_helper'
 module Tim
   describe TargetImage do
 
+    before (:each) do
+      Tim::TargetImage.any_instance.stub(:imported?).and_return(false)
+    end
     #TODO FIX: A bug in RSpec V2.1 means that any_instance propogates across context therefore we are  stubbing each 
     #target_image.   This bug is fixed in RSpec V2.6 
     describe "Model relationships" do
@@ -69,6 +72,12 @@ module Tim
           ti.progress.should == "0"
         end
 
+        it "should not make a request to factory if the base image is imported" do
+          Tim::TargetImage.any_instance.stub(:imported?).and_return(true)
+          ti = FactoryGirl.build(:target_image_import)
+          ti.should_not_receive(:create_factory_target_image)
+          ti.save
+        end
       end
     end
   end

@@ -4,6 +4,7 @@ describe ProviderAccount do
   describe "Dummy Model relationships" do
     before(:each) do
       Tim::ProviderImage.any_instance.stub(:create_factory_provider_image).and_return(true)
+      Tim::ProviderImage.any_instance.stub(:imported?).and_return(false)
     end
 
     it 'should have many provider images' do
