@@ -1,6 +1,6 @@
 module Tim
   class ProviderImage < Tim::Base
-    belongs_to :target_image
+    belongs_to :target_image, :inverse_of => :provider_images
     belongs_to :provider_account, :class_name => Tim.provider_account_class
 
     accepts_nested_attributes_for :target_image
