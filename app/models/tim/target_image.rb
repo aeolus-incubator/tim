@@ -8,6 +8,8 @@ module Tim
     accepts_nested_attributes_for :image_version
     accepts_nested_attributes_for :provider_images
 
+    validates_presence_of :image_version, :target
+
     attr_accessible :image_version_attributes
     attr_accessible :provider_images_attributes
     attr_accessible :status, :status_detail, :progress #, :as => :image_factory

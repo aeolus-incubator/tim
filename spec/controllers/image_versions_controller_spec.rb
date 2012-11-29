@@ -15,7 +15,8 @@ module Tim
 
         context "Success" do
            it "should return a new image version as xml" do
-            post :create, { :image_version => {}}
+           image_version = FactoryGirl.build(:image_version_with_full_tree)
+            post :create, { :image_version => image_version.attributes }
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -23,7 +24,8 @@ module Tim
           end
 
           it "should return a new image version with base image as xml" do
-            post :create, { :image_version => {:base_image => {:name => "Name"}}}
+            image_version = FactoryGirl.build(:image_version_with_full_tree)
+            post :create, { :image_version => image_version.attributes }
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -33,7 +35,7 @@ module Tim
           end
 
           it "should return a new image version with existing base image" do
-            base_image = FactoryGirl.create(:base_image)
+            base_image = FactoryGirl.create(:base_image_with_template)
             post :create, { :image_version => {:base_image => {:id => base_image.id}}}
             response.code.should == "201"
 
@@ -55,7 +57,7 @@ module Tim
       describe "Show Image Version" do
         context "Success" do
           it "should return an existing image version as XML" do
-            image_version = FactoryGirl.create(:image_version_with_base_image)
+            image_version = FactoryGirl.create(:image_version_with_full_tree)
             get :show, :id => image_version.id
 
             response.code.should == "200"
@@ -90,7 +92,7 @@ module Tim
         context "Success" do
           it "should return a list of existing base images as XML" do
             3.times do
-              FactoryGirl.create(:image_version_with_base_image)
+              FactoryGirl.create(:image_version_with_full_tree)
             end
 
             get :index
@@ -107,7 +109,7 @@ module Tim
       describe "Delete Image Version" do
         context "Success" do
           it "should return a no content code when deleting an image version" do
-            image_version = FactoryGirl.create(:image_version)
+            image_version = FactoryGirl.create(:image_version_with_full_tree)
             delete :destroy, :id => image_version.id
             response.code.should == "204"
 
@@ -128,7 +130,7 @@ module Tim
         context "Success" do
            it "should return an updated image version as xml" do
             image_version = FactoryGirl.create(:image_version_with_full_tree)
-            image_version.base_image = FactoryGirl.create(:base_image)
+            image_version.base_image = FactoryGirl.create(:base_image_with_template)
             put :update, :id => image_version.id, :image_version => image_version.attributes
             response.code.should == "200"
 
@@ -141,7 +143,7 @@ module Tim
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            image_version = FactoryGirl.create(:image_version)
+            image_version = FactoryGirl.create(:image_version_with_full_tree)
             post :update, :id => image_version.id, :invalid_image => image_version.attributes
             response.code.should == "422"
           end

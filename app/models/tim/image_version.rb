@@ -6,6 +6,8 @@ module Tim
     accepts_nested_attributes_for :base_image
     accepts_nested_attributes_for :target_images
 
+    validates_presence_of :base_image
+
     attr_accessible :base_image_attributes
     attr_accessible :target_images_versions_attributes
     attr_protected :id

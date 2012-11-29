@@ -6,7 +6,7 @@ module Tim
       it 'should have many base images' do
         template = FactoryGirl.build(:template)
         2.times do
-          template.base_images << BaseImage.new
+          template.base_images << FactoryGirl.build(:base_image)
         end
         template.save!
         Template.find(template).base_images.size.should == 2

@@ -12,6 +12,9 @@ module Tim
     attr_writer :credentials
     attr_protected :id
 
+    validates_presence_of :target_image
+    validates_presence_of :external_image_id, :if => :imported?
+
     after_create :create_factory_provider_image, :unless => :imported?
     after_create :create_import, :if => :imported?
 

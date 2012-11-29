@@ -10,8 +10,8 @@ module Tim
 
     describe "Model relationships" do
       it 'should have one target image' do
-        provider_image = ProviderImage.new
-        provider_image.target_image = TargetImage.new
+        provider_image = FactoryGirl.build(:provider_image)
+        provider_image.target_image = FactoryGirl.build(:target_image_with_full_tree)
         provider_image.stub(:create_factory_provider_image).and_return(true)
         provider_image.save!
         ProviderImage.find(provider_image).target_image.should == provider_image.target_image
@@ -20,7 +20,7 @@ module Tim
 
     describe "Dummy model relationships" do
       it "should have one provider account" do
-        provider_image = ProviderImage.new
+        provider_image = FactoryGirl.build(:provider_image_with_full_tree)
         provider_image.provider_account = ProviderAccount.new
         provider_image.stub(:create_factory_provider_image).and_return(true)
         provider_image.save!
@@ -41,7 +41,7 @@ module Tim
           target = mock(:target)
           target.stub(:target).and_return("mock")
 
-          pi = FactoryGirl.build(:provider_image)
+          pi = FactoryGirl.build(:provider_image_with_full_tree)
           pi.target_image.target = target
           pi.should_receive(:populate_factory_fields)
           pi.save

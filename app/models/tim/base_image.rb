@@ -8,6 +8,9 @@ module Tim
     accepts_nested_attributes_for :template
     accepts_nested_attributes_for :image_versions
 
+    validates_presence_of :name
+    validates_presence_of :template, :unless => :import
+
     attr_accessible :template, :name, :description, :import
     attr_accessible :template_attributes
     attr_accessible :image_versions_attributes, :as => :admin

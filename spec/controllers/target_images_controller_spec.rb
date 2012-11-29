@@ -47,7 +47,7 @@ module Tim
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            post :create, { :invalid_image => FactoryGirl.build(:target_image).attributes }
+            post :create, { :invalid_image => FactoryGirl.build(:target_image_with_full_tree).attributes }
             response.code.should == "422"
           end
         end
@@ -80,7 +80,7 @@ module Tim
         context "Success" do
           it "should return a list of existing target images as XML" do
             3.times do
-              FactoryGirl.create(:target_image)
+              FactoryGirl.create(:target_image_with_full_tree)
             end
 
             get :index
@@ -96,7 +96,7 @@ module Tim
       describe "Delete Target Image" do
         context "Success" do
           it "should return a no content code when deleting a target image" do
-            target_image = FactoryGirl.create(:target_image)
+            target_image = FactoryGirl.create(:target_image_with_full_tree)
             delete :destroy, :id => target_image.id
             response.code.should == "204"
 
@@ -117,7 +117,7 @@ module Tim
         context "Success" do
            it "should return an updated target image as xml" do
             target_image = FactoryGirl.create(:target_image_with_full_tree)
-            target_image.image_version = FactoryGirl.create(:image_version)
+            target_image.image_version = FactoryGirl.create(:image_version_with_full_tree)
             put :update, :id => target_image.id, :target_image => target_image.attributes
             response.code.should == "200"
 
@@ -130,13 +130,13 @@ module Tim
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            target_image = FactoryGirl.create(:target_image)
+            target_image = FactoryGirl.create(:target_image_with_full_tree)
             put :update, :id => target_image.id, :invalid_image => target_image.attributes
             response.code.should == "422"
           end
 
           it "should return a not found code when updating a target image that does not exist" do
-            delete :update, :id => -1, :target_image => FactoryGirl.build(:target_image).attributes
+            delete :update, :id => -1, :target_image => FactoryGirl.build(:target_image_with_full_tree).attributes
             response.code.should == "404"
           end
         end
