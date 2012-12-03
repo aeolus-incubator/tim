@@ -12,5 +12,14 @@ module Tim
         Template.find(template).base_images.size.should == 2
       end
     end
+
+    describe "XML helper methods" do
+      it 'should return os struct' do
+        os = FactoryGirl.build(:template).os
+        os.name.should == 'Fedora'
+        os.version.should == '15'
+        os.arch.should == 'x86_64'
+      end
+    end
   end
 end
