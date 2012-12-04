@@ -8,22 +8,22 @@ module Tim
 
     def index
       @provider_images = Tim::ProviderImage.all unless defined? @provider_images
-      respond_with @provider_images
+      respond_with(@provider_images, @respond_options)
     end
 
     def show
       @provider_image = Tim::ProviderImage.find(params[:id]) unless defined? @provider_image
-      respond_with @provider_image
+      respond_with(@provider_image, @respond_options)
     end
 
     def new
       @provider_image = Tim::ProviderImage.new
-      respond_with @provider_image
+      respond_with(@provider_image, @respond_options)
     end
 
     def edit
       @provider_image = Tim::ProviderImage.find(params[:id]) unless defined? @provider_image
-      respond_with @provider_image
+      respond_with(@provider_image, @respond_options)
     end
 
     def create
@@ -31,7 +31,7 @@ module Tim
       if @provider_image.save
         flash[:notice] = 'Image version was successfully created.'
       end
-      respond_with @provider_image
+      respond_with(@provider_image, @respond_options)
     end
 
     def update
@@ -39,13 +39,13 @@ module Tim
       if @provider_image.update_attributes(params[:provider_image])
         flash[:notice] = 'Provider image was successfully updated.'
       end
-      respond_with @provider_image
+      respond_with(@provider_image, @respond_options)
     end
 
     def destroy
       @provider_image = Tim::ProviderImage.find(params[:id]) unless defined? @provider_image
       @provider_image.destroy
-      respond_with @provider_image
+      respond_with(@provider_image, @respond_options)
     end
 
     private
