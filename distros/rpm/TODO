@@ -1,0 +1,3 @@
+* Make tim version dynamic for build script
+* Have the rpm spec pull the gem version from the gemspec, if possible
+* Make rpmbuild directory flexible/settable
