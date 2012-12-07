@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["{spec,test}/**/*"]
+  s.test_files.reject! { |fn| fn.match(/sqlite|tmp|log/) }
 
   s.add_dependency "rails", "~> 3.2.8"
   s.add_dependency "haml"
