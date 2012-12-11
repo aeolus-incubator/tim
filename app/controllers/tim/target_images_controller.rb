@@ -8,22 +8,22 @@ module Tim
 
     def index
       @target_images = Tim::TargetImage.all unless defined? @target_images
-      respond_with @target_images
+      respond_with(@target_images, @respond_options)
     end
 
     def show
       @target_image = Tim::TargetImage.find(params[:id]) unless defined? @target_image
-      respond_with @target_image
+      respond_with(@target_image, @respond_options)
     end
 
     def new
       @target_image = Tim::TargetImage.new unless defined? @target_image
-      respond_with @target_image
+      respond_with(@target_image, @respond_options)
     end
 
     def edit
       @target_image = Tim::TargetImage.find(params[:id]) unless defined? @target_image
-      respond_with @target_image
+      respond_with(@target_image, @respond_options)
     end
 
     def create
@@ -31,7 +31,7 @@ module Tim
       if @target_image.save
         flash[:notice] = 'Image version was successfully created.'
       end
-      respond_with @target_image
+      respond_with(@target_image, @respond_options)
     end
 
     def update
@@ -39,7 +39,7 @@ module Tim
       if @target_image.update_attributes(params[:target_image])
         flash[:notice] = 'Target image was successfully updated.'
       end
-      respond_with @target_image
+      respond_with(@target_image, @respond_options)
     end
 
     # DELETE /target_images/1
@@ -47,7 +47,7 @@ module Tim
     def destroy
       @target_image = Tim::TargetImage.find(params[:id]) unless defined? @target_image
       @target_image.destroy
-      respond_with @target_image
+      respond_with(@target_image, @respond_options)
     end
 
     # TODO Add factory permission check
