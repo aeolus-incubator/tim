@@ -11,6 +11,11 @@ module Tim
       Dir[Rails.root.join('app', 'decorators', '**', '*_decorator.rb')].each do |d|
         require d
       end
+
+      # Load everything under patches dir
+      Dir[Tim::Engine.root.join('app', 'patches', '**', '*.rb')].each do |p|
+        require p
+      end
     end
   end
 end
