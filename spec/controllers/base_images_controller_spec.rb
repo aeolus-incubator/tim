@@ -14,7 +14,10 @@ module Tim
 
         context "Success" do
           it "should return a new base image as xml" do
-            post :create, { :base_image => { :name => "Name", :description => "Description"}}
+            template = FactoryGirl.build(:template)
+            post :create, { :base_image => { :name => "Name",
+                                             :description => "Description",
+                                             :template_attributes => {:xml => template.xml }}}
             response.code.should == "201"
 
             body = Hash.from_xml(response.body)
@@ -59,7 +62,7 @@ module Tim
       describe "Show Base Image" do
         context "Success" do
           it "should return an existing base image as XML" do
-            base_image = FactoryGirl.create(:base_image)
+            base_image = FactoryGirl.create(:base_image, :import => true)
             get :show, :id => base_image.id
 
             response.code.should == "200"
@@ -110,7 +113,7 @@ module Tim
         context "Success" do
           it "should return a list of existing base images as XML" do
             3.times do
-              FactoryGirl.create(:base_image)
+              FactoryGirl.create(:base_image_with_template)
             end
 
             get :index
@@ -126,7 +129,7 @@ module Tim
       describe "List Delete Image" do
         context "Success" do
           it "should return a no content code when deleting an image" do
-            base_image = FactoryGirl.create(:base_image)
+            base_image = FactoryGirl.create(:base_image_with_template)
             delete :destroy, :id => base_image.id
             response.code.should == "204"
           end

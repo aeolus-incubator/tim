@@ -1,11 +1,14 @@
 module Tim
   class TargetImage < Tim::Base
-    belongs_to :image_version
+    belongs_to :image_version, :inverse_of => :target_images
+    has_many :provider_images, :inverse_of => :target_image
+
     belongs_to :provider_type, :class_name => Tim.provider_type_class
-    has_many :provider_images
 
     accepts_nested_attributes_for :image_version
     accepts_nested_attributes_for :provider_images
+
+    validates_presence_of :image_version, :target
 
     attr_accessible :image_version_attributes
     attr_accessible :provider_images_attributes

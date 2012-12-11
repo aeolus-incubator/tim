@@ -10,7 +10,7 @@ describe ProviderType do
     it 'should have many target images' do
       provider_type = ProviderType.new
       2.times do
-        provider_type.target_images << Tim::TargetImage.new
+        provider_type.target_images << FactoryGirl.build(:target_image_with_full_tree)
       end
       provider_type.save!
       ProviderType.find(provider_type).target_images.size.should == 2

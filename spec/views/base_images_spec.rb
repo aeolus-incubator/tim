@@ -3,8 +3,9 @@ require 'spec_helper'
 module Tim
   describe "/tim/base_images/_base_image" do
     before(:each) do
-      view.stub(:base_image).and_return FactoryGirl.create(:base_image)
+      view.stub(:base_image).and_return FactoryGirl.create(:base_image_with_template)
       view.stub(:base_image_url)
+      view.stub(:template_url)
     end
 
     it "should render custom content partial when it is defined" do

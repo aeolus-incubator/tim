@@ -5,7 +5,7 @@ module Tim
     include ActiveModel::Validations
     validates_with TemplateValidator
 
-    has_many :base_images
+    has_many :base_images, :inverse_of => :template
 
     attr_accessible :xml
     attr_protected :id
