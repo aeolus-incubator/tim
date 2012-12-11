@@ -36,7 +36,7 @@ module Tim
           end
 
           it "should return a new provider image awith existing target image" do
-            target_image = FactoryGirl.create(:target_image)
+            target_image = FactoryGirl.create(:target_image_with_full_tree)
             post :create, { :provider_image => { :target_image => { :id => target_image.id }}}
             response.code.should == "201"
 
@@ -50,7 +50,7 @@ module Tim
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            post :create, { :invalid_image => FactoryGirl.build(:provider_image).attributes }
+            post :create, { :invalid_image => FactoryGirl.build(:provider_image_with_full_tree).attributes }
             response.code.should == "422"
           end
         end
@@ -84,7 +84,7 @@ module Tim
         context "Success" do
           it "should return a list of existing provider images as XML" do
             3.times do
-              FactoryGirl.create(:provider_image)
+              FactoryGirl.create(:provider_image_with_full_tree)
             end
 
             get :index
@@ -100,7 +100,7 @@ module Tim
       describe "Delete Provider Image" do
         context "Success" do
           it "should return a no content code when deleting a provider image" do
-            provider_image = FactoryGirl.create(:provider_image)
+            provider_image = FactoryGirl.create(:provider_image_with_full_tree)
             delete :destroy, :id => provider_image.id
             response.code.should == "204"
 
@@ -121,7 +121,7 @@ module Tim
         context "Success" do
            it "should return an updated provider image as xml" do
             provider_image = FactoryGirl.create(:provider_image_with_full_tree)
-            provider_image.target_image  = FactoryGirl.create(:target_image )
+            provider_image.target_image  = FactoryGirl.create(:target_image_with_full_tree )
             put :update, :id => provider_image.id, :provider_image => provider_image.attributes
             response.code.should == "200"
 
@@ -134,13 +134,13 @@ module Tim
 
         context "failure" do
           it "should return a unprocessable entity error when the client sends invalid content" do
-            provider_image = FactoryGirl.create(:provider_image)
+            provider_image = FactoryGirl.create(:provider_image_with_full_tree)
             post :update, :id => provider_image.id, :invalid_image => provider_image.attributes
             response.code.should == "422"
           end
 
           it "should return a not found code when updating a Provider image that does not exist" do
-            delete :update, :id => -1, :provider_image => FactoryGirl.create(:provider_image).attributes
+            delete :update, :id => -1, :provider_image => FactoryGirl.create(:provider_image_with_full_tree).attributes
             response.code.should == "404"
           end
         end

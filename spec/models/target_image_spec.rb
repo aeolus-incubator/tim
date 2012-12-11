@@ -10,15 +10,15 @@ module Tim
     #target_image.   This bug is fixed in RSpec V2.6 
     describe "Model relationships" do
       it 'should have one images version' do
-        target_image = TargetImage.new
+        target_image = FactoryGirl.build(:target_image)
         target_image.stub(:create_factory_target_image).and_return(true)
-        target_image.image_version = ImageVersion.new
+        target_image.image_version = FactoryGirl.build(:image_version_with_full_tree)
         target_image.save!
         TargetImage.find(target_image).image_version.should == target_image.image_version
       end
 
       it 'should have many provider images' do
-        target_image = TargetImage.new
+        target_image = FactoryGirl.build(:target_image_with_full_tree)
         target_image.stub(:create_factory_target_image).and_return(true)
         ProviderImage.any_instance.stub(:create_factory_provider_image).and_return(true)
         2.times do
@@ -31,7 +31,7 @@ module Tim
 
     describe "Dummy model relationships" do
       it "should have one provider type" do
-        target_image = TargetImage.new
+        target_image = FactoryGirl.build(:target_image_with_full_tree)
         target_image.stub(:create_factory_target_image).and_return(true)
         target_image.provider_type = ProviderType.new
         target_image.save!

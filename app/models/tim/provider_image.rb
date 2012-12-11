@@ -1,6 +1,6 @@
 module Tim
   class ProviderImage < Tim::Base
-    belongs_to :target_image
+    belongs_to :target_image, :inverse_of => :provider_images
     belongs_to :provider_account, :class_name => Tim.provider_account_class
 
     accepts_nested_attributes_for :target_image
@@ -11,6 +11,9 @@ module Tim
     attr_accessible :provider
     attr_writer :credentials
     attr_protected :id
+
+    validates_presence_of :target_image
+    validates_presence_of :external_image_id, :if => :imported?
 
     after_create :create_factory_provider_image, :unless => :imported?
     after_create :create_import, :if => :imported?

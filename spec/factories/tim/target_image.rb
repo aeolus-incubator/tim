@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :target_image, :class => Tim::TargetImage do
-    association :image_version, :factory => :image_version
     target 'Mock'
   end
 
