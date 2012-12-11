@@ -4,7 +4,7 @@ module Tim
 
     respond_to :html, :xml
 
-    self.responder = CustomResponder
+    append_before_filter :set_default_respond_options
 
     # FIXME Remove filter once support for custom XML with nested resources is
     # supported by rails.
@@ -14,6 +14,11 @@ module Tim
 
     def render_not_found
       render :nothing => true, :status => :not_found
+    end
+
+    private
+    def set_default_respond_options
+      @respond_options = { :responder => CustomResponder } unless defined? @respond_options
     end
   end
 end
