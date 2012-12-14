@@ -29,7 +29,7 @@ module Tim
     def create
       @provider_image = ProviderImage.new(params[:provider_image]) unless defined? @provider_image
       if @provider_image.save
-        flash[:notice] = 'Image version was successfully created.'
+        flash[:notice] = 'Provider image was successfully created.'
       end
       respond_with(@provider_image, @respond_options)
     end
