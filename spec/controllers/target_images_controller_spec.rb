@@ -29,7 +29,8 @@ module Tim
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["target_image"]
-            body["target_image"].keys.should  =~ ["target", "status", "status_detail", "progress", "href", "id", "provider_images", "image_version"]
+            body["target_image"].keys.should  =~ ["target", "status", "status_detail", "progress", "href", "id",
+                                                  "provider_images", "image_version", "build_method"]
             body["target_image"]["image_version"]["id"].should == target_image.image_version.id.to_s
           end
 
@@ -40,7 +41,8 @@ module Tim
 
             body = Hash.from_xml(response.body)
             body.keys.should  == ["target_image"]
-            body["target_image"].keys.should  =~ ["target", "status", "status_detail", "progress", "href", "id", "provider_images", "image_version"]
+            body["target_image"].keys.should  =~ ["target", "status", "status_detail", "progress", "href", "id",
+                                                  "provider_images", "image_version", "build_method"]
             body["target_image"]["image_version"]["id"].should == image_version.id.to_s
           end
         end
@@ -64,7 +66,7 @@ module Tim
             body = Hash.from_xml(response.body)
             body.keys.should  == ["target_image"]
             body["target_image"].keys.should =~ ["id", "href", "image_version", 
-              "provider_images", "target", "status", "status_detail", "progress"]
+              "provider_images", "target", "status", "status_detail", "progress", "build_method"]
           end
         end
 

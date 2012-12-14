@@ -25,8 +25,7 @@ module Tim
     private
     def create_factory_provider_image
       begin
-        provider_image = ImageFactory::ProviderImage.new(:target_image_id => self.target_image.factory_id,
-                                                         :provider => self.provider,
+        provider_image = ImageFactory::ProviderImage.new(:provider => self.provider,
                                                          :credentials => @credentials,
                                                           # TODO Remove this when upgrading to 3.2
                                                           # target conflicts with rails 3.0.10
@@ -38,6 +37,13 @@ module Tim
         # Setting parameters at mass assign results in json => {"target_image":"parameters":{"parameters":{"..."}}}"
         # This should be tested and removed if fixed in 3.2
         provider_image.parameters = { :callbacks => ["#{ImageFactory::ProviderImage.callback_url}/#{self.id}"] }
+        if target_image.snapshot?
+          provider_image.parameters[:snapshot] = true
+          provider_image.template = self.target_image.template.xml
+        else
+          provider_image.target_image_id = self.target_image.factory_id
+        end
+
         provider_image.save!
         populate_factory_fields(provider_image)
         self.save

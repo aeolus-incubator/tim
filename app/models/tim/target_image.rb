@@ -17,7 +17,7 @@ module Tim
 
     attr_protected :id
 
-    after_create :create_factory_target_image, :unless => :imported?
+    after_create :create_factory_target_image, :if => :create_factory_target_image?
     after_create :create_import, :if => :imported?
 
     def template
@@ -26,6 +26,10 @@ module Tim
 
     def imported?
       image_version.base_image.import
+    end
+
+    def snapshot?
+      build_method == "SNAPSHOT"
     end
 
     private
@@ -59,6 +63,11 @@ module Tim
       self.status = "IMPORTED"
       self.status_detail = "Imported Image"
       self.save
+    end
+
+    private 
+    def create_factory_target_image?
+      !imported? && !snapshot?
     end
   end
 end
