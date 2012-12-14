@@ -71,6 +71,12 @@ module Tim
           ti.should_not_receive(:create_factory_provider_image)
           ti.save
         end
+
+        it "should make a request to factory if the target image build type is SNAPSHOT" do
+          ti = FactoryGirl.build(:provider_image)
+          ti.should_not_receive(:create_factory_provider_image)
+          ti.save
+        end
       end
     end
   end

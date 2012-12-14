@@ -67,9 +67,10 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
     t.string   "status"
     t.string   "status_detail"
     t.string   "progress"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "provider_type_id"
+    t.string   "build_method",     :default => "BARE_METAL"
   end
 
   create_table "tim_templates", :force => true do |t|

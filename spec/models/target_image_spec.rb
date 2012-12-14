@@ -78,6 +78,12 @@ module Tim
           ti.should_not_receive(:create_factory_target_image)
           ti.save
         end
+
+        it "should not make a request to factory if the target image is build method is SNAPSHOT" do
+          ti = FactoryGirl.build(:target_image_import, :build_method => "SNAPSHOT")
+          ti.should_not_receive(:create_factory_target_image)
+          ti.save
+        end
       end
     end
   end
