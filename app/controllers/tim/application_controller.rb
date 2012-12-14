@@ -1,7 +1,5 @@
 module Tim
   class ApplicationController < ::ApplicationController
-    protect_from_forgery
-
     respond_to :html, :xml
 
     append_before_filter :set_default_respond_options
