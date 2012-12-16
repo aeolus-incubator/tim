@@ -42,8 +42,9 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
   create_table "tim_image_versions", :force => true do |t|
     t.integer  "base_image_id"
     t.integer  "template_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.string   "factory_base_image_id"
   end
 
   create_table "tim_provider_images", :force => true do |t|
