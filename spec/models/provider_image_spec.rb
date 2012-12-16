@@ -62,7 +62,7 @@ module Tim
           pi.progress.should == "10"
           pi.provider.should == "MockSphere"
           pi.external_image_id.should == "mock-123456"
-          pi.provider_account_id.should == "mock-account-123"
+          pi.factory_provider_account_id.should == "mock-account-123"
         end
 
         it "should not make a request to factory if the base image is imported" do
