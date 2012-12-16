@@ -60,7 +60,7 @@ module Tim
       self.progress = factory_provider_image.percent_complete
       self.provider = factory_provider_image.provider
       self.external_image_id = factory_provider_image.identifier_on_provider
-      self.provider_account_id = factory_provider_image.provider_account_identifier
+      self.factory_provider_account_id = factory_provider_image.provider_account_identifier
     end
 
     # TODO At the moment this method simply sets fields to import defaults.
