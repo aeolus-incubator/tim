@@ -16,6 +16,11 @@ module Tim
       Dir[Tim::Engine.root.join('app', 'patches', '**', '*.rb')].each do |p|
         require p
       end
+
+      # Load Exceptions
+      Dir[Tim::Engine.root.join('app', 'exceptions', '**', '*.rb')].each do |e|
+        require e
+      end
     end
   end
 end
