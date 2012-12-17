@@ -112,6 +112,15 @@ module Tim
           mock_target_image.should_receive(:save!)
           target_image.save
         end
+
+        it "should raise ImagefactoryConnectionRefused exception when it can"\
+          " not connect to Imagefactory" do
+          expect {
+            Tim::ImageFactory::TargetImage.stub(:new).and_raise(Errno::ECONNREFUSED)
+            target_image = TargetImage.new
+            target_image.send(:create_factory_target_image)
+          }.to raise_error(Tim::Error::ImagefactoryConnectionRefused)
+        end
       end
     end
   end

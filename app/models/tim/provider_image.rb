@@ -47,6 +47,9 @@ module Tim
         provider_image.save!
         populate_factory_fields(provider_image)
         self.save
+      rescue Errno::ECONNREFUSED
+        raise Tim::Error::ImagefactoryConnectionRefused.new("Unable to connect"\
+         " to Imagefactory server @ #{Tim::ImageFactory::Base.site}")
       rescue => e
         # TODO Add proper error handling
         raise e
