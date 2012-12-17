@@ -77,6 +77,15 @@ module Tim
           ti.should_not_receive(:create_factory_provider_image)
           ti.save
         end
+
+        it "should raise ImagefactoryConnectionRefused exception when it can"\
+          " not connect to Imagefactory" do
+          expect {
+            Tim::ImageFactory::ProviderImage.stub(:new).and_raise(Errno::ECONNREFUSED)
+            provider_image = FactoryGirl.build(:provider_image_with_full_tree)
+            provider_image.send(:create_factory_provider_image)
+          }.to raise_error(Tim::Error::ImagefactoryConnectionRefused)
+        end
       end
     end
   end
