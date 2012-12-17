@@ -35,12 +35,17 @@ module Tim
     private
     def create_factory_target_image
       begin
-        target_image = ImageFactory::TargetImage.new(:template => template.xml,
-                                                        :target => target,
-                                                        :parameters => nil)
-                                                        # A bug in ARes adds parameters twice to the resulting json
-                                                        # when a map is provided in mass assign
+        target_image = ImageFactory::TargetImage.new(:target => target,
+                                                     :parameters => nil)
+        # A bug in ARes adds parameters twice to the resulting json when a map
+        # is provided in mass assign
         target_image.parameters =  { :callbacks => ["#{ImageFactory::TargetImage.callback_url}/#{self.id}"] }
+
+        if image_version.factory_base_image_id
+          target_image.base_image_id = image_version.factory_base_image_id
+        else
+          target_image.template = template.xml
+        end
         target_image.save!
 
         populate_factory_fields(target_image)
@@ -56,6 +61,10 @@ module Tim
       self.factory_id = factory_target_image.id
       self.status_detail = factory_target_image.status_detail.activity
       self.progress = factory_target_image.percent_complete
+      unless self.image_version.factory_base_image_id
+        image_version.factory_base_image_id = factory_target_image.base_image_id
+        image_version.save!
+      end
     end
 
     def create_import

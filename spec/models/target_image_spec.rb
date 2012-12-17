@@ -70,6 +70,7 @@ module Tim
           ti.status.should == "NEW"
           ti.status_detail.should == "Building"
           ti.progress.should == "0"
+          ti.image_version.factory_base_image_id.should == '2cc3b024-5fe7-4b0b-934b-c5d463b990b0'
         end
 
         it "should not make a request to factory if the base image is imported" do
@@ -83,6 +84,33 @@ module Tim
           ti = FactoryGirl.build(:target_image_import, :build_method => "SNAPSHOT")
           ti.should_not_receive(:create_factory_target_image)
           ti.save
+        end
+
+        it "should send base image id to factory if it is set on image version" do
+          image_version = FactoryGirl.build(:image_version_with_full_tree,
+                                            :factory_base_image_id => "1234")
+          target_image = FactoryGirl.build(:target_image,
+                                           :image_version => image_version)
+          target_image.stub(:populate_factory_fields)
+          mock_target_image = double("factory_target_image")
+          Tim::ImageFactory::TargetImage.stub(:new).and_return(mock_target_image)
+          mock_target_image.should_receive(:parameters=)
+          mock_target_image.should_receive(:base_image_id=)
+          mock_target_image.should_receive(:save!)
+          target_image.save
+        end
+
+        it "should send template to factory if factory base image id is not set on image version" do
+          image_version = FactoryGirl.build(:image_version_with_full_tree)
+          target_image = FactoryGirl.build(:target_image,
+                                           :image_version => image_version)
+          target_image.stub(:populate_factory_fields)
+          mock_target_image = double("factory_target_image")
+          Tim::ImageFactory::TargetImage.stub(:new).and_return(mock_target_image)
+          mock_target_image.should_receive(:parameters=)
+          mock_target_image.should_receive(:template=)
+          mock_target_image.should_receive(:save!)
+          target_image.save
         end
       end
     end
