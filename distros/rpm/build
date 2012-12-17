@@ -1,0 +1,7 @@
+cd ../../
+bundle exec rake build
+cp pkg/tim-*.gem ~/rpmbuild/SOURCES/
+rpmbuild -bs distros/rpm/rubygem-tim.spec
+mock rebuild -r fedora-18-x86_64 ~/rpmbuild/SRPMS/rubygem-tim-*.src.rpm
+#mock rebuild -r fedora-18-x86_64 ~/rpmbuild/SRPMS/rubygem-tim-*.$(rpm --eval '%dist').src.rpm
+cd distros/rpm
