@@ -25,13 +25,13 @@ module Tim
     private
     def create_factory_provider_image
       begin
-        provider_image = ImageFactory::ProviderImage.new(:provider => self.provider,
-                                                         :credentials => @credentials,
+        provider_image = ImageFactory::ProviderImage.new(:credentials => @credentials,
                                                           # TODO Remove this when upgrading to 3.2
                                                           # target conflicts with rails 3.0.10
                                                           # ActiveRecord::Associations::Association#target
                                                           :target => target_image.target,
                                                           :parameters => "")
+        provider_image.provider = self.provider
         # TODO There is a bug in ARes 3.0.10 that will add map name twice when setting in mass assign.  So we set
         # parameters separately.
         # Setting parameters at mass assign results in json => {"target_image":"parameters":{"parameters":{"..."}}}"
