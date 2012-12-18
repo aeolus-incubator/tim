@@ -18,7 +18,7 @@ module Tim
     attr_protected :id
 
     after_create :create_factory_target_image, :if => :create_factory_target_image?
-    after_create :create_import, :if => :imported?
+    after_create :set_import_snapshot_status, :if => lambda { |t| t.imported? || t.snapshot? }
 
     def template
       image_version.base_image.template
@@ -70,10 +70,14 @@ module Tim
       end
     end
 
-    def create_import
+    def set_import_snapshot_status
       self.progress = "COMPLETE"
-      self.status = "IMPORTED"
-      self.status_detail = "Imported Image"
+      self.status = "COMPLETE"
+      if self.imported? 
+        self.status_detail = "Imported Image"
+      elsif self.snapshot?
+        self.status_detail = "Snapshot Image"
+      end
       self.save
     end
 

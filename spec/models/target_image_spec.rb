@@ -121,6 +121,24 @@ module Tim
             target_image.send(:create_factory_target_image)
           }.to raise_error(Tim::Error::ImagefactoryConnectionRefused)
         end
+
+        it "should set default factory data when importing" do
+          target_image = FactoryGirl.build(:target_image_with_full_tree)
+          target_image.stub(:imported?).and_return(true)
+          target_image.save!
+          target_image.progress.should == "COMPLETE"
+          target_image.status.should == "COMPLETE"
+          target_image.status_detail.should == "Imported Image"
+        end
+
+        it "should set default factory data when creating snapshot" do
+          target_image = FactoryGirl.build(:target_image_with_full_tree)
+          target_image.stub(:snapshot?).and_return(true)
+          target_image.save!
+          target_image.progress.should == "COMPLETE"
+          target_image.status.should == "COMPLETE"
+          target_image.status_detail.should == "Snapshot Image"
+        end
       end
     end
   end
