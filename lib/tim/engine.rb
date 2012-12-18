@@ -8,18 +8,13 @@ module Tim
 
     # Load Host Decorator Classes
     config.to_prepare do |c|
-      Dir[Rails.root.join('app', 'decorators', '**', '*_decorator.rb')].each do |d|
-        require d
-      end
-
-      # Load everything under patches dir
-      Dir[Tim::Engine.root.join('app', 'patches', '**', '*.rb')].each do |p|
-        require p
-      end
-
-      # Load Exceptions
-      Dir[Tim::Engine.root.join('app', 'exceptions', '**', '*.rb')].each do |e|
-        require e
+      # Load everything under patches, exceptions and decorators dir
+      [
+        Dir[Rails.root.join('app', 'decorators', '**', '*_decorator.rb')],
+        Dir[Tim::Engine.root.join('app', 'patches', '**', '*.rb')],
+        Dir[Tim::Engine.root.join('app', 'exceptions', '**', '*.rb')]
+      ].flatten.each do |f|
+        Rails.application.config.cache_classes ? require(f) : load(f)
       end
     end
   end
