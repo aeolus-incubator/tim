@@ -70,9 +70,9 @@ module Tim
     # We should investigate whether we can check the image exists and if the
     # user can access it.  Deltacloud?
     def create_import
-      self.status = "IMPORTED"
-      self.status_detail = "Imported Image"
+      self.status = "COMPLETE"
       self.progress = "COMPLETE"
+      self.status_detail = "Imported Image"
       self.save
     end
   end
