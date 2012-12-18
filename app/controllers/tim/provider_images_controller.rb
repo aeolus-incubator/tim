@@ -54,7 +54,8 @@ module Tim
       if params[:provider_image][:percent_complete] && params[:provider_image][:status_detail][:activity]
         params[:provider_image] = { :progress => params[:provider_image][:percent_complete],
                                     :status_detail => params[:provider_image][:status_detail][:activity],
-                                    :status => params[:provider_image][:status] }
+                                    :status => params[:provider_image][:status],
+                                    :external_image_id => params[:provider_image][:identifier_on_provider] }
       end
     end
   end
