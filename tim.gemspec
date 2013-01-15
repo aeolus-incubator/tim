@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["{spec,test}/**/*"]
   s.test_files.reject! { |fn| fn.match(/sqlite|tmp|log/) }
 
-  s.add_dependency "rails", "~> 3.2.11"
+  s.add_dependency "rails", "~> 3.2"
   s.add_dependency "haml"
   s.add_dependency "nokogiri"
 
