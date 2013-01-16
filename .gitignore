@@ -1,3 +1,4 @@
+Gemfile.lock
 .bundle
 development.sqlite3
 production.sqlite3
