@@ -1,5 +1,19 @@
 = Tim
 
+== Summary
+
+Tim is a Rails Engine responsible for Cloud image management.  It
+allows clients to create, delete and upload images to a multitude of
+Cloud providers.  Tim builds on top of Imagefactory’s cloud
+abstraction layer.
+
+Adding the ability for clients to store meta-data (used for searching
+and sorting) as well as versioning and support for access control.
+Tim wraps all this up in a clean, simply RESTful API.
+
+You can read the full presentation
+here[http://www.aeolusproject.org/docs/presentations/2012-nov-conference/tim.odp].
+
 == Running Tests
 
 {<img src="https://secure.travis-ci.org/aeolus-incubator/tim.png"
