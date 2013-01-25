@@ -14,6 +14,21 @@ Tim wraps all this up in a clean, simply RESTful API.
 You can read the full presentation
 here[http://www.aeolusproject.org/docs/presentations/2012-nov-conference/tim.odp].
 
+== Configuration
+
+=== Securing Image Factory requests
+
+It is possible to secure Image Factory requests using 2 Legged OAuth.  To use 2
+Legged OAuth you must set the OAuth consumer key, consumer secret and url in the
+Tim::ImageFactory::Base.config.
+
+Example:
+
+  oauth_config = {:consumer_key => "mock-key",
+                  :consumer_secret => "mock-secret",
+                  :site => "http://localhost:8075/imagefactory/"}
+  Tim::ImageFactory::Base.config = oauth_config
+
 == Running Tests
 
 {<img src="https://secure.travis-ci.org/aeolus-incubator/tim.png"
