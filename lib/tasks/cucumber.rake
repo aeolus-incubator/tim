@@ -5,8 +5,10 @@
 # files.
 
 
-unless ARGV.any? {|a| a =~ /^gems/} # Don't load anything when running the gems:* tasks
+bailout = ARGV.any? {|a| a =~ /^gems/} # Don't load anything when running the gems:* tasks
+bailout ||= ! defined? Tim::Application # prevent cucumber tests from running 2x in host application (conductor)
 
+unless bailout
 begin
   require 'cucumber/rake/task'
 
