@@ -60,6 +60,10 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
     t.integer  "provider_account_id"
+    t.string   "fsm_create_state"
+    t.text     "fsm_create_state_message"
+    t.string   "fsm_delete_state"
+    t.text     "fsm_delete_state_message"
   end
 
   create_table "tim_target_images", :force => true do |t|
@@ -69,10 +73,14 @@ ActiveRecord::Schema.define(:version => 20120423123114264114) do
     t.string   "status"
     t.string   "status_detail"
     t.string   "progress"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.integer  "provider_type_id"
-    t.string   "build_method",     :default => "BARE_METAL"
+    t.string   "build_method",             :default => "BARE_METAL"
+    t.string   "fsm_create_state"
+    t.text     "fsm_create_state_message"
+    t.string   "fsm_delete_state"
+    t.text     "fsm_delete_state_message"
   end
 
   create_table "tim_templates", :force => true do |t|
