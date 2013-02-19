@@ -1,4 +1,7 @@
 cd ../../
+rm -rf pkg/
+rm ~/rpmbuild/SOURCES/tim*.gem
+rm ~/rpmbuild/SRPMS/rubygem-tim*
 bundle exec rake build
 cp pkg/tim-*.gem ~/rpmbuild/SOURCES/
 rpmbuild -bs distros/rpm/rubygem-tim.spec

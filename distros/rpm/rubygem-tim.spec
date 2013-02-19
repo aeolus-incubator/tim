@@ -4,7 +4,7 @@
 
 Summary: Embeddable client for Aeolus Image Factory
 Name: rubygem-%{gem_name}
-Version: 0.1.2
+Version: 0.3.0
 Release: 1%{?dist}
 Group: Development/Languages
 License: MIT
@@ -17,11 +17,13 @@ Requires: rubygem(rails) => 3.2.8
 Requires: rubygem(rails) < 3.3
 Requires: rubygem(haml)
 Requires: rubygem(nokogiri)
+Requires: rubygem(oauth)
 BuildRequires: ruby(abi) = %{rubyabi}
 BuildRequires: rubygems-devel
 BuildRequires: ruby
 BuildRequires: rubygem(nokogiri)
 BuildRequires: rubygem(haml)
+BuildRequires: rubygem(oauth)
 BuildRequires: rubygem(sqlite3)
 BuildRequires: rubygem(rspec)
 BuildRequires: rubygem(rspec-rails)
