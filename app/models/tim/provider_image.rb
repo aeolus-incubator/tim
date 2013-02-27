@@ -1,5 +1,7 @@
 module Tim
   class ProviderImage < Tim::Base
+    include FSM
+
     belongs_to :target_image, :inverse_of => :provider_images
     belongs_to :provider_account, :class_name => Tim.provider_account_class
 
