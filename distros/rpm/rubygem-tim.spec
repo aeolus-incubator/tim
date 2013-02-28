@@ -34,6 +34,7 @@ BuildRequires: rubygem(minitest)
 BuildRequires: rubygem(database_cleaner)
 BuildRequires: rubygem(factory_girl_rails) => 4.1.0
 BuildRequires: rubygem(rake)
+BuildRequires: rubygem(state_machine)
 BuildArch: noarch
 Provides: rubygem(%{gem_name}) = %{version}
 
@@ -94,3 +95,5 @@ popd
 %changelog
 * Tue Oct 23 2012 slinaber - 0.1.2-1
 - Initial package
+* Tue Feb 12 2012 mtaylor - 0.1.2-2
+- Added rubygem-state_machine dependency

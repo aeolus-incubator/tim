@@ -15,3 +15,8 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
+
+# FIXME This should be imported from tim.gemspec by bundler.  This does not
+# seem to be working, potentially due to this issue:
+# https://github.com/carlhuda/bundler/issues/1041
+gem 'state_machine'

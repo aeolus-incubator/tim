@@ -1,5 +1,7 @@
 module Tim
   class TargetImage < Tim::Base
+    include FSM
+
     belongs_to :image_version, :inverse_of => :target_images
     has_many :provider_images, :inverse_of => :target_image
 
