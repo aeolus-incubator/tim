@@ -53,6 +53,13 @@ accordingly).
 
 cd test/dummy; rails s
 
+== Generating State Machines Images
+
+From test/dummy run:
+
+  rake state_machine:draw FILE=../../app/models/tim/target_image.rb CLASS=Tim::TargetImage
+  rake state_machine:draw FILE=../../app/models/tim/provider_image.rb CLASS=Tim::ProviderImage
+
 == API Reference
 
 === Templates
