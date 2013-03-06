@@ -14,7 +14,7 @@ module Tim
       end
 
       it "should transition from new to pending when provider image is created" do
-        @pi.should_receive(:fsm_create_requested)
+        @pi.should_receive(:fsm_create_request)
         @pi.save
       end
 
@@ -25,13 +25,13 @@ module Tim
 
         it "should send factory request after transition from pending to queued" do
           @pi.should_receive(:create_factory_provider_image)
-          @pio.after_fsm_create_requested(@pi, nil)
+          @pio.after_fsm_create_request(@pi, nil)
         end
 
         it "should transition to failed if factory request fails" do
           @pi.stub(:create_factory_provider_image).and_raise(Errno::ECONNREFUSED)
-          @pi.should_receive(:fsm_create_failed)
-          @pio.after_fsm_create_requested(@pi, nil)
+          @pi.should_receive(:fsm_create_fail)
+          @pio.after_fsm_create_request(@pi, nil)
         end
 
         describe "after factory callback" do
@@ -43,7 +43,7 @@ module Tim
                   returns complete" do
             @pi.status = "COMPLETE"
             @pi.should_receive(:fsm_create_start)
-            @pi.should_receive(:fsm_create_completed)
+            @pi.should_receive(:fsm_create_complete)
             @pi.save
           end
   
@@ -58,7 +58,7 @@ module Tim
                failed" do
             @pi.status = "FAILED"
             @pi.should_receive(:fsm_create_start)
-            @pi.should_receive(:fsm_create_failed)
+            @pi.should_receive(:fsm_create_fail)
             @pi.save
           end
         end
@@ -72,16 +72,16 @@ module Tim
 
         it "should transition through queued to complete on successful import" do
           @pi.stub(:create_import).and_return(true)
-          @pi.should_receive(:fsm_create_accepted)
+          @pi.should_receive(:fsm_create_accept)
           @pi.should_receive(:fsm_create_start)
           @pi.should_receive(:fsm_create_complete)
-          @pio.after_fsm_create_requested(@pi, nil)
+          @pio.after_fsm_create_request(@pi, nil)
         end
 
         it "should transition directly to failed on failed import" do
           @pi.stub(:create_import).and_return(false)
-          @pi.should_receive(:fsm_create_failed)
-          @pio.after_fsm_create_requested(@pi, nil)
+          @pi.should_receive(:fsm_create_fail)
+          @pio.after_fsm_create_request(@pi, nil)
         end
       end
 
