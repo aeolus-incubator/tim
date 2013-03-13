@@ -1,6 +1,6 @@
 module Tim
   class ProviderImage < Tim::Base
-    include FSM
+    include ::Tim::StateMachine::FSM
 
     belongs_to :target_image, :inverse_of => :provider_images
     belongs_to :provider_account, :class_name => Tim.provider_account_class
@@ -16,9 +16,6 @@ module Tim
 
     validates_presence_of :target_image
     validates_presence_of :external_image_id, :if => :imported?
-
-    after_create :create_factory_provider_image, :unless => :imported?
-    after_create :create_import, :if => :imported?
 
     def imported?
       target_image.imported?
