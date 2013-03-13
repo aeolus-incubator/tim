@@ -17,5 +17,11 @@ module Tim
         Rails.application.config.cache_classes ? require(f) : load(f)
       end
     end
+
+    # FIXME Normal method of instantiating observers does not seem to work in
+    # rails engine,
+    config.after_initialize do
+      Tim::ProviderImageObserver.instance
+    end
   end
 end
