@@ -35,7 +35,7 @@ module Tim
         # We ensure that the state is correctly transition through the state
         # machine. This will ensure all the correct events are fired.
         def handle_factory_callback(pi)
-          case pi.status
+          case pi.status.upcase
             when "COMPLETE"
               pi.fsm_create_start if pi.fsm_create_state == "queued"
               pi.fsm_create_complete
