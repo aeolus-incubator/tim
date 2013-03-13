@@ -121,6 +121,7 @@ module Tim
 
         context "Success" do
            it "should return an updated provider image as xml" do
+            ProviderImage.any_instance.stub(:fsm_create_request)
             provider_image = FactoryGirl.create(:provider_image_with_full_tree)
             provider_image.target_image  = FactoryGirl.create(:target_image_with_full_tree )
             put :update, :id => provider_image.id, :provider_image => provider_image.attributes

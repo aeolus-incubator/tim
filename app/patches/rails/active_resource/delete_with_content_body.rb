@@ -29,7 +29,7 @@ module ActiveResource
   # delete request
   class Base
     def destroy_with_body
-      connection.delete_with_body(element_path, encode, self.class.headers)
+      connection.delete_with_body(self.class.element_path(self.id), encode, self.class.headers)
     end
   end
 

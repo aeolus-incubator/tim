@@ -2,7 +2,7 @@ module Tim
   class ProviderImage < Tim::Base
     include ::Tim::StateMachine::FSM
     alias_method :force_destroy, :destroy
-# 
+
     belongs_to :target_image, :inverse_of => :provider_images
     belongs_to :provider_account, :class_name => Tim.provider_account_class
 
@@ -12,6 +12,7 @@ module Tim
     attr_accessible :external_image_id, :if => :imported?
     attr_accessible :status, :status_detail, :progress #, :as => :image_factory
     attr_accessible :provider
+
     attr_protected :id
 
     validates_presence_of :target_image
@@ -36,7 +37,8 @@ module Tim
 
     def delete_factory_provider_image
       begin
-        pi = ImageFactory::ProviderImage.find(factory_id)
+        pi = ImageFactory::ProviderImage.new
+        pi.id = factory_id
         pi.credentials = factory_provider_credentials
         pi.target = target_image.target
         pi.provider = factory_provider

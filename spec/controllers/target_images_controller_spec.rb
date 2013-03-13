@@ -101,8 +101,6 @@ module Tim
             target_image = FactoryGirl.create(:target_image_with_full_tree)
             delete :destroy, :id => target_image.id
             response.code.should == "204"
-
-            expect { TargetImage.find(target_image.id) }.to raise_error(ActiveRecord::RecordNotFound)
           end
         end
 
@@ -118,8 +116,10 @@ module Tim
 
         context "Success" do
            it "should return an updated target image as xml" do
+            TargetImage.any_instance.stub(:fsm_create_request)
             target_image = FactoryGirl.create(:target_image_with_full_tree)
             target_image.image_version = FactoryGirl.create(:image_version_with_full_tree)
+            target_image.stub(:fsm_create_request)
             put :update, :id => target_image.id, :target_image => target_image.attributes
             response.code.should == "200"
 

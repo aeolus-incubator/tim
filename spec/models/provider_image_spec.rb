@@ -2,6 +2,10 @@ require 'spec_helper'
 
 module Tim
   describe ProviderImage do
+    before(:all) do
+      ProviderImage.observers.disable Tim::ProviderImageObserver
+    end
+
     before (:each) do
       TargetImage.any_instance.stub(:create_factory_target_image).and_return(true)
       Tim::ProviderImage.any_instance.stub(:imported?).and_return(false)
@@ -35,7 +39,7 @@ module Tim
           TargetImage.any_instance.stub(:factory_id).and_return("1234")
         end
 
-        it "should create factory provider image and populate fields" do
+        it "should populate fields on create factory provider image" do
           # Needed due to ActiveRecord::Associations::Association#target
           # name conflict
           target = mock(:target)
@@ -44,7 +48,7 @@ module Tim
           pi = FactoryGirl.build(:provider_image_with_full_tree)
           pi.target_image.target = target
           pi.should_receive(:populate_factory_fields)
-          pi.save
+          pi.send(:create_factory_provider_image)
         end
 
         it "should add factory fields to provider image" do
