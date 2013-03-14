@@ -42,7 +42,7 @@ module Tim
           end
 
           event :fsm_delete_fail do
-            transition :in_progress => :failed
+            transition [:in_progress, :pending] => :failed
           end
         end
       end

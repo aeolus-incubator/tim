@@ -1,7 +1,8 @@
 module Tim
   class ProviderImage < Tim::Base
     include ::Tim::StateMachine::FSM
-
+    alias_method :force_destroy, :destroy
+# 
     belongs_to :target_image, :inverse_of => :provider_images
     belongs_to :provider_account, :class_name => Tim.provider_account_class
 
@@ -11,7 +12,6 @@ module Tim
     attr_accessible :external_image_id, :if => :imported?
     attr_accessible :status, :status_detail, :progress #, :as => :image_factory
     attr_accessible :provider
-    attr_writer :credentials
     attr_protected :id
 
     validates_presence_of :target_image
@@ -21,13 +21,30 @@ module Tim
       target_image.imported?
     end
 
+    def destroy
+      fsm_delete_request
+    end
+
     private
     def factory_provider_credentials
-      @credentials
+      provider_account.format_credentials
     end
 
     def factory_provider
       self.provider
+    end
+
+    def delete_factory_provider_image
+      begin
+        pi = ImageFactory::ProviderImage.find(factory_id)
+        pi.credentials = factory_provider_credentials
+        pi.target = target_image.target
+        pi.provider = factory_provider
+        pi.parameters = { :callbacks => [factory_callback_url] }
+        pi.destroy_with_body
+      rescue => e
+        raise e
+      end
     end
 
     def create_factory_provider_image
@@ -43,7 +60,7 @@ module Tim
         # parameters separately.
         # Setting parameters at mass assign results in json => {"target_image":"parameters":{"parameters":{"..."}}}"
         # This should be tested and removed if fixed in 3.2
-        provider_image.parameters = { :callbacks => ["#{ImageFactory::ProviderImage.callback_url}/#{self.id}"] }
+        provider_image.parameters = { :callbacks => [factory_callback_url] }
         if target_image.snapshot?
           provider_image.parameters[:snapshot] = true
           provider_image.template = self.target_image.template.xml
@@ -81,6 +98,10 @@ module Tim
       self.progress = "COMPLETE"
       self.status_detail = "Imported Image"
       self.save
+    end
+
+    def factory_callback_url
+      "#{ImageFactory::ProviderImage.callback_url}/#{self.id}"
     end
   end
 end

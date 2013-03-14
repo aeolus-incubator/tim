@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :provider_image, :class => Tim::ProviderImage do
+    association :provider_account, :factory => :provider_account
   end
 
   factory :provider_image_with_full_tree, :parent => :provider_image do

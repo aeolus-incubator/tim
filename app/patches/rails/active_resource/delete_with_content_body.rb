@@ -24,7 +24,7 @@ module ActiveResource
     end
   end
 
-  # Override ActiveRecord::Base to check to content_body parameter.  If its true
+  # Override ActiveRecord::Base to check the content body parameter.  If its true
   # then encode the body of the object and set it in the content body of the
   # delete request
   class Base
