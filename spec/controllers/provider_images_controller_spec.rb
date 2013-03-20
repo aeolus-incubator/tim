@@ -101,10 +101,11 @@ module Tim
         context "Success" do
           it "should return a no content code when deleting a provider image" do
             provider_image = FactoryGirl.create(:provider_image_with_full_tree)
+            provider_image.attributes[:credentials] = {:username => "password" }
             delete :destroy, :id => provider_image.id
             response.code.should == "204"
-
-            expect { ProviderImage.find(provider_image.id) }.to raise_error(ActiveRecord::RecordNotFound)
+            ProviderImage.find(provider_image.id).fsm_delete_state
+              .should_not == "inactive"
           end
         end
 
