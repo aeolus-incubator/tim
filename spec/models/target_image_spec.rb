@@ -3,9 +3,14 @@ require 'spec_helper'
 module Tim
   describe TargetImage do
 
+    before(:all) do
+      TargetImage.observers.disable Tim::TargetImageObserver
+    end
+
     before (:each) do
       Tim::TargetImage.any_instance.stub(:imported?).and_return(false)
     end
+
     #TODO FIX: A bug in RSpec V2.1 means that any_instance propogates across context therefore we are  stubbing each 
     #target_image.   This bug is fixed in RSpec V2.6 
     describe "Model relationships" do
@@ -54,7 +59,7 @@ module Tim
           ti = FactoryGirl.build(:target_image_with_full_tree)
           ti.target = target
           ti.should_receive(:populate_factory_fields)
-          ti.save
+          ti.send(:create_factory_target_image)
         end
 
         it "should add factory fields to provider image" do
@@ -97,7 +102,7 @@ module Tim
           mock_target_image.should_receive(:parameters=)
           mock_target_image.should_receive(:base_image_id=)
           mock_target_image.should_receive(:save!)
-          target_image.save
+          target_image.send(:create_factory_target_image)
         end
 
         it "should send template to factory if factory base image id is not set on image version" do
@@ -110,7 +115,7 @@ module Tim
           mock_target_image.should_receive(:parameters=)
           mock_target_image.should_receive(:template=)
           mock_target_image.should_receive(:save!)
-          target_image.save
+          target_image.send(:create_factory_target_image)
         end
 
         it "should raise ImagefactoryConnectionRefused exception when it can"\
@@ -125,7 +130,7 @@ module Tim
         it "should set default factory data when importing" do
           target_image = FactoryGirl.build(:target_image_with_full_tree)
           target_image.stub(:imported?).and_return(true)
-          target_image.save!
+          target_image.send(:set_import_snapshot_status)
           target_image.progress.should == "COMPLETE"
           target_image.status.should == "COMPLETE"
           target_image.status_detail.should == "Imported Image"
@@ -134,11 +139,12 @@ module Tim
         it "should set default factory data when creating snapshot" do
           target_image = FactoryGirl.build(:target_image_with_full_tree)
           target_image.stub(:snapshot?).and_return(true)
-          target_image.save!
+          target_image.send(:set_import_snapshot_status)
           target_image.progress.should == "COMPLETE"
           target_image.status.should == "COMPLETE"
           target_image.status_detail.should == "Snapshot Image"
         end
+
       end
     end
   end

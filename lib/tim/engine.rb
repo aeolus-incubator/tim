@@ -22,6 +22,7 @@ module Tim
     # rails engine,
     config.after_initialize do
       Tim::ProviderImageObserver.instance
+      Tim::TargetImageObserver.instance
     end
   end
 end
