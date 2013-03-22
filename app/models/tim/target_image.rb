@@ -1,5 +1,8 @@
 module Tim
   class TargetImage < Tim::Base
+    include ::Tim::StateMachine::FSM
+    alias_method :force_destroy, :destroy
+
     belongs_to :image_version, :inverse_of => :target_images
     has_many :provider_images, :inverse_of => :target_image
 
@@ -17,9 +20,6 @@ module Tim
 
     attr_protected :id
 
-    after_create :create_factory_target_image, :if => :create_factory_target_image?
-    after_create :set_import_snapshot_status, :if => lambda { |t| t.imported? || t.snapshot? }
-
     def template
       image_version.base_image.template
     end
@@ -32,7 +32,22 @@ module Tim
       build_method == "SNAPSHOT"
     end
 
+    def destroy
+      fsm_delete_request
+    end
+
     private
+    def delete_factory_target_image
+      begin
+        ti = ImageFactory::TargetImage.new
+        ti.id = factory_id
+        ti.parameters = { :callbacks => ["#{ImageFactory::TargetImage.callback_url}/#{self.id}"] }
+        ti.destroy_with_body
+      rescue => e
+        raise e
+      end
+    end
+
     def create_factory_target_image
       begin
         target_image = ImageFactory::TargetImage.new(:target => target,

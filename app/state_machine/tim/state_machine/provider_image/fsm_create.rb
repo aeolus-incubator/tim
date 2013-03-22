@@ -3,8 +3,11 @@ module Tim
     module ProviderImage
       module FSMCreate
 
-        def after_create(pi)
-          pi.fsm_create_request
+        def after_commit(pi)
+          # check :on => :create
+          if pi.created_at == pi.updated_at
+            pi.fsm_create_request
+          end
         end
 
         def after_fsm_create_request(pi, transition)

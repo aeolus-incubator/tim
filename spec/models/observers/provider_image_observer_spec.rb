@@ -3,13 +3,21 @@ require 'spec_helper'
 module Tim
   describe ProviderImageObserver do
 
+    before(:all) do
+      ProviderImage.observers.enable Tim::ProviderImageObserver
+      @pio = ProviderImageObserver.instance
+    end
+
+    after(:all) do
+      ProviderImage.observers.disable Tim::ProviderImageObserver
+    end
+
     before(:each) do
       TargetImage.any_instance.stub(:create_factory_target_image)
         .and_return(true)
       ProviderImage.any_instance.stub(:create_factory_provider_image)
         .and_return(true)
       @pi = FactoryGirl.build(:provider_image_with_full_tree)
-      @pio = ProviderImageObserver.instance
     end
 
     describe "Create FSM" do
