@@ -1,74 +1,168 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Tim : Web application for managing virtual images to be deployed in the cloud" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <title>Tim</title>
+    <title>Tim by aeolus-incubator</title>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <h1>Tim</h1>
+        <h2>Web application for managing virtual images to be deployed in the cloud</h2>
+        <a href="https://github.com/aeolus-incubator/tim" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/aeolus-incubator/tim">View on GitHub</a>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>Tim is a Rails Engine responsible for Cloud image management.  It
+allows clients to create, delete and upload images to a multitude of
+Cloud providers.  Tim builds on top of Imagefactory’s cloud
+abstraction layer.</p>
 
-          <h1 id="project_title">Tim</h1>
-          <h2 id="project_tagline">Web application for managing virtual images to be deployed in the cloud</h2>
+<p>Adding the ability for clients to store meta-data (used for searching
+and sorting) as well as versioning and support for access control.
+Tim wraps all this up in a clean, simply RESTful API.</p>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/aeolus-incubator/tim/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/aeolus-incubator/tim/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+<p>You can read the full presentation <a href="http://www.aeolusproject.org/docs/presentations/2012-nov-conference/tim.odp">here</a>.</p>
+
+<h2>Configuration</h2>
+
+<h3>Securing Image Factory requests</h3>
+
+<p>It is possible to secure Image Factory requests using 2 Legged OAuth.  To use 2
+Legged OAuth you must set the OAuth consumer key, consumer secret and url in the
+Tim::ImageFactory::Base.config.</p>
+
+<h4>Example:</h4>
+
+<div class="highlight"><pre>  <span class="n">oauth_config</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:consumer_key</span> <span class="o">=&gt;</span> <span class="s2">"mock-key"</span><span class="p">,</span>
+                  <span class="ss">:consumer_secret</span> <span class="o">=&gt;</span> <span class="s2">"mock-secret"</span><span class="p">,</span>
+                  <span class="ss">:site</span> <span class="o">=&gt;</span> <span class="s2">"http://localhost:8075/imagefactory/"</span><span class="p">}</span>
+  <span class="ss">Tim</span><span class="p">:</span><span class="ss">:ImageFactory</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">oauth_config</span>
+</pre></div>
+
+<h2>Running Tests</h2>
+
+<p><a href="http://travis-ci.org/aeolus-incubator/tim%5D"><img src="https://secure.travis-ci.org/aeolus-incubator/tim.png" alt="Build Status"></a></p>
+
+<p>Tests are run from the project root directory.  But are run in the
+context of the dummy app located under test/dummy.  In order to run
+the tests you must first setup dummy app database.</p>
+
+<div class="highlight"><pre>  <span class="n">rake</span> <span class="ss">db</span><span class="p">:</span><span class="n">setup</span><span class="p">;</span> <span class="n">rake</span> <span class="o">-</span><span class="n">f</span> <span class="nb">test</span><span class="o">/</span><span class="n">dummy</span><span class="o">/</span><span class="no">Rakefile</span> <span class="nb">test</span><span class="ss">:prepare</span>
+</pre></div>
+
+<p>Once you have done this cd to the project root and run the following:</p>
+
+<div class="highlight"><pre>  <span class="n">rake</span> <span class="n">spec</span>
+</pre></div>
+
+<h2>Running the Dummy app</h2>
+
+<p>This will allow you to runn the commands below to test out the engine
+in isolation (if mounted in another application, the main difference
+will just be where the engine gets mounted, so adjust your url
+accordingly).</p>
+
+<p>cd test/dummy; rails s</p>
+
+<h2>Generating State Machines Images</h2>
+
+<p>From test/dummy run:</p>
+
+<div class="highlight"><pre>  <span class="n">rake</span> <span class="n">state_machine</span><span class="ss">:draw</span> <span class="no">FILE</span><span class="o">=.</span><span class="n">.</span><span class="o">/.</span><span class="n">.</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">tim</span><span class="o">/</span><span class="n">target_image</span><span class="o">.</span><span class="n">rb</span> <span class="no">CLASS</span><span class="o">=</span><span class="ss">Tim</span><span class="p">:</span><span class="ss">:TargetImage</span>
+  <span class="n">rake</span> <span class="n">state_machine</span><span class="ss">:draw</span> <span class="no">FILE</span><span class="o">=.</span><span class="n">.</span><span class="o">/.</span><span class="n">.</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">tim</span><span class="o">/</span><span class="n">provider_image</span><span class="o">.</span><span class="n">rb</span> <span class="no">CLASS</span><span class="o">=</span><span class="ss">Tim</span><span class="p">:</span><span class="ss">:ProviderImage</span>
+</pre></div>
+
+<h2>Contributing</h2>
+
+<p>We encourage you to contribute to Tim.  We are open to new ideas and
+features (especially if you offer to implement them!) as well as
+{Github issues}[<a href="https://github.com/aeolus-incubator/tim/issues/">https://github.com/aeolus-incubator/tim/issues/</a>] to point
+us at any bugs that may be encountered.</p>
+
+<h3>General</h3>
+
+<ul>
+<li>We use {Github issues}[<a href="https://github.com/aeolus-incubator/tim/issues/">https://github.com/aeolus-incubator/tim/issues/</a>]
+to track our features and bugs.</li>
+<li>Want to paste some code or output? Put ``` on a line above and
+below your code/output. See {Github documentation's}[<a href="https://help.github.com/articles/github-flavored-markdown">https://help.github.com/articles/github-flavored-markdown</a>]
+<b>Fenced Code Blocks</b> for details.</li>
+<li>Please use {pull requests}[<a href="https://help.github.com/articles/using-pull-requests">https://help.github.com/articles/using-pull-requests</a>]
+to submit code, whether for implementation of a new feature or for a bug fix.</li>
+<li>If you submit a pull request that doesn't have a test to go with it
+there is less chance we will merge it.</li>
+</ul><h3>Features</h3>
+
+<p>Have an idea for a feature you want to implement (or would like us to
+consider implementing when time allows)?  Simply submit a new
+issue[<a href="https://github.com/aeolus-incubator/tim/issues/">https://github.com/aeolus-incubator/tim/issues/</a>] describing the
+feature in sufficient detail to enable someone to consider
+implementing it.  Ideally this would be in a format focusing on:</p>
+
+<ul>
+<li>Who would be the user of this feature?</li>
+<li>How would the feature be used (this could be a workflow, api
+example, etc)?</li>
+<li>What need does it fill (in other words, why does the user want/need
+to do the described task)?</li>
+</ul><p>If you like, you may use the Connextra format, but it is not strictly
+required.  For reference, that format is:</p>
+
+<p><em>In order to [benefit], a [stakeholder] wants to [feature].</em></p>
+
+<h3>Bug Reporting</h3>
+
+<p>While we always strive to not have bug, we realize they will come up,
+and appreciate help in identifying them so they can be corrected. If
+you believe you have found such a thing, please tell us:</p>
+
+<ul>
+<li>which version of Tim you're using</li>
+<li>which version of Ruby you're using.</li>
+<li>How to reproduce it. Bugs with a failing test in a
+{pull request}[<a href="https://help.github.com/articles/using-pull-requests">https://help.github.com/articles/using-pull-requests</a>] get
+extra points, though a description and stack trace, if appropriate,
+would be a minimum requirement for the issue to receive attention.
+(And of course, submitting a pull request with proper tests that also
+fixes the bug will get the fix in a release quicker yet!)</li>
+</ul><h2>License</h2>
+
+<p>Image Management Engine is released under the MIT license.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/aeolus-incubator/tim/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/aeolus-incubator/tim/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/aeolus-incubator/tim"></a> is maintained by <a href="https://github.com/aeolus-incubator">aeolus-incubator</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Tim maintained by <a href="https://github.com/aeolus-incubator">aeolus-incubator</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+  
   </body>
 </html>
